@@ -1,0 +1,15 @@
+/**
+ * This is an auto-generated file.
+ * Any changes made to this file can be lost when this file is regenerated.
+ */
+
+export class applicationNotificationMessage {
+    type: string = "";
+    id: string = "";
+    title: string = "";
+    message: string = "";
+    args: string[] = [];
+    accept: string = "";
+    decline?: string;
+    timestamp: Date = new Date();
+}

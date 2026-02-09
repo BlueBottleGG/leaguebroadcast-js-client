@@ -1,0 +1,17 @@
+# Source files (only ship dist/)
+src/
+types/
+scripts/
+examples/
+tsconfig.json
+tsup.config.ts
+.gitignore
+
+# Development
+*.log
+*.md
+!README.md
+
+# IDE
+.vscode/
+.idea/

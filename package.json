@@ -1,0 +1,48 @@
+{
+  "name": "@leaguebroadcast/client",
+  "version": "0.1.0",
+  "description": "TypeScript client library for League Broadcast game data",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rimraf dist",
+    "sync-types": "node scripts/sync-types.mjs"
+  },
+  "keywords": [
+    "league-of-legends",
+    "esports",
+    "broadcast",
+    "websocket",
+    "typescript"
+  ],
+  "author": "BlueBottleGG",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/BlueBottleGG/leaguebroadcast-js-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BlueBottleGG/leaguebroadcast-js-client/issues"
+  },
+  "homepage": "https://github.com/BlueBottleGG/leaguebroadcast-js-client#readme",
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {}
+}
