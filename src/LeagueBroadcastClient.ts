@@ -3,7 +3,7 @@ import { GameStateStore } from "./reactivity/GameStateStore";
 import { structuralShare } from "./reactivity/structuralShare";
 import type { Subscribable } from "./reactivity/GameStateStore";
 import { ingameFrontendData } from "#types/ingame/ingamefrontenddata";
-import { GameState } from "#types/shared/GameState";
+import { GameState } from "#types/shared/gamestate";
 import type { transitionEvents } from "#types/ingame/event/transitionevents";
 import type { playerUpdateEvent } from "#types/ingame/event/playerUpdateEvent";
 import type { teamUpdateResults } from "#types/ingame/event/teamUpdateResults";

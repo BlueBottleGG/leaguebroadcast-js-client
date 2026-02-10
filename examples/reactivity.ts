@@ -60,7 +60,7 @@ function vanillaJsExample() {
 // React example (requires React 18+)
 /*
 import { useSyncExternalStore } from 'react';
-import { LeagueBroadcastClient } from '@leaguebroadcast/client';
+import { LeagueBroadcastClient } from '@bluebottle_gg/league-broadcast-client';
 
 // Create client instance outside component (or use context)
 const client = new LeagueBroadcastClient({
@@ -102,8 +102,8 @@ function Scoreboard() {
 
 // Custom hook for convenience
 function useGameState<T>(
-  selector: (snapshot: import('@leaguebroadcast/client').GameStateSnapshot) => T,
-  equalityFn?: import('@leaguebroadcast/client').EqualityFn<T>,
+  selector: (snapshot: import('@bluebottle_gg/league-broadcast-client').GameStateSnapshot) => T,
+  equalityFn?: import('@bluebottle_gg/league-broadcast-client').EqualityFn<T>,
 ) {
   const slice = client.select(selector, equalityFn);
   return useSyncExternalStore(slice.subscribe, slice.getSnapshot);
@@ -123,7 +123,7 @@ function GameTimer() {
 // Vue 3 example
 /*
 import { ref, watchEffect, onUnmounted } from 'vue';
-import { LeagueBroadcastClient } from '@leaguebroadcast/client';
+import { LeagueBroadcastClient } from '@bluebottle_gg/league-broadcast-client';
 
 const client = new LeagueBroadcastClient({
   host: 'localhost',
@@ -165,7 +165,7 @@ export default {
 
 // Or use a composable helper with ref
 function useGameStateRef<T>(
-  selector: (s: import('@leaguebroadcast/client').GameStateSnapshot) => T
+  selector: (s: import('@bluebottle_gg/league-broadcast-client').GameStateSnapshot) => T
 ) {
   const value = ref<T>(selector(client.store.getSnapshot()));
   
@@ -192,7 +192,7 @@ export default {
 import { computed } from 'vue';
 
 function useGameStateComputed<T>(
-  selector: (s: import('@leaguebroadcast/client').GameStateSnapshot) => T
+  selector: (s: import('@bluebottle_gg/league-broadcast-client').GameStateSnapshot) => T
 ) {
   // Trigger Vue's reactivity by tracking a version number
   const version = ref(client.store.getVersion());
@@ -264,7 +264,7 @@ export default {
 // Svelte example - the Subscribable interface matches Svelte's store contract!
 /*
 <script lang="ts">
-  import { LeagueBroadcastClient } from '@leaguebroadcast/client';
+  import { LeagueBroadcastClient } from '@bluebottle_gg/league-broadcast-client';
 
   const client = new LeagueBroadcastClient({
     host: 'localhost',
@@ -293,7 +293,7 @@ export default {
 // Solid.js example
 /*
 import { createSignal, createEffect, onCleanup } from 'solid-js';
-import { LeagueBroadcastClient } from '@leaguebroadcast/client';
+import { LeagueBroadcastClient } from '@bluebottle_gg/league-broadcast-client';
 
 const client = new LeagueBroadcastClient({
   host: 'localhost',
@@ -330,7 +330,7 @@ function GameStats() {
 
 // Or create a helper
 function createGameState<T>(
-  selector: (s: import('@leaguebroadcast/client').GameStateSnapshot) => T
+  selector: (s: import('@bluebottle_gg/league-broadcast-client').GameStateSnapshot) => T
 ) {
   const [value, setValue] = createSignal<T>(selector(client.store.getSnapshot()));
   
@@ -357,7 +357,7 @@ function GameTimer() {
 // Angular example with signals
 /*
 import { Component, OnInit, OnDestroy, signal } from '@angular/core';
-import { LeagueBroadcastClient } from '@leaguebroadcast/client';
+import { LeagueBroadcastClient } from '@bluebottle_gg/league-broadcast-client';
 
 @Component({
   selector: 'app-game-stats',

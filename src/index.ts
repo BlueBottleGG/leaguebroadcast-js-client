@@ -18,7 +18,7 @@ export type {
 
 // Re-export commonly used types from the types package
 export type { ingameFrontendData } from "#types/ingame/ingamefrontenddata";
-export { GameState } from "#types/shared/GameState";
+export { GameState } from "#types/shared/gamestate";
 
 // Event types
 export type { transitionEvents } from "#types/ingame/event/transitionevents";

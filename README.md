@@ -14,13 +14,16 @@ A TypeScript/JavaScript client library for connecting to the League Broadcast ba
 ## Installation
 
 ```bash
-npm install @leaguebroadcast/client
+npm install @bluebottle_gg/league-broadcast-client
 ```
 
 ## Quick Start
 
 ```typescript
-import { LeagueBroadcastClient, GameState } from "@leaguebroadcast/client";
+import {
+  LeagueBroadcastClient,
+  GameState,
+} from "@bluebottle_gg/league-broadcast-client";
 
 // Create client instance
 const client = new LeagueBroadcastClient({
@@ -316,7 +319,7 @@ client.select((s) => s.gameData.gameTime); // Uses Object.is by default
 Compares objects by their enumerable properties. Use when selecting objects whose identity changes but contents may not:
 
 ```typescript
-import { shallowEqual } from "@leaguebroadcast/client";
+import { shallowEqual } from "@bluebottle_gg/league-broadcast-client";
 
 const stats = client.select(
   (s) => ({
@@ -377,13 +380,16 @@ client.watch((s) => s.gameData.scoreboard?.teams[0], handleTeam);
 **✅ DO:** Handle `null` as “not available”
 
 ```typescript
-client.watch((s) => s.gameData.scoreboard, (scoreboard) => {
-  if (!scoreboard) {
-    hideScoreboard();
-    return;
-  }
-  renderScoreboard(scoreboard);
-});
+client.watch(
+  (s) => s.gameData.scoreboard,
+  (scoreboard) => {
+    if (!scoreboard) {
+      hideScoreboard();
+      return;
+    }
+    renderScoreboard(scoreboard);
+  },
+);
 ```
 
 ### Framework Integration Examples
@@ -402,7 +408,7 @@ See [examples/reactivity.ts](examples/reactivity.ts) for complete examples with:
 ### Basic Usage
 
 ```typescript
-import { LeagueBroadcastClient } from "@leaguebroadcast/client";
+import { LeagueBroadcastClient } from "@bluebottle_gg/league-broadcast-client";
 
 const client = new LeagueBroadcastClient({
   host: "192.168.1.100",
@@ -420,7 +426,7 @@ setInterval(() => {
 
 ```typescript
 import { useEffect, useState } from 'react';
-import { LeagueBroadcastClient, ingameFrontendData, GameState } from '@leaguebroadcast/client';
+import { LeagueBroadcastClient, ingameFrontendData, GameState } from '@bluebottle_gg/league-broadcast-client';
 
 function useLeagueBroadcast(host: string, port: number) {
   const [client] = useState(() => new LeagueBroadcastClient({ host, port }));
@@ -467,7 +473,7 @@ function GameDisplay() {
 ### Event Handling
 
 ```typescript
-import { LeagueBroadcastClient } from "@leaguebroadcast/client";
+import { LeagueBroadcastClient } from "@bluebottle_gg/league-broadcast-client";
 
 const client = new LeagueBroadcastClient({
   host: "localhost",
@@ -500,7 +506,7 @@ client.onGameEvents({
 ### Manual Connection Control
 
 ```typescript
-import { LeagueBroadcastClient } from "@leaguebroadcast/client";
+import { LeagueBroadcastClient } from "@bluebottle_gg/league-broadcast-client";
 
 const client = new LeagueBroadcastClient({
   host: "localhost",
