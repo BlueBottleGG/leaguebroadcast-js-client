@@ -27,3 +27,10 @@ export type { teamUpdateResults } from "#types/ingame/event/teamUpdateResults";
 export type { ingameObjectiveEvent } from "#types/ingame/event/ingameObjectiveEvent";
 export type { announcerEvent } from "#types/ingame/announcer/announcerEvent";
 export type { killFeedEvent } from "#types/ingame/event/killFeedEvent";
+
+// Utility functions
+export {
+  getSortedInventory,
+  getTrinket,
+  getRoleQuest,
+} from "./util/ingameScoreboardBottomPlayerDataUtils";
