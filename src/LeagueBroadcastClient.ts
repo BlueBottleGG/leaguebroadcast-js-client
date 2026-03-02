@@ -277,12 +277,18 @@ export class LeagueBroadcastClient {
    */
   private handleStateUpdate(state: any, events?: transitionEvents): void {
     // Replace game data entirely — the backend sends the full state each time.
-    // Null fields mean "not available / don't show", so we must not carry over
-    // stale values from the previous state via Object.assign / merge.
+    // Null / absent fields mean "not available / don't show", so we must not
+    // carry over stale values from the previous state.
     //
     // Structural sharing keeps nested references stable when values are
     // unchanged, so selectors only re-fire when their content changes.
-    const nextData = Object.assign(new ingameFrontendData(), state);
+    const nextData: ingameFrontendData = {
+      gameTime: 0,
+      playbackSpeed: 0,
+      gameVersion: "",
+      gameStatus: GameState.OutOfGame,
+      ...state,
+    };
     this.gameData = structuralShare(this.gameData, nextData);
 
     // Check if game ended

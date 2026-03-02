@@ -44,6 +44,15 @@ export function structuralShare<T>(prev: T, next: T): T {
   const prevKeys = Object.keys(prevObj);
 
   let changed = nextKeys.length !== prevKeys.length;
+  if (!changed) {
+    for (const key of prevKeys) {
+      if (!Object.prototype.hasOwnProperty.call(nextObj, key)) {
+        changed = true;
+        break;
+      }
+    }
+  }
+
   const result: Record<string, unknown> = Object.create(
     Object.getPrototypeOf(next),
   );
