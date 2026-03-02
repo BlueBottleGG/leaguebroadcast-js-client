@@ -3,13 +3,13 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { colorStyle } from "../../../shared/style/colorStyle";
 import { layoutStyle } from "../../../shared/style/layoutStyle";
 import { textStyle } from "../../../shared/style/textStyle";
 
-export class healthBarStyle {
+export class matchupHeaderStyle {
+    titleText: string = "";
+    title: textStyle = {} as textStyle;
+    subtitleText: string = "";
+    subtitle: textStyle = {} as textStyle;
     layout: layoutStyle = {} as layoutStyle;
-    textStyle: textStyle = {} as textStyle;
-    background: string | colorStyle = "";
-    foreground: string | colorStyle = "";
 }

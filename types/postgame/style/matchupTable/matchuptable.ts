@@ -5,11 +5,11 @@
 
 import { colorStyle } from "../../../shared/style/colorStyle";
 import { layoutStyle } from "../../../shared/style/layoutStyle";
-import { textStyle } from "../../../shared/style/textStyle";
+import { matchupTableContentStyle } from "./matchupTableContentStyle";
 
-export class healthBarStyle {
-    layout: layoutStyle = {} as layoutStyle;
-    textStyle: textStyle = {} as textStyle;
+export class matchupTable {
+    content: matchupTableContentStyle = {} as matchupTableContentStyle;
     background: string | colorStyle = "";
-    foreground: string | colorStyle = "";
+    layout: layoutStyle = {} as layoutStyle;
+    fileVersion: string = "1.0";
 }

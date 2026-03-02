@@ -10,5 +10,6 @@ export class championSlot {
     textStyle: textStyle = {} as textStyle;
     background: string | colorStyle = "";
     separator: string | colorStyle = "";
+    hover: string | colorStyle = "";
     separatorWidth: string = "";
 }

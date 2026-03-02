@@ -5,6 +5,7 @@
 
 import { borderStyle } from "../../../shared/style/borderStyle";
 import { colorStyle } from "../../../shared/style/colorStyle";
+import { layoutStyle } from "../../../shared/style/layoutStyle";
 
 export class damageBarStyle {
     magicDamageBackground?: string | colorStyle = "";
@@ -12,4 +13,5 @@ export class damageBarStyle {
     trueDamageBackground?: string | colorStyle = "";
     background?: string | colorStyle = "";
     border?: borderStyle;
+    layout: layoutStyle = {} as layoutStyle;
 }

@@ -8,6 +8,7 @@ import { Team } from "../../shared/style/Team";
 export class activeComponentChangedEventArgs {
     componentName?: string;
     gameId?: number;
+    matchId?: number;
     playerIndex?: number;
     team?: Team;
 }

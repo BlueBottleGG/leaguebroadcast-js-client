@@ -5,11 +5,8 @@
 
 import { colorStyle } from "../../../shared/style/colorStyle";
 import { layoutStyle } from "../../../shared/style/layoutStyle";
-import { textStyle } from "../../../shared/style/textStyle";
 
-export class healthBarStyle {
-    layout: layoutStyle = {} as layoutStyle;
-    textStyle: textStyle = {} as textStyle;
+export class fearlessTreeBanRowStyle {
     background: string | colorStyle = "";
-    foreground: string | colorStyle = "";
+    layout: layoutStyle = {} as layoutStyle;
 }

@@ -7,14 +7,13 @@ import { announcerEvent } from "../announcer/announcerEvent";
 import { ingameObjectiveEvent } from "./ingameObjectiveEvent";
 import { killFeedEvent } from "./killFeedEvent";
 import { playerUpdateEvent } from "./playerUpdateEvent";
-import { Team } from "../../shared/style/Team";
 import { teamUpdateResults } from "./teamUpdateResults";
 
 export class transitionEvents {
     player?: playerUpdateEvent[];
     team?: teamUpdateResults[];
     objective?: ingameObjectiveEvent[];
-    firstTower?: Team;
+    firstTower?: number;
     announcements?: announcerEvent[];
     killFeed?: killFeedEvent[];
 }

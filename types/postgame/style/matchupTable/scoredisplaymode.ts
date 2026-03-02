@@ -3,10 +3,9 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-export enum ChampionIconType {
-    Splash = 0,
-    SplashCentered = 1,
-    Loading = 2,
-    Square = 3,
-    Tile = 4
+export enum ScoreDisplayMode {
+    Dots = 0,
+    Squares = 1,
+    Diamonds = 2,
+    Numbers = 3
 }

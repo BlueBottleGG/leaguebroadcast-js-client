@@ -7,9 +7,12 @@ import { colorStyle } from "../../../shared/style/colorStyle";
 import { layoutStyle } from "../../../shared/style/layoutStyle";
 import { textStyle } from "../../../shared/style/textStyle";
 
-export class healthBarStyle {
+export class matchupScoreStyle {
+    text: textStyle = {} as textStyle;
+    displayMode: string = "";
+    borderMode: string = "";
+    dotSize: string = "";
+    dotColor: string | colorStyle = "";
+    dotEmptyColor: string | colorStyle = "";
     layout: layoutStyle = {} as layoutStyle;
-    textStyle: textStyle = {} as textStyle;
-    background: string | colorStyle = "";
-    foreground: string | colorStyle = "";
 }

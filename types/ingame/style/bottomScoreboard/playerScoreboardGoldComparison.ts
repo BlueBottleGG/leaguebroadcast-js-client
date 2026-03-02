@@ -10,6 +10,11 @@ import { textStyle } from "../../../shared/style/textStyle";
 export class playerScoreboardGoldComparison {
     layoutStyle: layoutStyle = {} as layoutStyle;
     textStyle: textStyle = {} as textStyle;
-    triangleColor: string | colorStyle = "";
-    defaultComparisonColor: string | colorStyle = "";
+    neutralLeadingColor: string | colorStyle = "";
+    leftLeadingColor: string | colorStyle = "";
+    rightLeadingColor: string | colorStyle = "";
+    showTriangle: boolean = false;
+    showBottomRect: boolean = false;
+    recolorTriangleBasedOnLeadingTeam: boolean = false;
+    recolorBottomRectBasedOnLeadingTeam: boolean = false;
 }

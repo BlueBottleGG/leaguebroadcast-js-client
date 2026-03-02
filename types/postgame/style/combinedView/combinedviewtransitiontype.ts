@@ -3,10 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-export enum ChampionIconType {
-    Splash = 0,
-    SplashCentered = 1,
-    Loading = 2,
-    Square = 3,
-    Tile = 4
+export enum CombinedViewTransitionType {
+    Cut = 0,
+    Fade = 1,
+    Stinger = 2
 }

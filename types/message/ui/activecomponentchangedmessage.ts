@@ -9,6 +9,7 @@ export class activeComponentChangedMessage {
     type: string = "";
     componentName?: string;
     gameId?: number;
+    matchId?: number;
     playerIndex?: number;
     team?: Team;
 }

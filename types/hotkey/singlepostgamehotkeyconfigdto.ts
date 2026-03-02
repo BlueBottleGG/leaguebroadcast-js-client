@@ -19,4 +19,5 @@ export class singlePostgameHotkeyConfigDto {
     playerIndex?: number;
     allowPlayers: boolean = false;
     allowTeams: boolean = false;
+    requiresCompletedGame: boolean = false;
 }

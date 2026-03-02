@@ -5,11 +5,14 @@
 
 import { colorStyle } from "../../../shared/style/colorStyle";
 import { layoutStyle } from "../../../shared/style/layoutStyle";
+import { matchupVersusStyle } from "../matchupTable/matchupVersusStyle";
 import { textStyle } from "../../../shared/style/textStyle";
 
-export class healthBarStyle {
-    layout: layoutStyle = {} as layoutStyle;
-    textStyle: textStyle = {} as textStyle;
+export class matchupOverviewTeamBarStyle {
+    teamNameText: textStyle = {} as textStyle;
+    teamNameTemplate: string = "";
+    iconSize: string = "";
+    versus: matchupVersusStyle = {} as matchupVersusStyle;
     background: string | colorStyle = "";
-    foreground: string | colorStyle = "";
+    layout: layoutStyle = {} as layoutStyle;
 }
