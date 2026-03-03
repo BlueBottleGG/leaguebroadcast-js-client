@@ -20,14 +20,14 @@ function basicExample() {
   });
 
   // Listen for state updates
-  client.onStateUpdate((gameData) => {
+  client.onIngameStateUpdate((gameData) => {
     console.log("Game Time:", gameData.gameTime);
     console.log("Blue Team Kills:", gameData.scoreboard?.teams[0]?.kills);
     console.log("Red Team Kills:", gameData.scoreboard?.teams[1]?.kills);
   });
 
   // Listen for game status changes
-  client.onGameStatusChange((status, isTestingEnv) => {
+  client.onIngameStatusChange((status, isTestingEnv) => {
     if (status === GameState.Running) {
       console.log("🎮 Game started!");
     } else if (status === GameState.Paused) {
@@ -49,7 +49,7 @@ function eventHandlingExample() {
   });
 
   // Register handlers for all game events
-  client.onGameEvents({
+  client.onIngameEvents({
     onKillFeedEvent: (event) => {
       console.log(`💀 ${event.killer?.name} killed ${event.victim?.name}`);
     },
@@ -151,7 +151,7 @@ function cacheUrlExample() {
     document.body.appendChild(img);
   }
 
-  unsubscribe = client.onStateUpdate(onGameDataUpdate);
+  unsubscribe = client.onIngameStateUpdate(onGameDataUpdate);
 }
 
 // ============================================================================
@@ -164,7 +164,7 @@ function scoreboardExample() {
     port: 58869,
   });
 
-  client.onStateUpdate((gameData: ingameFrontendData) => {
+  client.onIngameStateUpdate((gameData: ingameFrontendData) => {
     if (!gameData.scoreboard) return;
 
     const blueTeam = gameData.scoreboard.teams[0];
@@ -217,22 +217,22 @@ function connectionStateExample() {
   });
 
   // Handle connection events
-  client.onConnect(() => {
+  client.onIngameConnect(() => {
     console.log("✅ Connected to backend");
   });
 
-  client.onDisconnect(() => {
+  client.onIngameDisconnect(() => {
     console.log("❌ Disconnected from backend");
     console.log("🔄 Attempting to reconnect...");
   });
 
-  client.onError((error) => {
+  client.onIngameError((error) => {
     console.error("⚠️ Connection error:", error);
   });
 
   // Check connection status periodically
   setInterval(() => {
-    const status = client.isConnected() ? "🟢 Online" : "🔴 Offline";
+    const status = client.isIngameConnected() ? "🟢 Online" : "🔴 Offline";
     console.log(`Connection status: ${status}`);
   }, 5000);
 }
@@ -248,11 +248,11 @@ function unsubscribeExample() {
   });
 
   // All event handlers return an unsubscribe function
-  const unsubscribeState = client.onStateUpdate((gameData) => {
+  const unsubscribeState = client.onIngameStateUpdate((gameData) => {
     console.log("State updated:", gameData.gameTime);
   });
 
-  const unsubscribeStatus = client.onGameStatusChange((status) => {
+  const unsubscribeStatus = client.onIngameStatusChange((status) => {
     console.log("Status changed:", status);
   });
 

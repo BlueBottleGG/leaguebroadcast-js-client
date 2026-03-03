@@ -5,8 +5,8 @@ A TypeScript/JavaScript client library for connecting to the League Broadcast ba
 ## Features
 
 - 🔌 Automatic WebSocket connection management with reconnection
-- 📊 Real-time game state and data updates
-- 🎮 Event-driven architecture for game events (kills, objectives, etc.)
+- 📊 Real-time game state and data updates — in-game **and** pre-game (champion select)
+- 🎮 Event-driven architecture for game events (kills, objectives, pick/ban actions, etc.)
 - ⚡ **Framework-agnostic reactive store** with fine-grained subscriptions
 - 🔄 Works seamlessly with React, Vue, Svelte, Solid, Angular, and vanilla JS
 - 📦 TypeScript support with full type definitions
@@ -33,13 +33,13 @@ const client = new LeagueBroadcastClient({
 });
 
 // Listen for state updates
-client.onStateUpdate((gameData) => {
+client.onIngameStateUpdate((gameData) => {
   console.log("Game time:", gameData.gameTime);
   console.log("Scoreboard:", gameData.scoreboard);
 });
 
 // Listen for game status changes
-client.onGameStatusChange((status, isTestingEnv) => {
+client.onIngameStatusChange((status, isTestingEnv) => {
   if (status === GameState.InGame) {
     console.log("Game started!");
   } else if (status === GameState.OutOfGame) {
@@ -48,7 +48,7 @@ client.onGameStatusChange((status, isTestingEnv) => {
 });
 
 // Listen for game events
-client.onGameEvents({
+client.onIngameEvents({
   onKillFeedEvent: (event) => {
     console.log("Kill event:", event);
   },
@@ -59,6 +59,50 @@ client.onGameEvents({
     console.log("Player event:", event);
   },
 });
+```
+
+## Pre-Game Quick Start
+
+The same `LeagueBroadcastClient` also connects to the pre-game WebSocket
+(`/ws/pre`) automatically — no second client needed.
+
+```typescript
+import {
+  LeagueBroadcastClient,
+  PickBanPhase,
+} from "@bluebottle_gg/league-broadcast-client";
+
+const client = new LeagueBroadcastClient({
+  host: "localhost",
+  port: 58869,
+  autoConnect: true,
+});
+
+// Receive state updates every time the server pushes new champ-select data
+client.onChampSelectUpdate((data) => {
+  if (!data.isActive) return;
+  console.log("Phase:", PickBanPhase[data.timer.phaseName]);
+  console.log("Time remaining:", data.timer.timeRemaining);
+  console.log(
+    "Blue picks:",
+    data.blueTeam.slots.map((s) => s.champion?.name),
+  );
+});
+
+// High-level lifecycle events
+client.onChampSelectEvents({
+  onChampSelectStart: () => console.log("Draft started!"),
+  onChampSelectEnd: () => console.log("Champions locked — game loading"),
+  onAction: (action) => console.log("Pick/ban action:", action),
+  onRouteUpdate: (uri) => console.log("Frontend route:", uri),
+});
+
+// Reactive selector (works with React useSyncExternalStore, Svelte $, Vue ref, etc.)
+const timer = client.selectChampSelect((s) => s.champSelectData.timer);
+client.watchChampSelect(
+  (s) => s.champSelectData.blueTeam.slots,
+  (slots) => console.log("Blue picks updated:", slots),
+);
 ```
 
 ## API Reference
@@ -73,78 +117,159 @@ new LeagueBroadcastClient(config: LeagueBroadcastClientConfig)
 
 **Config Options:**
 
-| Option        | Type      | Default      | Description                            |
-| ------------- | --------- | ------------ | -------------------------------------- |
-| `host`        | `string`  | **required** | Backend server hostname or IP          |
-| `port`        | `number`  | `58869`      | Backend server port                    |
-| `wsRoute`     | `string`  | `/ws/in`     | WebSocket endpoint route               |
-| `apiRoute`    | `string`  | `/api`       | API endpoint route                     |
-| `cacheRoute`  | `string`  | `/cache`     | Cache endpoint route                   |
-| `useHttps`    | `boolean` | `false`      | Use WSS/HTTPS instead of WS/HTTP       |
-| `autoConnect` | `boolean` | `true`       | Automatically connect on instantiation |
+| Option           | Type      | Default      | Description                            |
+| ---------------- | --------- | ------------ | -------------------------------------- |
+| `host`           | `string`  | **required** | Backend server hostname or IP          |
+| `port`           | `number`  | `58869`      | Backend server port                    |
+| `ingameWsRoute`  | `string`  | `/ws/in`     | In-game WebSocket endpoint route       |
+| `preGameWsRoute` | `string`  | `/ws/pre`    | Pre-game WebSocket endpoint route      |
+| `apiRoute`       | `string`  | `/api`       | API endpoint route                     |
+| `cacheRoute`     | `string`  | `/cache`     | Cache endpoint route                   |
+| `useHttps`       | `boolean` | `false`      | Use WSS/HTTPS instead of WS/HTTP       |
+| `autoConnect`    | `boolean` | `true`       | Automatically connect on instantiation |
 
 #### Methods
 
 ##### Connection Management
 
 ```typescript
-// Connect to backend
+// Connect to both in-game and pre-game WebSocket endpoints
 await client.connect(): Promise<void>
 
-// Disconnect from backend
+// Disconnect from both endpoints
 client.disconnect(): void
 
-// Check connection status
-client.isConnected(): boolean
+// Check in-game connection status
+client.isIngameConnected(): boolean
+
+// Check pre-game connection status
+client.isPreGameConnected(): boolean
 ```
 
-##### Data Access
+##### In-Game Data Access
 
 ```typescript
-// Get current game data
-client.getGameData(): ingameFrontendData
-
-// Get current game state
-client.getGameState(): GameState
-
-// Check if in testing environment
+client.getIngameData(): ingameFrontendData
+client.getIngameState(): GameState
 client.isInTestingEnvironment(): boolean
+```
+
+##### Pre-Game Data Access
+
+```typescript
+client.getChampSelectData(): champSelectStateData
+client.isChampSelectActive(): boolean
 ```
 
 ##### URLs
 
 ```typescript
-// Get API base URL
 client.getApiUrl(): string
-
-// Get cache URL (optionally with path)
 client.getCacheUrl(path?: string): string
 ```
 
-##### Event Handlers
+##### In-Game Event Handlers
 
 ```typescript
-// State updates - called when game data changes
-client.onStateUpdate(handler: (state: ingameFrontendData) => void): () => void
+// State updates - called when in-game data changes
+client.onIngameStateUpdate(handler: (state: ingameFrontendData) => void): () => void
 
 // Game status changes - called when game starts/ends
-client.onGameStatusChange(handler: (status: GameState, isTestingEnv: boolean) => void): () => void
+client.onIngameStatusChange(handler: (status: GameState, isTestingEnv: boolean) => void): () => void
 
 // Game events - register handlers for various game events
-client.onGameEvents(handlers: GameDataEventHandlers): void
+client.onIngameEvents(handlers: IngameEventHandlers): void
 
-// Connection events
-client.onConnect(handler: () => void): () => void
-client.onDisconnect(handler: () => void): () => void
-client.onError(handler: (error: Event) => void): () => void
+// In-game connection events
+client.onIngameConnect(handler: () => void): () => void
+client.onIngameDisconnect(handler: () => void): () => void
+client.onIngameError(handler: (error: Event) => void): () => void
+```
+
+##### Pre-Game Event Handlers
+
+```typescript
+// Called on every champ-select state push from the server
+client.onChampSelectUpdate(handler: (state: champSelectStateData) => void): () => void
+
+// Register handlers for lifecycle and action events
+client.onChampSelectEvents(handlers: ChampSelectEventHandlers): void
+
+// Pre-game connection events
+client.onPreGameConnect(handler: () => void): () => void
+client.onPreGameDisconnect(handler: () => void): () => void
+client.onPreGameError(handler: (error: Event) => void): () => void
 ```
 
 All event handler registration methods return an unsubscribe function.
 
-### GameDataEventHandlers
+##### In-Game Reactive API
 
 ```typescript
-interface GameDataEventHandlers {
+// Subscribe to a fine-grained slice of in-game state
+client.selectIngame<S>(selector: (s: GameStateSnapshot) => S, equalityFn?): Subscribable<S>
+
+// Watch a value imperatively; callback fires on change
+client.watchIngame<S>(selector, callback, equalityFn?): () => void
+
+// Direct access to the reactive in-game store
+client.ingameStore: GameStateStore
+```
+
+##### Pre-Game Reactive API
+
+```typescript
+// Subscribe to a fine-grained slice of champ-select state
+client.selectChampSelect<S>(selector: (s: ChampSelectSnapshot) => S, equalityFn?): Subscribable<S>
+
+// Watch a value imperatively; callback fires on change
+client.watchChampSelect<S>(selector, callback, equalityFn?): () => void
+
+// Direct access to the reactive pre-game store
+client.preGameStore: ChampSelectStateStore
+```
+
+#### `ChampSelectEventHandlers`
+
+```typescript
+interface ChampSelectEventHandlers {
+  /** Every pick/ban action (hover, lock, ban reveal, phase transition). */
+  onAction?: (action: pickBanActionEventArgs) => void;
+  /** Fires when champ select becomes active. */
+  onChampSelectStart?: () => void;
+  /** Fires when champ select ends (isActive becomes false). */
+  onChampSelectEnd?: () => void;
+  /** Fires when the backend navigates the frontend to a new route. */
+  onRouteUpdate?: (uri: string) => void;
+}
+```
+
+#### `ChampSelectSnapshot`
+
+The snapshot object passed to `selectChampSelect()` / `watchChampSelect()` selectors:
+
+```typescript
+interface ChampSelectSnapshot {
+  readonly champSelectData: champSelectStateData; // Full champ-select state
+  readonly isActive: boolean; // Whether draft is in progress
+  readonly version: number; // Monotonic version counter
+}
+```
+
+#### WebSocket Message Types
+
+| Message type                   | Handled as                                                                      |
+| ------------------------------ | ------------------------------------------------------------------------------- |
+| `champion-select-state-update` | Updates `champSelectStateData`, fires `onChampSelectStart` / `onChampSelectEnd` |
+| `champion-select-action`       | Fires `onAction`                                                                |
+| `frontend-route-update`        | Fires `onRouteUpdate`                                                           |
+
+---
+
+### IngameEventHandlers
+
+```typescript
+interface IngameEventHandlers {
   onPlayerEvent?: (event: playerEvent) => void;
   onTeamEvent?: (event: teamEvent) => void;
   onObjectiveEvent?: (event: objectiveEvent) => void;
@@ -168,7 +293,7 @@ The reactive API is built around **selectors** — functions that extract a slic
 
 ```typescript
 // Watch a specific value
-const unsubscribe = client.watch(
+const unsubscribe = client.watchIngame(
   (s) => s.gameData.scoreboard?.teams[0]?.kills,
   (kills, prevKills) => {
     console.log(`Blue team kills: ${prevKills} → ${kills}`);
@@ -185,7 +310,7 @@ unsubscribe();
 import { useSyncExternalStore } from 'react';
 
 function BlueTeamKills() {
-  const slice = client.select(s => s.gameData.scoreboard?.teams[0]?.kills);
+  const slice = client.selectIngame(s => s.gameData.scoreboard?.teams[0]?.kills);
   const kills = useSyncExternalStore(slice.subscribe, slice.getSnapshot);
 
   return <div>Blue Kills: {kills ?? 0}</div>;
@@ -201,7 +326,7 @@ export default {
   setup() {
     const kills = ref(0);
 
-    const unsubscribe = client.watch(
+    const unsubscribe = client.watchIngame(
       (s) => s.gameData.scoreboard?.teams[0]?.kills,
       (value) => {
         kills.value = value ?? 0;
@@ -217,11 +342,11 @@ export default {
 
 #### Svelte
 
-The `Subscribable` returned by `select()` matches Svelte's store contract:
+The `Subscribable` returned by `selectIngame()` matches Svelte's store contract:
 
 ```svelte
 <script lang="ts">
-  const kills = client.select(s => s.gameData.scoreboard?.teams[0]?.kills);
+  const kills = client.selectIngame(s => s.gameData.scoreboard?.teams[0]?.kills);
 </script>
 
 <div>Blue Kills: {$kills ?? 0}</div>
@@ -229,12 +354,12 @@ The `Subscribable` returned by `select()` matches Svelte's store contract:
 
 ### Reactive Methods
 
-#### `client.select(selector, equalityFn?)`
+#### `client.selectIngame(selector, equalityFn?)`
 
 Create a subscribable slice that only notifies listeners when the selected value changes.
 
 ```typescript
-const slice = client.select(
+const slice = client.selectIngame(
   (s) => s.gameData.gameTime,
   Object.is, // Default equality function (can use shallowEqual for objects)
 );
@@ -258,12 +383,12 @@ const unsubscribe = slice.subscribe(() => {
 - `subscribe(listener: () => void): () => void` — Subscribe to changes
 - `getSnapshot(): T` — Get current value
 
-#### `client.watch(selector, callback, equalityFn?)`
+#### `client.watchIngame(selector, callback, equalityFn?)`
 
 Imperative API for watching a derived value. Callback is invoked whenever the selected value changes.
 
 ```typescript
-const unsubscribe = client.watch(
+const unsubscribe = client.watchIngame(
   (s) => s.gameData.scoreboard?.teams[0]?.kills,
   (kills, prevKills) => {
     console.log(`Kills changed: ${prevKills} → ${kills}`);
@@ -279,24 +404,24 @@ const unsubscribe = client.watch(
 
 **Returns:** `() => void` — Unsubscribe function
 
-#### `client.store`
+#### `client.ingameStore`
 
 Direct access to the `GameStateStore` instance for advanced use cases:
 
 ```typescript
 // Get full snapshot
-const snapshot = client.store.getSnapshot();
+const snapshot = client.ingameStore.getSnapshot();
 console.log("Game time:", snapshot.gameData.gameTime);
 console.log("Game state:", snapshot.gameState);
 console.log("Version:", snapshot.version);
 
 // Subscribe to all changes (unfiltered)
-const unsubscribe = client.store.subscribe(() => {
+const unsubscribe = client.ingameStore.subscribe(() => {
   console.log("Store updated");
 });
 
 // Watch with immediate callback
-client.store.watchImmediate(
+client.ingameStore.watchImmediate(
   (s) => s.gameData.gameTime,
   (time, prevTime) => {
     console.log(`Time: ${prevTime} → ${time}`);
@@ -311,7 +436,7 @@ client.store.watchImmediate(
 Uses strict equality (`===`). Best for primitives and object references:
 
 ```typescript
-client.select((s) => s.gameData.gameTime); // Uses Object.is by default
+client.selectIngame((s) => s.gameData.gameTime); // Uses Object.is by default
 ```
 
 #### `shallowEqual`
@@ -321,7 +446,7 @@ Compares objects by their enumerable properties. Use when selecting objects whos
 ```typescript
 import { shallowEqual } from "@bluebottle_gg/league-broadcast-client";
 
-const stats = client.select(
+const stats = client.selectIngame(
   (s) => ({
     kills: s.gameData.scoreboard?.teams[0]?.kills ?? 0,
     deaths: s.gameData.scoreboardBottom?.teams[0]?.players[0]?.deaths ?? 0,
@@ -330,15 +455,25 @@ const stats = client.select(
 );
 ```
 
-### GameStateSnapshot
+### Snapshots
 
-The snapshot passed to selectors contains:
+#### `GameStateSnapshot` (in-game)
 
 ```typescript
 interface GameStateSnapshot {
-  gameData: ingameFrontendData; // Full game data
-  gameState: GameState; // Current game state enum
-  version: number; // Monotonic version counter
+  readonly gameData: ingameFrontendData; // Full in-game data
+  readonly gameState: GameState; // Current game state enum
+  readonly version: number; // Monotonic version counter
+}
+```
+
+#### `ChampSelectSnapshot` (pre-game)
+
+```typescript
+interface ChampSelectSnapshot {
+  readonly champSelectData: champSelectStateData; // Full champ-select state
+  readonly isActive: boolean; // Whether draft is in progress
+  readonly version: number; // Monotonic version counter
 }
 ```
 
@@ -347,15 +482,15 @@ interface GameStateSnapshot {
 **✅ DO:** Use selectors to watch specific values
 
 ```typescript
-client.watch((s) => s.gameData.scoreboard?.teams[0]?.kills, handleKills);
+client.watchIngame((s) => s.gameData.scoreboard?.teams[0]?.kills, handleKills);
 ```
 
 **❌ DON'T:** Subscribe to entire store and manually filter
 
 ```typescript
 // This triggers on EVERY change, even unrelated ones
-client.store.subscribe(() => {
-  const kills = client.store.getSnapshot().gameData.scoreboard?.teams[0]?.kills;
+client.ingameStore.subscribe(() => {
+  const kills = client.ingameStore.getSnapshot().gameData.scoreboard?.teams[0]?.kills;
   handleKills(kills);
 });
 ```
@@ -363,7 +498,7 @@ client.store.subscribe(() => {
 **✅ DO:** Use `shallowEqual` for derived objects
 
 ```typescript
-client.watch(
+client.watchIngame(
   (s) => ({ kills: s.gameData.scoreboard?.teams[0]?.kills ?? 0 }),
   handleStats,
   shallowEqual,
@@ -374,13 +509,13 @@ client.watch(
 
 ```typescript
 // Only triggers when team object reference changes
-client.watch((s) => s.gameData.scoreboard?.teams[0], handleTeam);
+client.watchIngame((s) => s.gameData.scoreboard?.teams[0], handleTeam);
 ```
 
 **✅ DO:** Handle `null` as “not available”
 
 ```typescript
-client.watch(
+client.watchIngame(
   (s) => s.gameData.scoreboard,
   (scoreboard) => {
     if (!scoreboard) {
@@ -394,7 +529,7 @@ client.watch(
 
 ### Framework Integration Examples
 
-See [examples/reactivity.ts](examples/reactivity.ts) for complete examples with:
+See [examples/reactivity.ts](examples/reactivity.ts) for complete in-game examples with:
 
 - React (with `useSyncExternalStore` and custom hooks)
 - Vue 3 (Composition API)
@@ -403,9 +538,20 @@ See [examples/reactivity.ts](examples/reactivity.ts) for complete examples with:
 - Angular (with Signals)
 - Vanilla JavaScript
 
+See [examples/pregame-reactivity.ts](examples/pregame-reactivity.ts) for the equivalent examples using pre-game reactive selectors (`selectChampSelect` / `watchChampSelect`).
+
 ## Examples
 
-### Basic Usage
+See the [examples/](examples/) directory for full runnable code.
+
+| File                                                             | Description                                                             |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| [examples/usage.ts](examples/usage.ts)                           | In-game usage: state updates, events, cache URLs, scoreboards           |
+| [examples/reactivity.ts](examples/reactivity.ts)                 | In-game reactive API across all major frameworks                        |
+| [examples/pregame-usage.ts](examples/pregame-usage.ts)           | Pre-game usage: champ select state, pick/ban actions, team compositions |
+| [examples/pregame-reactivity.ts](examples/pregame-reactivity.ts) | Pre-game reactive API across all major frameworks                       |
+
+### Basic In-Game Usage
 
 ```typescript
 import { LeagueBroadcastClient } from "@bluebottle_gg/league-broadcast-client";
@@ -417,9 +563,54 @@ const client = new LeagueBroadcastClient({
 
 // Game data is automatically updated in real-time
 setInterval(() => {
-  const data = client.getGameData();
+  const data = client.getIngameData();
   console.log("Current game time:", data.gameTime);
 }, 1000);
+```
+
+### Basic Pre-Game Usage
+
+```typescript
+import {
+  LeagueBroadcastClient,
+  PickBanPhase,
+} from "@bluebottle_gg/league-broadcast-client";
+
+const client = new LeagueBroadcastClient({ host: "192.168.1.100" });
+
+client.onChampSelectEvents({
+  onAction: (action) => {
+    console.log(
+      `Action: ${action.type} — ${action.champion?.name ?? "hovering"}`,
+    );
+  },
+});
+
+client.watchChampSelect(
+  (s) => s.champSelectData.timer.phaseName,
+  (phase) => console.log("Phase:", PickBanPhase[phase]),
+);
+```
+
+### Full Lifecycle (Draft → In-Game)
+
+```typescript
+import {
+  LeagueBroadcastClient,
+  GameState,
+} from "@bluebottle_gg/league-broadcast-client";
+
+// One client handles both /ws/in and /ws/pre
+const client = new LeagueBroadcastClient({ host: "localhost" });
+
+client.onChampSelectEvents({
+  onChampSelectStart: () => console.log("Draft started"),
+  onChampSelectEnd: () => console.log("Game loading"),
+});
+
+client.onIngameStatusChange((status) => {
+  if (status === GameState.OutOfGame) console.log("Returned to lobby");
+});
 ```
 
 ### React Integration
@@ -434,11 +625,11 @@ function useLeagueBroadcast(host: string, port: number) {
   const [gameState, setGameState] = useState<GameState>(GameState.OutOfGame);
 
   useEffect(() => {
-    const unsubscribeState = client.onStateUpdate((data) => {
+    const unsubscribeState = client.onIngameStateUpdate((data) => {
       setGameData(data);
     });
 
-    const unsubscribeStatus = client.onGameStatusChange((status) => {
+    const unsubscribeStatus = client.onIngameStatusChange((status) => {
       setGameState(status);
     });
 
@@ -481,7 +672,7 @@ const client = new LeagueBroadcastClient({
 });
 
 // Handle all game events
-client.onGameEvents({
+client.onIngameEvents({
   onKillFeedEvent: (event) => {
     console.log(`${event.killerName} killed ${event.victimName}`);
   },

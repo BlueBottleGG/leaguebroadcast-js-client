@@ -18,7 +18,7 @@ function vanillaJsExample() {
   });
 
   // Watch a specific value and get callbacks when it changes
-  const unsubscribe1 = client.watch(
+  const unsubscribe1 = client.watchIngame(
     (s) => s.gameData.scoreboard?.teams[0]?.kills,
     (kills, prevKills) => {
       console.log(`Blue team kills: ${prevKills} → ${kills}`);
@@ -27,7 +27,7 @@ function vanillaJsExample() {
 
   // Watch multiple values with a selector that returns an object
   // Use shallowEqual to avoid triggering on the same values
-  const unsubscribe2 = client.watch(
+  const unsubscribe2 = client.watchIngame(
     (s) => ({
       blueKills: s.gameData.scoreboard?.teams[0]?.kills ?? 0,
       redKills: s.gameData.scoreboard?.teams[1]?.kills ?? 0,
@@ -40,7 +40,7 @@ function vanillaJsExample() {
   );
 
   // Watch game state changes
-  const unsubscribe3 = client.watch(
+  const unsubscribe3 = client.watchIngame(
     (s) => s.gameState,
     (state) => {
       console.log("Game state changed:", state);
@@ -70,7 +70,7 @@ const client = new LeagueBroadcastClient({
 
 function BlueTeamKills() {
   // Select just the blue team kills
-  const slice = client.select(s => s.gameData.scoreboard?.teams[0]?.kills);
+  const slice = client.selectIngame(s => s.gameData.scoreboard?.teams[0]?.kills);
   
   // Subscribe to changes with useSyncExternalStore
   const kills = useSyncExternalStore(
@@ -83,7 +83,7 @@ function BlueTeamKills() {
 
 function Scoreboard() {
   // Select the entire scoreboard
-  const slice = client.select(s => s.gameData.scoreboard);
+  const slice = client.selectIngame(s => s.gameData.scoreboard);
   const scoreboard = useSyncExternalStore(
     slice.subscribe,
     slice.getSnapshot,
@@ -105,7 +105,7 @@ function useGameState<T>(
   selector: (snapshot: import('@bluebottle_gg/league-broadcast-client').GameStateSnapshot) => T,
   equalityFn?: import('@bluebottle_gg/league-broadcast-client').EqualityFn<T>,
 ) {
-  const slice = client.select(selector, equalityFn);
+  const slice = client.selectIngame(selector, equalityFn);
   return useSyncExternalStore(slice.subscribe, slice.getSnapshot);
 }
 
@@ -137,17 +137,17 @@ export default {
     const gameState = ref<number>(0);
 
     // Subscribe to changes and update refs
-    const unsubscribe1 = client.watch(
+    const unsubscribe1 = client.watchIngame(
       s => s.gameData.scoreboard?.teams[0]?.kills,
       (value) => { kills.value = value; }
     );
 
-    const unsubscribe2 = client.watch(
+    const unsubscribe2 = client.watchIngame(
       s => s.gameData.gameTime,
       (value) => { gameTime.value = value; }
     );
 
-    const unsubscribe3 = client.watch(
+    const unsubscribe3 = client.watchIngame(
       s => s.gameState,
       (value) => { gameState.value = value; }
     );
@@ -167,9 +167,9 @@ export default {
 function useGameStateRef<T>(
   selector: (s: import('@bluebottle_gg/league-broadcast-client').GameStateSnapshot) => T
 ) {
-  const value = ref<T>(selector(client.store.getSnapshot()));
+  const value = ref<T>(selector(client.ingameStore.getSnapshot()));
   
-  const unsubscribe = client.watch(selector, (newValue) => {
+  const unsubscribe = client.watchIngame(selector, (newValue) => {
     value.value = newValue;
   });
 
@@ -195,15 +195,15 @@ function useGameStateComputed<T>(
   selector: (s: import('@bluebottle_gg/league-broadcast-client').GameStateSnapshot) => T
 ) {
   // Trigger Vue's reactivity by tracking a version number
-  const version = ref(client.store.getVersion());
+  const version = ref(client.ingameStore.getVersion());
   
-  const unsubscribe = client.store.subscribe(() => {
-    version.value = client.store.getVersion();
+  const unsubscribe = client.ingameStore.subscribe(() => {
+    version.value = client.ingameStore.getVersion();
   });
 
   onUnmounted(() => unsubscribe());
 
-  return computed(() => selector(client.store.getSnapshot()));
+  return computed(() => selector(client.ingameStore.getSnapshot()));
 }
 
 // Usage with computed
@@ -223,21 +223,21 @@ export default {
 export default {
   setup() {
     // Track version for reactivity
-    const version = ref(client.store.getVersion());
-    client.store.subscribe(() => {
-      version.value = client.store.getVersion();
+    const version = ref(client.ingameStore.getVersion());
+    client.ingameStore.subscribe(() => {
+      version.value = client.ingameStore.getVersion();
     });
 
     // Create computed values that depend on the store
     const blueTeam = computed(() => {
       // Access version to trigger reactivity
       void version.value;
-      return client.store.getSnapshot().gameData.scoreboard?.teams[0];
+      return client.ingameStore.getSnapshot().gameData.scoreboard?.teams[0];
     });
 
     const redTeam = computed(() => {
       void version.value;
-      return client.store.getSnapshot().gameData.scoreboard?.teams[1];
+      return client.ingameStore.getSnapshot().gameData.scoreboard?.teams[1];
     });
 
     // Derived computed from other computeds
@@ -272,9 +272,9 @@ export default {
   });
 
   // Create subscribable slices
-  const kills = client.select(s => s.gameData.scoreboard?.teams[0]?.kills);
-  const gameTime = client.select(s => s.gameData.gameTime);
-  const gameState = client.select(s => s.gameState);
+  const kills = client.selectIngame(s => s.gameData.scoreboard?.teams[0]?.kills);
+  const gameTime = client.selectIngame(s => s.gameData.gameTime);
+  const gameState = client.selectIngame(s => s.gameState);
 
   // Svelte automatically subscribes/unsubscribes with the $ prefix
 </script>
@@ -305,12 +305,12 @@ function GameStats() {
   const [gameTime, setGameTime] = createSignal(0);
 
   // Subscribe to store changes
-  const unsubscribe1 = client.watch(
+  const unsubscribe1 = client.watchIngame(
     s => s.gameData.scoreboard?.teams[0]?.kills,
     (value) => setKills(value)
   );
 
-  const unsubscribe2 = client.watch(
+  const unsubscribe2 = client.watchIngame(
     s => s.gameData.gameTime,
     (value) => setGameTime(value)
   );
@@ -332,9 +332,9 @@ function GameStats() {
 function createGameState<T>(
   selector: (s: import('@bluebottle_gg/league-broadcast-client').GameStateSnapshot) => T
 ) {
-  const [value, setValue] = createSignal<T>(selector(client.store.getSnapshot()));
+  const [value, setValue] = createSignal<T>(selector(client.ingameStore.getSnapshot()));
   
-  const unsubscribe = client.watch(selector, (newValue) => {
+  const unsubscribe = client.watchIngame(selector, (newValue) => {
     setValue(() => newValue);
   });
 
@@ -382,14 +382,14 @@ export class GameStatsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Subscribe to store changes
     this.unsubscribers.push(
-      this.client.watch(
+      this.client.watchIngame(
         s => s.gameData.scoreboard?.teams[0]?.kills,
         (value) => this.kills.set(value)
       )
     );
 
     this.unsubscribers.push(
-      this.client.watch(
+      this.client.watchIngame(
         s => s.gameData.gameTime,
         (value) => this.gameTime.set(value)
       )
@@ -412,7 +412,7 @@ function directStoreUsageExample() {
   });
 
   // Access the store directly for full control
-  const store = client.store;
+  const store = client.ingameStore;
 
   // Get current snapshot
   const snapshot = store.getSnapshot();
@@ -459,14 +459,14 @@ function performanceExample() {
   });
 
   // ❌ BAD: This will trigger on EVERY update, even if kills didn't change
-  client.store.subscribe(() => {
+  client.ingameStore.subscribe(() => {
     const kills =
-      client.store.getSnapshot().gameData.scoreboard?.teams[0]?.kills;
+      client.ingameStore.getSnapshot().gameData.scoreboard?.teams[0]?.kills;
     console.log("Kills:", kills);
   });
 
   // ✅ GOOD: This only triggers when kills actually changes
-  client.watch(
+  client.watchIngame(
     (s) => s.gameData.scoreboard?.teams[0]?.kills,
     (kills) => {
       console.log("Kills:", kills);
@@ -474,7 +474,7 @@ function performanceExample() {
   );
 
   // ✅ GOOD: For objects, use shallowEqual to compare contents
-  client.watch(
+  client.watchIngame(
     (s) => ({
       kills: s.gameData.scoreboard?.teams[0]?.kills ?? 0,
       deaths: s.gameData.scoreboardBottom?.teams[0]?.players[0]?.deaths ?? 0,
@@ -486,7 +486,7 @@ function performanceExample() {
   );
 
   // ✅ GOOD: Select nested objects only when their identity changes
-  client.watch(
+  client.watchIngame(
     (s) => s.gameData.scoreboard?.teams[0],
     (team) => {
       console.log("Blue team changed:", team);

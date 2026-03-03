@@ -5,3 +5,7 @@ export type {
   Subscribable,
   EqualityFn,
 } from "./GameStateStore";
+
+export { ChampSelectStateStore } from "./ChampSelectStateStore";
+
+export type { ChampSelectSnapshot } from "./ChampSelectStateStore";
