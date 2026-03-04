@@ -3,6 +3,7 @@ src/
 types/
 scripts/
 examples/
+test/
 tsconfig.json
 tsup.config.ts
 .gitignore

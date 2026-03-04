@@ -1,6 +1,6 @@
 {
   "name": "@bluebottle_gg/league-broadcast-client",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TypeScript client library for League Broadcast game data",
   "type": "module",
   "main": "./dist/index.js",
@@ -22,6 +22,9 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "clean": "rimraf dist",
+    "test": "tsx test/run.ts",
+    "test:rest": "tsx test/run.ts --skip-ws",
+    "test:ws": "tsx test/run.ts --skip-rest",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -46,7 +49,7 @@
     "@types/node": "^22.10.5",
     "rimraf": "^6.0.1",
     "tsup": "^8.3.5",
+    "tsx": "^4.21.0",
     "typescript": "^5.7.2"
-  },
-  "dependencies": {}
+  }
 }

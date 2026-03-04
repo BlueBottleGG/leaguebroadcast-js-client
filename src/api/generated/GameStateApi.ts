@@ -2,7 +2,7 @@
  * Auto-generated REST API client for Live game state endpoints (requires active game).
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-03-03
+ * @generated 2026-03-04
  */
 
 import type { ApiClient } from "../ApiClient";

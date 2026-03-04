@@ -2,7 +2,7 @@
  * Auto-generated REST API client for Game CRUD and draft (picks/bans) endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-03-03
+ * @generated 2026-03-04
  */
 
 import type { ApiClient } from "../ApiClient";
@@ -54,8 +54,8 @@ export class GameApi {
   }
 
   /** `GET game/{gameid}/bans` */
-  async getBans(gameid: number): Promise<(simpleChampionData | null)[]> {
-    return this.client.get<(simpleChampionData | null)[]>(`game/${gameid}/bans`);
+  async getBans(gameid: number): Promise<simpleChampionData[]> {
+    return this.client.get<simpleChampionData[]>(`game/${gameid}/bans`);
   }
 
   /** `GET game/{gameid}/bans/{teamid}` */
@@ -74,13 +74,13 @@ export class GameApi {
   }
 
   /** `GET game/{gameid}/picks` */
-  async getPicks(gameid: number): Promise<Record<number, (simpleChampionData | null)[]>> {
-    return this.client.get<Record<number, (simpleChampionData | null)[]>>(`game/${gameid}/picks`);
+  async getPicks(gameid: number): Promise<Record<number, simpleChampionData[]>> {
+    return this.client.get<Record<number, simpleChampionData[]>>(`game/${gameid}/picks`);
   }
 
   /** `GET game/{gameid}/picks/{teamid}` */
-  async getPicksForTeam(gameid: number, teamid: number): Promise<(simpleChampionData | null)[]> {
-    return this.client.get<(simpleChampionData | null)[]>(`game/${gameid}/picks/${teamid}`);
+  async getPicksForTeam(gameid: number, teamid: number): Promise<simpleChampionData[]> {
+    return this.client.get<simpleChampionData[]>(`game/${gameid}/picks/${teamid}`);
   }
 
   /** `PUT game/{gameid}/picks` */
