@@ -3,7 +3,10 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+import { Lane } from "./Lane";
+import { Team } from "../shared/style/Team";
+
 export class playerHotkeyDto {
-    team?: string;
-    role?: string;
+    team?: Team;
+    role?: Lane;
 }

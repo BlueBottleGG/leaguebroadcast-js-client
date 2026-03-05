@@ -2,11 +2,13 @@
  * Auto-generated REST API client for Match (series) management endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-03-04
+ * @generated 2026-03-05
  */
 
 import type { ApiClient } from "../ApiClient";
 import type { matchData } from "#types/pregame/matchdata";
+import type { addMatchRequestArgs } from "#types/rest/match/addmatchrequestargs";
+import type { optionalMatchData } from "#types/rest/match/optionalmatchdata";
 import type { BestOfType } from "#types/shared/bestoftype";
 import type { gameWithTeams } from "#types/shared/gamewithteams";
 import type { MatchRuleSet } from "#types/shared/matchruleset";
@@ -178,7 +180,7 @@ export class MatchApi {
   }
 
   /** `PATCH match/{matchid}` */
-  async updateMatch(matchid: number, matchUpdate: unknown): Promise<void> {
+  async updateMatch(matchid: number, matchUpdate: optionalMatchData): Promise<void> {
     return this.client.patch<void>(`match/${matchid}`, matchUpdate);
   }
 
@@ -193,7 +195,7 @@ export class MatchApi {
   }
 
   /** `PUT match` */
-  async addMatch(match: unknown): Promise<number> {
+  async addMatch(match: addMatchRequestArgs): Promise<number> {
     return this.client.put<number>('match', match);
   }
 

@@ -10,7 +10,3 @@ export {
   PreGameApi,
   GameStateApi,
 } from "./generated";
-
-// Re-export request DTO types
-export type { OptionalGameData } from "./generated";
-export type { AddMatchRequest, OptionalMatchData } from "./generated";

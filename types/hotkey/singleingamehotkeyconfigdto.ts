@@ -4,6 +4,7 @@
  */
 
 import { playerHotkeyDto } from "./playerHotkeyDto";
+import { Team } from "../shared/style/Team";
 import { Tier } from "../shared/style/set/Tier";
 
 export class singleIngameHotkeyConfigDto {
@@ -15,7 +16,7 @@ export class singleIngameHotkeyConfigDto {
     hotkeyModifiers?: string[];
     overlayName: string = "";
     timePeriod: number = 0;
-    team?: string;
+    team?: Team;
     players?: playerHotkeyDto[];
     backgroundColor: string = "";
     hasSettings: boolean = false;

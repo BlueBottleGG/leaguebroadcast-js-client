@@ -2,7 +2,7 @@
  * Auto-generated REST API client for In-game overlay and serialization endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-03-04
+ * @generated 2026-03-05
  */
 
 import type { ApiClient } from "../ApiClient";
@@ -71,8 +71,8 @@ export class IngameApi {
   }
 
   /** `GET ingame/state/activeOverlays` */
-  async getActiveOverlays(): Promise<unknown> {
-    return this.client.get<unknown>('ingame/state/activeOverlays');
+  async getActiveOverlays(): Promise<string[]> {
+    return this.client.get<string[]>('ingame/state/activeOverlays');
   }
 }
 

@@ -25,7 +25,8 @@
     "test": "tsx test/run.ts",
     "test:rest": "tsx test/run.ts --skip-ws",
     "test:ws": "tsx test/run.ts --skip-rest",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "type-check": "tsc --noEmit"
   },
   "keywords": [
     "league-of-legends",
@@ -50,6 +51,6 @@
     "rimraf": "^6.0.1",
     "tsup": "^8.3.5",
     "tsx": "^4.21.0",
-    "typescript": "^5.7.2"
+    "typescript": "~5.9.3"
   }
 }
