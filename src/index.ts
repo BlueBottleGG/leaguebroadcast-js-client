@@ -76,3 +76,9 @@ export {
   getTrinket,
   getRoleQuest,
 } from "./util/ingameScoreboardBottomPlayerDataUtils";
+
+export {
+  getRoleQuestProgressPercent,
+  isRoleQuestComplete,
+  isRoleQuestTeleport,
+} from "./util/roleQuestItemUtils";
