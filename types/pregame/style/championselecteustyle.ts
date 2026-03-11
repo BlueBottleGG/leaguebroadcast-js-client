@@ -11,7 +11,6 @@ import { layoutStyle } from "../../shared/style/layoutStyle";
 import { phaseTimer } from "./phaseTimer";
 import { pickBans } from "./pickBans";
 import { playerSlot } from "./playerSlot";
-import { PreGameScoreDisplayMode } from "./PreGameScoreDisplayMode";
 import { teamName } from "./teamName";
 import { tournamentData } from "./tournamentData";
 
@@ -34,5 +33,4 @@ export class championSelectEUStyle {
     heroStats: HeroStatsDisplayMode = HeroStatsDisplayMode.None;
     heroStatDurationSeconds: number = 0;
     showCoaches: boolean = false;
-    preGameScoreDisplay: PreGameScoreDisplayMode = PreGameScoreDisplayMode.None;
 }

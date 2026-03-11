@@ -12,4 +12,5 @@ export class activeComponentChangedMessage {
     matchId?: number;
     playerIndex?: number;
     team?: Team;
+    componentSettings?: { [key: string]: string };
 }

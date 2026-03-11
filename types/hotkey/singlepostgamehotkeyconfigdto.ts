@@ -19,5 +19,7 @@ export class singlePostgameHotkeyConfigDto {
     playerIndex?: number;
     allowPlayers: boolean = false;
     allowTeams: boolean = false;
+    allowStats: boolean = false;
+    selectedStats?: string[];
     requiresCompletedGame: boolean = false;
 }

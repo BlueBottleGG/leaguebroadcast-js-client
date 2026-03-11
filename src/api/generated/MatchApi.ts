@@ -2,7 +2,7 @@
  * Auto-generated REST API client for Match (series) management endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-03-05
+ * @generated 2026-03-11
  */
 
 import type { ApiClient } from "../ApiClient";

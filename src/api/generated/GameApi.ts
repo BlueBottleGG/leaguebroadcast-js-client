@@ -2,12 +2,14 @@
  * Auto-generated REST API client for Game CRUD and draft (picks/bans) endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-03-05
+ * @generated 2026-03-11
  */
 
 import type { ApiClient } from "../ApiClient";
 import type { gameWithTeams } from "#types/shared/gamewithteams";
 import type { simpleChampionData } from "#types/shared/simplechampiondata";
+import type { Team } from "#types/shared/style/team";
+import type { teamMember } from "#types/shared/teammember";
 import type { teamWithMembers } from "#types/shared/teamwithmembers";
 
 export class GameApi {
@@ -91,6 +93,11 @@ export class GameApi {
   /** `PUT game/{gameid}/picks/{teamid}` */
   async setPicksForTeam(gameid: number, teamid: number, picks: (string | null)[]): Promise<void> {
     return this.client.put<void>(`game/${gameid}/picks/${teamid}`, picks);
+  }
+
+  /** `GET game/{gameid}/teams/players` */
+  async getPlayersInGame(gameid: number): Promise<Record<Team, teamMember[]>> {
+    return this.client.get<Record<Team, teamMember[]>>(`game/${gameid}/teams/players`);
   }
 }
 

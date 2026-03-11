@@ -8,7 +8,7 @@ import { textStyle } from "../../../shared/style/textStyle";
 
 export class inhibitorTimerIconContainer {
     imageSize: string = "";
-    showTeam: boolean = false;
+    titleText: string = "";
     layoutStyling: layoutStyle = {} as layoutStyle;
     textStyling: textStyle = {} as textStyle;
     showIcon: boolean = false;

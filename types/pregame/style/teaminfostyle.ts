@@ -9,6 +9,7 @@ import { scoreStyle } from "./scoreStyle";
 import { textStyle } from "../../shared/style/textStyle";
 
 export class teamInfoStyle {
+    nameTemplate: string = "";
     backgroundColor: string | colorStyle = "";
     scoreStyle: scoreStyle = {} as scoreStyle;
     layout: layoutStyle = {} as layoutStyle;

@@ -4,6 +4,6 @@
  */
 
 export class infoRow {
-    description: string = "";
+    key: string = "";
     value: string = "";
 }

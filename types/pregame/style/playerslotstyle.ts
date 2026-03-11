@@ -8,6 +8,7 @@ import { layoutStyle } from "../../shared/style/layoutStyle";
 import { textStyle } from "../../shared/style/textStyle";
 
 export class playerSlotStyle {
+    nameTemplate: string = "";
     backgroundColor: string | colorStyle = "";
     textStyle: textStyle = {} as textStyle;
     layout: layoutStyle = {} as layoutStyle;

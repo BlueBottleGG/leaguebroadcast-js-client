@@ -11,4 +11,5 @@ export class activeComponentChangedEventArgs {
     matchId?: number;
     playerIndex?: number;
     team?: Team;
+    componentSettings?: { [key: string]: string };
 }

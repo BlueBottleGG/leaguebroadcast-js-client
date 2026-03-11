@@ -4,7 +4,9 @@
  */
 
 import { colorStyle } from "./colorStyle";
+import { TextOrientation } from "./text/TextOrientation";
 import { textOutline } from "./textOutline";
+import { WritingMode } from "./text/WritingMode";
 
 export class optionalTextStyle {
     show: boolean = false;
@@ -15,4 +17,6 @@ export class optionalTextStyle {
     textColor: string | colorStyle = "";
     textBorder?: textOutline;
     overrideCommonFontFamily: boolean = false;
+    textOrientation: TextOrientation = TextOrientation.None;
+    writingMode: WritingMode = WritingMode.None;
 }

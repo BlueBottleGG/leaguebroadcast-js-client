@@ -40,7 +40,7 @@
   "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
-    "url": "https://github.com/BlueBottleGG/leaguebroadcast-js-client"
+    "url": "git+https://github.com/BlueBottleGG/leaguebroadcast-js-client.git"
   },
   "bugs": {
     "url": "https://github.com/BlueBottleGG/leaguebroadcast-js-client/issues"

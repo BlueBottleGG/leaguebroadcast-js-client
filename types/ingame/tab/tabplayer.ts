@@ -14,6 +14,8 @@ export class tabPlayer {
     id: string = "";
     playerName: string = "";
     playerHashtag: string = "";
+    givenName: string = "";
+    familyName: string = "";
     championAssets?: simpleChampionData;
     abilities: ingameAbilityInfo[] = [];
     perks: perkInfoV2[] = [];

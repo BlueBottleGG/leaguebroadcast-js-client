@@ -7,4 +7,5 @@ import { textStyle } from "../../../shared/style/textStyle";
 
 export class championTabNameStyle {
     textStyling: textStyle = {} as textStyle;
+    nameTemplate: string = "";
 }

@@ -7,6 +7,7 @@ import { colorStyle } from "../../shared/style/colorStyle";
 import { textStyle } from "../../shared/style/textStyle";
 
 export class teamName {
+    nameTemplate: string = "";
     textStyle: textStyle = {} as textStyle;
     background: string | colorStyle = "";
 }

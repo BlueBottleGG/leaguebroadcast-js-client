@@ -11,4 +11,6 @@ export class championContainer {
     layoutStyle: layoutStyle = {} as layoutStyle;
     heading: textStyle = {} as textStyle;
     subHeading: textStyle = {} as textStyle;
+    nameTemplate: string = "";
+    subHeadingTemplate: string = "";
 }

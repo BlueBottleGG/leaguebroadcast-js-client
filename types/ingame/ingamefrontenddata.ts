@@ -29,6 +29,9 @@ export class ingameFrontendData {
     baronPitTimer?: iObjectiveRespawnData;
     dragonPitTimer?: iObjectiveRespawnData;
     inhibitors?: teamInhibitorData[];
+    showTwitchPrediction: boolean = false;
+    showTwitchPoll: boolean = false;
+    showTwitchChatVote: boolean = false;
     sideInfoPage?: ingameSideInfoPage;
     goldGraph?: ingameGoldGraphData;
     runes?: ingameRuneData;

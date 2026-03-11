@@ -9,4 +9,5 @@ import { textStyle } from "../../../shared/style/textStyle";
 export class timerTeamStyle {
     teamname: textStyle = {} as textStyle;
     layout: layoutStyle = {} as layoutStyle;
+    nameTemplate: string = "";
 }
