@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { MatchRuleSet } from "../../shared/MatchRuleSet";
+import { MatchRuleSet } from "../../shared/matchRuleSet";
 
 export class optionalMatchData {
     date?: Date;

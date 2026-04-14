@@ -3,8 +3,9 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+import { ObjectiveRecapDisplayMode } from "./damageRecap/objectiveRecapDisplayMode";
 import { playerHotkeyDto } from "../hotkey/playerHotkeyDto";
-import { Team } from "../shared/style/Team";
+import { Team } from "../shared/style/team";
 
 export class ingameStateSettingsWrapper {
     timePeriod?: number;
@@ -12,4 +13,6 @@ export class ingameStateSettingsWrapper {
     team?: Team;
     players?: playerHotkeyDto[];
     overlaysToDisable: number[] = [];
+    selectedDamageEventId?: number;
+    displayMode?: ObjectiveRecapDisplayMode;
 }

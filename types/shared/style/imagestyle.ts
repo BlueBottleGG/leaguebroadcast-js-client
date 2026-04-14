@@ -4,7 +4,7 @@
  */
 
 import { borderStyle } from "./borderStyle";
-import { ObjectFit } from "./ObjectFit";
+import { ObjectFit } from "./objectFit";
 
 export class imageStyle {
     fit: ObjectFit = ObjectFit.Fill;

@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { Team } from "../../shared/style/Team";
+import { Team } from "../../shared/style/team";
 
 export class activeComponentChangedMessage {
     type: string = "";

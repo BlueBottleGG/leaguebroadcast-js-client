@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { TransitionType } from "./TransitionType";
+import { TransitionType } from "./transitionType";
 
 export class transitionStyle {
     type: TransitionType = TransitionType.Cut;

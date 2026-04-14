@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { CombinedViewTransitionType } from "./CombinedViewTransitionType";
+import { CombinedViewTransitionType } from "./combinedViewTransitionType";
 
 export class combinedViewTransitionStyle {
     type: CombinedViewTransitionType = CombinedViewTransitionType.Cut;

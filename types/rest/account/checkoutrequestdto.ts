@@ -3,8 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { PaymentInterval } from "./PaymentInterval";
-import { Tier } from "../../shared/style/set/Tier";
+import { PaymentInterval } from "./paymentInterval";
+import { Tier } from "../../shared/style/set/tier";
 
 export class checkoutRequestDTO {
     tier: Tier = Tier.Free;

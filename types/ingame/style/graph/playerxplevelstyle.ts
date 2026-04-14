@@ -4,15 +4,11 @@
  */
 
 import { championIamgeStyle } from "./championIamgeStyle";
-import { ContentAlign } from "../../../shared/style/ContentAlign";
 import { layoutStyle } from "../../../shared/style/layoutStyle";
 import { numberContainerStyle } from "./numberContainerStyle";
 import { textStyle } from "../../../shared/style/textStyle";
 
 export class playerXpLevelStyle {
-    align: ContentAlign = ContentAlign.TopLeft;
-    verticalSpacing: string = "";
-    horizontalSpacing: string = "";
     textStyle: textStyle = {} as textStyle;
     bar: layoutStyle = {} as layoutStyle;
     layout: layoutStyle = {} as layoutStyle;

@@ -3,8 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { Team } from "../shared/style/Team";
-import { Tier } from "../shared/style/set/Tier";
+import { Team } from "../shared/style/team";
+import { Tier } from "../shared/style/set/tier";
 
 export class singlePostgameHotkeyConfigDto {
     minTier: Tier = Tier.Free;

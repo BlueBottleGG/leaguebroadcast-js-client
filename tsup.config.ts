@@ -9,7 +9,7 @@ export default defineConfig({
   splitting: false,
   treeshake: true,
   external: [],
-  noExternal: [/#types\/.*/],
+  noExternal: [/#types(\/.*)?/],
   esbuildOptions(options) {
     options.alias = {
       "#types": "./types",

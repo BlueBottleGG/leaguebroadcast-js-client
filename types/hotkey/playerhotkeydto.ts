@@ -3,8 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { Lane } from "./Lane";
-import { Team } from "../shared/style/Team";
+import { Lane } from "./lane";
+import { Team } from "../shared/style/team";
 
 export class playerHotkeyDto {
     team?: Team;

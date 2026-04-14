@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { Tier } from "./Tier";
+import { Tier } from "./tier";
 
 export class styleSetEntry {
     variant: string = "";

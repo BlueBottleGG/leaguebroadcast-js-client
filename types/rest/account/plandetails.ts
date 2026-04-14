@@ -4,7 +4,7 @@
  */
 
 import { billingCycle } from "../billing_cycle/billingCycle";
-import { Tier } from "../../shared/style/set/Tier";
+import { Tier } from "../../shared/style/set/tier";
 
 export class planDetails {
     planName: string = "";

@@ -3,10 +3,9 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { colorStyle } from "../../../shared/style/colorStyle";
 import { textStyle } from "../../../shared/style/textStyle";
 
 export class championStackStyle {
     textStyling: textStyle = {} as textStyle;
-    textColorOutline: string | colorStyle = "";
+    textColorOutline: string = "";
 }

@@ -4,10 +4,12 @@
  */
 
 import { colorStyle } from "../../../shared/style/colorStyle";
+import { globalPosition } from "../../../shared/style/globalPosition";
 import { layoutStyle } from "../../../shared/style/layoutStyle";
 import { teamfightDamageEntryStyle } from "./teamfightDamageEntryStyle";
 
 export class teamFightDamageStyle {
+    position: globalPosition = {} as globalPosition;
     logo: layoutStyle = {} as layoutStyle;
     background: string | colorStyle = "";
     layout: layoutStyle = {} as layoutStyle;

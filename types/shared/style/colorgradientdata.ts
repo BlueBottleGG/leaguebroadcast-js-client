@@ -4,7 +4,7 @@
  */
 
 import { colorStop } from "./colorStop";
-import { GradientType } from "./GradientType";
+import { GradientType } from "./gradientType";
 
 export class colorGradientData {
     angle: number = 0;

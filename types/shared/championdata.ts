@@ -4,6 +4,7 @@
  */
 
 import { championAbilityData } from "./championAbilityData";
+import { championSkinInfo } from "./championSkinInfo";
 
 export class championData {
     id: number = 0;
@@ -16,4 +17,5 @@ export class championData {
     squareImg: string = "";
     tileImg: string = "";
     spells: championAbilityData[] = [];
+    skins: { [key: number]: championSkinInfo } = {};
 }

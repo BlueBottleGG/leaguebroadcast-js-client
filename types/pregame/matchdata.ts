@@ -3,8 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { BestOfType } from "../shared/BestOfType";
-import { MatchRuleSet } from "../shared/MatchRuleSet";
+import { BestOfType } from "../shared/bestOfType";
+import { MatchRuleSet } from "../shared/matchRuleSet";
 
 export class matchData {
     matchId: number = 0;

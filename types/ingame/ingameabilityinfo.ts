@@ -4,7 +4,7 @@
  */
 
 import { championAbilityData } from "../shared/championAbilityData";
-import { SpellSlotIndex } from "./SpellSlotIndex";
+import { SpellSlotIndex } from "./spellSlotIndex";
 
 export class ingameAbilityInfo {
     identifier: string = "";

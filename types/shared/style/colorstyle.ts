@@ -5,8 +5,8 @@
 
 import { colorGradientData } from "./colorGradientData";
 import { colorImageData } from "./colorImageData";
-import { Team } from "./Team";
-import { TeamColorType } from "./TeamColorType";
+import { Team } from "./team";
+import { TeamColorType } from "./teamColorType";
 
 export class colorStyle {
     color: string = "";

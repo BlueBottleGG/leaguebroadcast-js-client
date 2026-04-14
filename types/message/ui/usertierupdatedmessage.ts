@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { Tier } from "../../shared/style/set/Tier";
+import { Tier } from "../../shared/style/set/tier";
 
 export class userTierUpdatedMessage {
     type: string = "";

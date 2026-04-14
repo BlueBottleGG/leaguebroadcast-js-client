@@ -19,7 +19,5 @@ export enum SpellSlotIndex {
     ItemTrinket = 12,
     Recall = 13,
     Quest = 14,
-    Auto1 = 64,
-    Auto2 = 65,
-    Auto3 = 66
+    Passive = 63
 }

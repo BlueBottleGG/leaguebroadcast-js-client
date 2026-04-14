@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { PostGameDataType } from "./PostGameDataType";
+import { PostGameDataType } from "./postGameDataType";
 
 export class postGamePlayerInfo {
     id: number = 0;

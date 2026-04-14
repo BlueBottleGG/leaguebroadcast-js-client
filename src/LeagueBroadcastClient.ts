@@ -5,8 +5,8 @@ import { structuralShare } from "./reactivity/structuralShare";
 import type { Subscribable, EqualityFn } from "./reactivity/GameStateStore";
 import type { GameStateSnapshot } from "./reactivity/GameStateStore";
 import type { ChampSelectSnapshot } from "./reactivity/ChampSelectStateStore";
-import { ingameFrontendData } from "#types/ingame/ingamefrontenddata";
-import { GameState } from "#types/shared/gamestate";
+import { ingameFrontendData } from "#types/ingame/ingameFrontendData";
+import { GameState } from "#types/shared/gameState";
 import type { transitionEvents } from "#types/ingame/event/transitionevents";
 import type { playerUpdateEvent } from "#types/ingame/event/playerUpdateEvent";
 import type { teamUpdateResults } from "#types/ingame/event/teamUpdateResults";
@@ -14,7 +14,7 @@ import type { ingameObjectiveEvent } from "#types/ingame/event/ingameObjectiveEv
 import type { announcerEvent } from "#types/ingame/announcer/announcerEvent";
 import type { killFeedEvent } from "#types/ingame/event/killFeedEvent";
 import { Team } from "#types/shared/style/Team";
-import { champSelectStateData } from "#types/pregame/champselectstatedata";
+import { champSelectStateData } from "#types/pregame/champSelectStateData";
 import type { pickBanActionEventArgs } from "#types/pregame/pickbanactioneventargs";
 import { RestApi } from "./api/RestApi";
 
@@ -258,7 +258,9 @@ export class LeagueBroadcastClient {
   // ===========================================================================
 
   /** Register a handler for in-game state updates. */
-  onIngameStateUpdate(handler: (state: ingameFrontendData) => void): () => void {
+  onIngameStateUpdate(
+    handler: (state: ingameFrontendData) => void,
+  ): () => void {
     this.stateUpdateHandlers.add(handler);
     return () => this.stateUpdateHandlers.delete(handler);
   }

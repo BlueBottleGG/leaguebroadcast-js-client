@@ -3,8 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { CampLocation } from "./CampLocation";
-import { IngameObjectiveType } from "./IngameObjectiveType";
+import { CampLocation } from "./campLocation";
+import { IngameObjectiveType } from "./ingameObjectiveType";
 
 export interface iObjectiveRespawnData {
     type: IngameObjectiveType;

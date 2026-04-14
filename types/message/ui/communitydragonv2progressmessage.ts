@@ -3,8 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { AssetType } from "./AssetType";
-import { CacheOperation } from "./CacheOperation";
+import { AssetType } from "./assetType";
+import { CacheOperation } from "./cacheOperation";
 
 export class communityDragonV2ProgressMessage {
     type: string = "";

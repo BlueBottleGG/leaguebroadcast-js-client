@@ -4,12 +4,14 @@
  */
 
 import { colorStyle } from "../../../../shared/style/colorStyle";
+import { globalPosition } from "../../../../shared/style/globalPosition";
 import { gridLineStyle } from "./gridLineStyle";
 import { layoutStyle } from "../../../../shared/style/layoutStyle";
 import { lineStyle } from "./lineStyle";
 import { textStyle } from "../../../../shared/style/textStyle";
 
 export class goldGraph {
+    position: globalPosition = {} as globalPosition;
     yAxis: textStyle = {} as textStyle;
     xAxis: textStyle = {} as textStyle;
     title: textStyle = {} as textStyle;

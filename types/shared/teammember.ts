@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { TeamMemberRole } from "./TeamMemberRole";
+import { TeamMemberRole } from "./teamMemberRole";
 
 export class teamMember {
     memberId: number = 0;

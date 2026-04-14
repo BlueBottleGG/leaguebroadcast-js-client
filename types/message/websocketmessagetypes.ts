@@ -13,6 +13,7 @@ export class websocketMessageTypes {
     static readonly champSelectState = "champion-select-state-update";
     static readonly champSelectAction = "champion-select-action";
     static readonly ingameState = "ingame-state-update";
+    static readonly ingameRewind = "ingame-rewind";
     static readonly ingameTelemetry = "ingame-telemetry";
     static readonly fontsChanged = "fonts-changed";
     static readonly matchDatabaseUpdate = "match-database-update";
@@ -45,4 +46,5 @@ export class websocketMessageTypes {
     static readonly activeComponentChanged = "active-component-changed";
     static readonly disabledOverlaysUpdate = "disabled-overlays-update";
     static readonly userTierUpdated = "user-tier-updated";
+    static readonly damageEventHistoryUpdate = "damage-event-history-update";
 }

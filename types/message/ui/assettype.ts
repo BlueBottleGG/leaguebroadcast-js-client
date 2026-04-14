@@ -12,5 +12,7 @@ export enum AssetType {
     Summoner = 5,
     Perk = 6,
     PerkStyle = 7,
-    Unknown = 8
+    PerkSpell = 8,
+    Shared = 9,
+    Unknown = 10
 }

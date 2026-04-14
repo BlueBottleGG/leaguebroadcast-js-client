@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { ContentAlign } from "../../../shared/style/ContentAlign";
+import { ContentAlign } from "../../../shared/style/contentAlign";
 
 export class killFeedAssistersStyle {
     gap: string = "";

@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { BestOfType } from "../../shared/BestOfType";
+import { BestOfType } from "../../shared/bestOfType";
 import { ingameScoreboardTeamData } from "./ingameScoreboardTeamData";
 
 export class ingameScoreboardData {

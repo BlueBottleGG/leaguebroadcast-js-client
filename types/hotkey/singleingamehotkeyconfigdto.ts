@@ -4,8 +4,8 @@
  */
 
 import { playerHotkeyDto } from "./playerHotkeyDto";
-import { Team } from "../shared/style/Team";
-import { Tier } from "../shared/style/set/Tier";
+import { Team } from "../shared/style/team";
+import { Tier } from "../shared/style/set/tier";
 
 export class singleIngameHotkeyConfigDto {
     minTier: Tier = Tier.Free;

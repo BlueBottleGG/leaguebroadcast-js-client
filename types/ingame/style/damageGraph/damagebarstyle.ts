@@ -14,5 +14,6 @@ export class damageBarStyle {
     border: borderStyle = {} as borderStyle;
     fill?: string | colorStyle = "";
     fillByDamageType?: colorByDamageType;
+    useFillByDamageType: boolean = false;
     damageDealt: textStyle = {} as textStyle;
 }

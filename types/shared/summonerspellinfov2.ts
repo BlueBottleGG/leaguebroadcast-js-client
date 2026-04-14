@@ -9,4 +9,7 @@ export class summonerSpellInfoV2 {
     iconPath: string = "";
     iconFileName: string = "";
     iconHash?: string;
+    nativeBinHash: number = 0;
+    spellName: string = "";
+    iconAsset: string = "";
 }

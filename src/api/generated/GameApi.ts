@@ -2,7 +2,7 @@
  * Auto-generated REST API client for Game CRUD and draft (picks/bans) endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-03-11
+ * @generated 2026-04-14
  */
 
 import type { ApiClient } from "../ApiClient";
