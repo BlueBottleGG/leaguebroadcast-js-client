@@ -121,13 +121,37 @@ export class LeagueBroadcastClient {
   private gameStatusHandlers: Set<
     (status: GameState, isTestingEnv: boolean) => void
   > = new Set();
-  private ingameEventHandlers: IngameEventHandlers = {};
+  private ingameEventHandlers: {
+    onPlayerEvent: Set<(event: playerUpdateEvent) => void>;
+    onTeamEvent: Set<(event: teamUpdateResults) => void>;
+    onObjectiveEvent: Set<(event: ingameObjectiveEvent) => void>;
+    onFirstTowerEvent: Set<(teamId: Team) => void>;
+    onAnnouncementEvent: Set<(event: announcerEvent) => void>;
+    onKillFeedEvent: Set<(event: killFeedEvent) => void>;
+  } = {
+    onPlayerEvent: new Set(),
+    onTeamEvent: new Set(),
+    onObjectiveEvent: new Set(),
+    onFirstTowerEvent: new Set(),
+    onAnnouncementEvent: new Set(),
+    onKillFeedEvent: new Set(),
+  };
 
   // -- Pre-game event handlers ------------------------------------------------
   private champSelectUpdateHandlers: Set<
     (state: champSelectStateData) => void
   > = new Set();
-  private champSelectEventHandlers: ChampSelectEventHandlers = {};
+  private champSelectEventHandlers: {
+    onAction: Set<(action: pickBanActionEventArgs) => void>;
+    onChampSelectStart: Set<() => void>;
+    onChampSelectEnd: Set<() => void>;
+    onRouteUpdate: Set<(uri: string) => void>;
+  } = {
+    onAction: new Set(),
+    onChampSelectStart: new Set(),
+    onChampSelectEnd: new Set(),
+    onRouteUpdate: new Set(),
+  };
 
   constructor(config: LeagueBroadcastClientConfig) {
     this.config = {
@@ -151,12 +175,14 @@ export class LeagueBroadcastClient {
     this.gameData = new ingameFrontendData();
     this.ingameStore = new GameStateStore(this.gameData, this.gameState);
     this.setupIngameMessageHandler();
+    this.ingameWs.onDisconnect(() => this.endGame());
 
     // Pre-game
     this.preGameWs = new WebSocketManager();
     this.champSelectData = new champSelectStateData();
     this.preGameStore = new ChampSelectStateStore(this.champSelectData);
     this.setupPreGameMessageHandler();
+    this.preGameWs.onDisconnect(() => this.endChampSelect());
 
     if (this.config.autoConnect) {
       this.connect();
@@ -273,9 +299,26 @@ export class LeagueBroadcastClient {
     return () => this.gameStatusHandlers.delete(handler);
   }
 
-  /** Register handlers for in-game events (kills, objectives, etc.). */
-  onIngameEvents(handlers: IngameEventHandlers): void {
-    this.ingameEventHandlers = { ...this.ingameEventHandlers, ...handlers };
+  /** Register handlers for in-game events (kills, objectives, etc.). Returns an unsubscribe function. */
+  onIngameEvents(handlers: IngameEventHandlers): () => void {
+    const entries = Object.entries(handlers) as [
+      keyof IngameEventHandlers,
+      NonNullable<IngameEventHandlers[keyof IngameEventHandlers]>,
+    ][];
+    for (const [key, handler] of entries) {
+      if (handler) {
+        (this.ingameEventHandlers[key] as Set<typeof handler>).add(handler);
+      }
+    }
+    return () => {
+      for (const [key, handler] of entries) {
+        if (handler) {
+          (this.ingameEventHandlers[key] as Set<typeof handler>).delete(
+            handler,
+          );
+        }
+      }
+    };
   }
 
   // ===========================================================================
@@ -290,11 +333,27 @@ export class LeagueBroadcastClient {
     return () => this.champSelectUpdateHandlers.delete(handler);
   }
 
-  /** Register handlers for champ-select lifecycle and action events. */
-  onChampSelectEvents(handlers: ChampSelectEventHandlers): void {
-    this.champSelectEventHandlers = {
-      ...this.champSelectEventHandlers,
-      ...handlers,
+  /** Register handlers for champ-select lifecycle and action events. Returns an unsubscribe function. */
+  onChampSelectEvents(handlers: ChampSelectEventHandlers): () => void {
+    const entries = Object.entries(handlers) as [
+      keyof ChampSelectEventHandlers,
+      NonNullable<ChampSelectEventHandlers[keyof ChampSelectEventHandlers]>,
+    ][];
+    for (const [key, handler] of entries) {
+      if (handler) {
+        (this.champSelectEventHandlers[key] as Set<typeof handler>).add(
+          handler,
+        );
+      }
+    }
+    return () => {
+      for (const [key, handler] of entries) {
+        if (handler) {
+          (this.champSelectEventHandlers[key] as Set<typeof handler>).delete(
+            handler,
+          );
+        }
+      }
     };
   }
 
@@ -516,40 +575,39 @@ export class LeagueBroadcastClient {
   private handleGameEvents(events?: transitionEvents): void {
     if (!events) return;
 
-    if (events.player && this.ingameEventHandlers.onPlayerEvent) {
+    if (events.player) {
       events.player.forEach((event) =>
-        this.ingameEventHandlers.onPlayerEvent!(event),
+        this.ingameEventHandlers.onPlayerEvent.forEach((h) => h(event)),
       );
     }
 
-    if (events.team && this.ingameEventHandlers.onTeamEvent) {
+    if (events.team) {
       events.team.forEach((event) =>
-        this.ingameEventHandlers.onTeamEvent!(event),
+        this.ingameEventHandlers.onTeamEvent.forEach((h) => h(event)),
       );
     }
 
-    if (events.objective && this.ingameEventHandlers.onObjectiveEvent) {
+    if (events.objective) {
       events.objective.forEach((event) =>
-        this.ingameEventHandlers.onObjectiveEvent!(event),
+        this.ingameEventHandlers.onObjectiveEvent.forEach((h) => h(event)),
       );
     }
 
-    if (
-      events.firstTower !== undefined &&
-      this.ingameEventHandlers.onFirstTowerEvent
-    ) {
-      this.ingameEventHandlers.onFirstTowerEvent(events.firstTower);
+    if (events.firstTower !== undefined) {
+      this.ingameEventHandlers.onFirstTowerEvent.forEach((h) =>
+        h(events.firstTower!),
+      );
     }
 
-    if (events.announcements && this.ingameEventHandlers.onAnnouncementEvent) {
+    if (events.announcements) {
       events.announcements.forEach((event) =>
-        this.ingameEventHandlers.onAnnouncementEvent!(event),
+        this.ingameEventHandlers.onAnnouncementEvent.forEach((h) => h(event)),
       );
     }
 
-    if (events.killFeed && this.ingameEventHandlers.onKillFeedEvent) {
+    if (events.killFeed) {
       events.killFeed.forEach((event) =>
-        this.ingameEventHandlers.onKillFeedEvent!(event),
+        this.ingameEventHandlers.onKillFeedEvent.forEach((h) => h(event)),
       );
     }
   }
@@ -606,7 +664,7 @@ export class LeagueBroadcastClient {
     // Detect champ select start / end transitions
     if (nextData.isActive && !this.champSelectWasActive) {
       this.champSelectWasActive = true;
-      this.champSelectEventHandlers.onChampSelectStart?.();
+      this.champSelectEventHandlers.onChampSelectStart.forEach((h) => h());
     } else if (!nextData.isActive && this.champSelectWasActive) {
       this.champSelectWasActive = false;
       this.endChampSelect();
@@ -620,11 +678,13 @@ export class LeagueBroadcastClient {
   }
 
   private handleChampSelectAction(action: any): void {
-    this.champSelectEventHandlers.onAction?.(action as pickBanActionEventArgs);
+    this.champSelectEventHandlers.onAction.forEach((h) =>
+      h(action as pickBanActionEventArgs),
+    );
   }
 
   private handleRouteUpdate(uri: string): void {
-    this.champSelectEventHandlers.onRouteUpdate?.(uri);
+    this.champSelectEventHandlers.onRouteUpdate.forEach((h) => h(uri));
   }
 
   private endChampSelect(): void {
@@ -633,7 +693,7 @@ export class LeagueBroadcastClient {
     this.champSelectData = new champSelectStateData();
     this.preGameStore._reset(this.champSelectData);
 
-    this.champSelectEventHandlers.onChampSelectEnd?.();
+    this.champSelectEventHandlers.onChampSelectEnd.forEach((h) => h());
     this.champSelectUpdateHandlers.forEach((handler) =>
       handler(this.champSelectData),
     );
