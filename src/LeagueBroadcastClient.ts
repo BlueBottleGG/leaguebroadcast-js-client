@@ -17,6 +17,7 @@ import { Team } from "#types/shared/style/Team";
 import { champSelectStateData } from "#types/pregame/champSelectStateData";
 import type { pickBanActionEventArgs } from "#types/pregame/pickbanactioneventargs";
 import { RestApi } from "./api/RestApi";
+import { smiteReactionResult } from "#types/ingame/smiteReaction/smiteReactionResult";
 
 export interface LeagueBroadcastClientConfig {
   host: string;
@@ -127,6 +128,7 @@ export class LeagueBroadcastClient {
     onObjectiveEvent: Set<(event: ingameObjectiveEvent) => void>;
     onFirstTowerEvent: Set<(teamId: Team) => void>;
     onAnnouncementEvent: Set<(event: announcerEvent) => void>;
+    onSmiteReactionEvent: Set<(event: smiteReactionResult) => void>;
     onKillFeedEvent: Set<(event: killFeedEvent) => void>;
   } = {
     onPlayerEvent: new Set(),
@@ -135,6 +137,7 @@ export class LeagueBroadcastClient {
     onFirstTowerEvent: new Set(),
     onAnnouncementEvent: new Set(),
     onKillFeedEvent: new Set(),
+    onSmiteReactionEvent: new Set(),
   };
 
   // -- Pre-game event handlers ------------------------------------------------
@@ -486,7 +489,7 @@ export class LeagueBroadcastClient {
   }
 
   /** Get the base URL for cache requests (optionally resolve a path). */
-  getCacheUrl(path?: string): string {
+  getCacheUrl(path?: string, preventCacheBust: boolean = false): string {
     const protocol = this.config.useHttps ? "https" : "http";
     const baseUrl = `${protocol}://${this.config.host}:${this.config.port}${this.config.cacheRoute}`;
 
@@ -507,6 +510,13 @@ export class LeagueBroadcastClient {
     }
     if (cleanPath.startsWith("/")) {
       cleanPath = cleanPath.slice(1);
+    }
+
+    if (preventCacheBust) {
+      const cacheBust = `cb=${Date.now()}`;
+      cleanPath = cleanPath.includes("?")
+        ? `${cleanPath}&${cacheBust}`
+        : `${cleanPath}?${cacheBust}`;
     }
 
     return `${baseUrl}/${cleanPath}`;
@@ -608,6 +618,18 @@ export class LeagueBroadcastClient {
     if (events.killFeed) {
       events.killFeed.forEach((event) =>
         this.ingameEventHandlers.onKillFeedEvent.forEach((h) => h(event)),
+      );
+    }
+
+    if (events.announcements) {
+      events.announcements.forEach((event) =>
+        this.ingameEventHandlers.onAnnouncementEvent.forEach((h) => h(event)),
+      );
+    }
+
+    if (events.smiteReaction !== undefined) {
+      this.ingameEventHandlers.onSmiteReactionEvent.forEach((h) =>
+        h(events.smiteReaction!),
       );
     }
   }

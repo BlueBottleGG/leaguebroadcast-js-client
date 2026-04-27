@@ -26,6 +26,12 @@
  *
  * // Pre-game / champion select
  * const frontendUrl = await client.api.preGame.getFrontendUrl();
+ *
+ * // Post-game (REST-only — no WebSocket)
+ * const overview     = await client.api.postGame.getCurrentGameOverview();
+ * const matchSummary = await client.api.postGame.getCurrentMatchOverview();
+ * const goldGraph    = await client.api.postGame.getGameGoldGraph(gameId);
+ * const playerStats  = await client.api.postGame.getPlayerStatsByTeamAndLane(gameId, Team.Blue, Lane.Mid);
  * ```
  */
 
@@ -37,6 +43,7 @@ import {
   SeasonApi,
   PreGameApi,
   GameStateApi,
+  PostGameApi,
 } from "./generated";
 
 export class RestApi {
@@ -60,6 +67,9 @@ export class RestApi {
   /** Live game state — participants, dragons, ordering. Requires active game. */
   public readonly gameState: GameStateApi;
 
+  /** Post-game overview, stats, gold/damage graphs, and analysis component control. */
+  public readonly postGame: PostGameApi;
+
   constructor(baseUrl: string) {
     this.client = new ApiClient(baseUrl);
 
@@ -69,6 +79,7 @@ export class RestApi {
     this.season = new SeasonApi(this.client);
     this.preGame = new PreGameApi(this.client);
     this.gameState = new GameStateApi(this.client);
+    this.postGame = new PostGameApi(this.client);
   }
 
   /**

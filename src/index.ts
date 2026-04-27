@@ -41,6 +41,7 @@ export {
   SeasonApi,
   PreGameApi,
   GameStateApi,
+  PostGameApi,
 } from "./api/generated";
 
 // Utility functions
