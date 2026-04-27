@@ -8,6 +8,7 @@ import { simpleChampionData } from "../../shared/simpleChampionData";
 export class damageFlowNode {
     champion?: simpleChampionData;
     name: string = "";
+    displayName: string = "";
     team?: number;
     totalDamageDealt: number = 0;
     totalDamageReceived: number = 0;

@@ -8,6 +8,7 @@ import { simpleChampionData } from "../../shared/simpleChampionData";
 export class damageCompositionPlayer {
     champion?: simpleChampionData;
     name: string = "";
+    displayName: string = "";
     physical: number = 0;
     magic: number = 0;
     trueDamage: number = 0;

@@ -9,6 +9,7 @@ import { simpleChampionData } from "../../shared/simpleChampionData";
 export class damageRecapEntry {
     source?: simpleChampionData;
     sourceName: string = "";
+    sourceDisplayName: string = "";
     team?: number;
     spells: damageRecapSpellEntry[] = [];
     totalDamage: number = 0;

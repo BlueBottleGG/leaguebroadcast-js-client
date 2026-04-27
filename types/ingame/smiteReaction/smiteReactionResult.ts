@@ -8,6 +8,7 @@ import { simpleChampionData } from "../../shared/simpleChampionData";
 export class smiteReactionResult {
     junglerChampion?: simpleChampionData;
     junglerName: string = "";
+    junglerDisplayName: string = "";
     junglerTeam: number = 0;
     smiteDamage: number = 0;
     thresholdReachedTime: number = 0;

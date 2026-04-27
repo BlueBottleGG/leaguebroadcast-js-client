@@ -2,15 +2,16 @@
  * Auto-generated REST API client for Game CRUD and draft (picks/bans) endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-04-14
+ * @generated 2026-04-28
  */
 
 import type { ApiClient } from "../ApiClient";
-import type { gameWithTeams } from "#types/shared/gamewithteams";
-import type { simpleChampionData } from "#types/shared/simplechampiondata";
+import type { optionalGameData } from "#types/rest/optionalGameData";
+import type { gameWithTeams } from "#types/shared/gameWithTeams";
+import type { simpleChampionData } from "#types/shared/simpleChampionData";
 import type { Team } from "#types/shared/style/team";
-import type { teamMember } from "#types/shared/teammember";
-import type { teamWithMembers } from "#types/shared/teamwithmembers";
+import type { teamMember } from "#types/shared/teamMember";
+import type { teamWithMembers } from "#types/shared/teamWithMembers";
 
 export class GameApi {
   constructor(private readonly client: ApiClient) {}
@@ -31,7 +32,7 @@ export class GameApi {
   }
 
   /** `PATCH game/{gameid}` */
-  async updateGame(gameid: number, game: unknown): Promise<void> {
+  async updateGame(gameid: number, game: optionalGameData): Promise<void> {
     return this.client.patch<void>(`game/${gameid}`, game);
   }
 

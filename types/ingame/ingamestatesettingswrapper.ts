@@ -13,6 +13,7 @@ export class ingameStateSettingsWrapper {
     team?: Team;
     players?: playerHotkeyDto[];
     overlaysToDisable: number[] = [];
+    customSettings: { [key: string]: any } = {};
     selectedDamageEventId?: number;
     displayMode?: ObjectiveRecapDisplayMode;
 }

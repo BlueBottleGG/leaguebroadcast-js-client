@@ -11,6 +11,7 @@ export class ingameDamageSplitData {
     mode: DamageSplitMode = DamageSplitMode.Detail;
     source?: simpleChampionData;
     sourceName: string = "";
+    sourceDisplayName: string = "";
     targets: damageSplitTargetEntry[] = [];
     totalDamageDealt: number = 0;
     damageByType: { [key: string]: number } = {};

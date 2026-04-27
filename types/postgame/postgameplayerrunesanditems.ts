@@ -13,6 +13,7 @@ export class postGamePlayerRunesAndItems {
     items: itemAsset[] = [];
     champion: simpleChampionData = {} as simpleChampionData;
     nameWithTag: string = "";
+    displayName: string = "";
     description?: string;
     team?: teamWithMembers;
 }

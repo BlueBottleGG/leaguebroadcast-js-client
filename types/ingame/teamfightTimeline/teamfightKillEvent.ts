@@ -9,9 +9,12 @@ import { Team } from "../../shared/style/team";
 export class teamfightKillEvent {
     gameTime: number = 0;
     killerName: string = "";
+    killerDisplayName: string = "";
     victimName: string = "";
+    victimDisplayName: string = "";
     killerChampion?: simpleChampionData;
     victimChampion?: simpleChampionData;
     killerTeam: Team = Team.None;
     assisterNames: string[] = [];
+    assisterDisplayNames: string[] = [];
 }

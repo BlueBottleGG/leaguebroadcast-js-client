@@ -11,6 +11,7 @@ export class postGamePlayerStats {
     infoRows: infoRow[] = [];
     champion: simpleChampionData = {} as simpleChampionData;
     nameWithTag: string = "";
+    displayName: string = "";
     description?: string;
     team?: teamWithMembers;
 }

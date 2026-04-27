@@ -14,6 +14,7 @@ export * from './colorRGBA';
 export * from './communityDragonCacheProgressMessage';
 export * from './communityDragonV2ProgressMessage';
 export * from './communityDragonV2StatusMessage';
+export * from './customOverlayUpdateMessage';
 export * from './damageEventHistoryUpdateMessage';
 export * from './fontsChangedMessage';
 export * from './gameDatabaseUpdateMessage';

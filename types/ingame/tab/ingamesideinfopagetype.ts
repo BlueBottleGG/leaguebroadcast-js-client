@@ -8,5 +8,6 @@ export enum IngameSideInfoPageType {
     Experience = 2,
     CreepScore = 4,
     Damage = 8,
-    None = 16
+    None = 16,
+    SkinDisplay = 32
 }

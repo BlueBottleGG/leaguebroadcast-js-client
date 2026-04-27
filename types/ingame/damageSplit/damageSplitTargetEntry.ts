@@ -9,6 +9,7 @@ import { simpleChampionData } from "../../shared/simpleChampionData";
 export class damageSplitTargetEntry {
     target?: simpleChampionData;
     targetName: string = "";
+    targetDisplayName: string = "";
     team?: number;
     spells: damageSplitSpellEntry[] = [];
     totalDamage: number = 0;

@@ -9,6 +9,7 @@ import { Team } from "../../shared/style/team";
 export class teamfightTimelinePlayer {
     champion?: simpleChampionData;
     name: string = "";
+    displayName: string = "";
     team: Team = Team.None;
     totalDamage: number = 0;
     died: boolean = false;

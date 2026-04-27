@@ -31,5 +31,6 @@ export * from './teamMember';
 export * from './teamMemberRole';
 export * from './teamScore';
 export * from './teamWithMembers';
+export * from './customoverlay';
 export * from './style';
 export * from './window';

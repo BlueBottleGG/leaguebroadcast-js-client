@@ -8,6 +8,7 @@ import { simpleChampionData } from "../../shared/simpleChampionData";
 export class ingameSkinDisplayPlayerData {
     name: string = "";
     playerName: string = "";
+    displayName: string = "";
     champion?: simpleChampionData;
     skinName: string = "";
     splashCenteredUrl: string = "";

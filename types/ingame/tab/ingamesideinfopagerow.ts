@@ -8,6 +8,7 @@ import { simpleChampionData } from "../../shared/simpleChampionData";
 export class ingameSideInfoPageRow {
     champion?: simpleChampionData;
     playerName?: string;
+    displayName?: string;
     team?: number;
     minValue?: number;
     curValue?: number;

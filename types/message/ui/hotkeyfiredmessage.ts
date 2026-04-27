@@ -5,6 +5,8 @@
 
 export class hotkeyFiredMessage {
     type: string = "";
-    activatedOverlayId: number = 0;
+    activatedButtonId: string = "";
+    activatedOverlayName: string = "";
+    activatedOverlayId?: number;
     toggle: boolean = false;
 }

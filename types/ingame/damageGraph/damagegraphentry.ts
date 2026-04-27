@@ -4,6 +4,9 @@
  */
 
 import { ingameAbilityInfo } from "../ingameAbilityInfo";
+import { ingameExperienceData } from "../tab/ingameExperienceData";
+import { ingameHealthData } from "../tab/ingameHealthData";
+import { ingameResourceData } from "../tab/ingameResourceData";
 import { itemWithAsset } from "../itemWithAsset";
 import { simpleChampionData } from "../../shared/simpleChampionData";
 
@@ -12,12 +15,14 @@ export class damageGraphEntry {
     abilities?: ingameAbilityInfo[];
     activeItems?: itemWithAsset[];
     name: string = "";
+    displayName: string = "";
     team?: number;
     damageByType: { [key: string]: number } = {};
     totalDamageDealt: number = 0;
     respawnTime?: number;
     level?: number;
-    health: number = 0;
-    maxHealth: number = 0;
+    health?: ingameHealthData;
+    resource?: ingameResourceData;
+    experience?: ingameExperienceData;
     role: string = "";
 }

@@ -14,6 +14,7 @@ export class tabPlayer {
     id: string = "";
     playerName: string = "";
     playerHashtag: string = "";
+    displayName: string = "";
     givenName: string = "";
     familyName: string = "";
     championAssets?: simpleChampionData;

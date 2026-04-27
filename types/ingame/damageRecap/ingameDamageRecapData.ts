@@ -13,6 +13,7 @@ import type { iSpellObjectResource } from "./iSpellObjectResource";
 export class ingameDamageRecapData {
     victim?: simpleChampionData;
     victimName: string = "";
+    victimDisplayName: string = "";
     deathTime: number = 0;
     entries: damageRecapEntry[] = [];
     totalDamageReceived: number = 0;

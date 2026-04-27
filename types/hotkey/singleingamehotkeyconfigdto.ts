@@ -9,7 +9,7 @@ import { Tier } from "../shared/style/set/tier";
 
 export class singleIngameHotkeyConfigDto {
     minTier: Tier = Tier.Free;
-    overlayId: number = 0;
+    buttonId: string = "";
     name: string = "";
     hotkey?: string;
     hotkeyCode?: string;
@@ -22,5 +22,5 @@ export class singleIngameHotkeyConfigDto {
     hasSettings: boolean = false;
     allowSinglePlayers: boolean = false;
     allowTimePeriod: boolean = false;
-    overlaysToDisable: number[] = [];
+    customSettings?: { [key: string]: any };
 }

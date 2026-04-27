@@ -8,6 +8,7 @@ import { DamageType } from "./damageType";
 export class damageRecapTimelineEntry {
     gameTime: number = 0;
     sourceName: string = "";
+    sourceDisplayName: string = "";
     spellKey?: string;
     damage: number = 0;
     damageType: DamageType = DamageType.Physical;

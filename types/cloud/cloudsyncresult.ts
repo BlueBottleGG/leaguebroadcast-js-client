@@ -11,4 +11,5 @@ export class cloudSyncResult {
     metadata?: cloudStyleSetMetadata;
     styleSetsSynced: number = 0;
     warnings: string[] = [];
+    stubbed: boolean = false;
 }

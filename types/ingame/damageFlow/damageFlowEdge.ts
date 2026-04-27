@@ -5,7 +5,9 @@
 
 export class damageFlowEdge {
     sourceName: string = "";
+    sourceDisplayName: string = "";
     targetName: string = "";
+    targetDisplayName: string = "";
     totalDamage: number = 0;
     damageByType: { [key: string]: number } = {};
 }

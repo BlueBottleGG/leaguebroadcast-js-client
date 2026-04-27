@@ -8,6 +8,7 @@ import { simpleChampionData } from "../../shared/simpleChampionData";
 export class goldEfficiencyEntry {
     champion?: simpleChampionData;
     name: string = "";
+    displayName: string = "";
     team: number = 0;
     goldSpent: number = 0;
     damageDealt: number = 0;

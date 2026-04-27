@@ -5,6 +5,8 @@
 
 export class killParticipationLink {
     killerName: string = "";
+    killerDisplayName: string = "";
     assisterName: string = "";
+    assisterDisplayName: string = "";
     count: number = 0;
 }

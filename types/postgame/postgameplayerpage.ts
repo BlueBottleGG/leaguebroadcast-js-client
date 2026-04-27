@@ -9,6 +9,7 @@ import { teamWithMembers } from "../shared/teamWithMembers";
 export class postGamePlayerPage {
     champion: simpleChampionData = {} as simpleChampionData;
     nameWithTag: string = "";
+    displayName: string = "";
     description?: string;
     team?: teamWithMembers;
 }

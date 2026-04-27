@@ -16,4 +16,5 @@ export class teamMember {
     role: TeamMemberRole = TeamMemberRole.Unknown;
     familyName: string = "";
     givenName: string = "";
+    displayName?: string;
 }

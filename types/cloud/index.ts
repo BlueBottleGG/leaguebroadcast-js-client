@@ -12,3 +12,4 @@ export * from './cloudStyleSetUploadResponse';
 export * from './cloudSyncConfig';
 export * from './cloudSyncResult';
 export * from './localSyncState';
+export * from './overlay';
