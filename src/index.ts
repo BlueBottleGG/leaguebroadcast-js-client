@@ -52,6 +52,21 @@ export {
 } from "./util/ingameScoreboardBottomPlayerDataUtils";
 
 export {
+  getRemaining,
+  isActive,
+  getAbilityCooldownRemaining,
+  isAbilityOnCooldown,
+  getAbilityCooldownFraction,
+  getItemCooldownRemaining,
+  isItemOnCooldown,
+  getItemCooldownFraction,
+  getRespawnRemaining,
+  isPlayerDead,
+  createIngameTimerUtils,
+} from "./util/ingameTimerUtils";
+export type { BoundIngameTimerUtils } from "./util/ingameTimerUtils";
+
+export {
   PHYS_COLOR,
   MAGIC_COLOR,
   TRUE_COLOR,

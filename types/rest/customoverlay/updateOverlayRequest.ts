@@ -4,9 +4,9 @@
  */
 
 export class updateOverlayRequest {
-  name?: string;
-  description?: string;
-  devScript?: string;
-  phase?: string;
-  version?: string;
+    name?: string;
+    description?: string;
+    devScript?: string;
+    phase?: string;
+    version?: string;
 }

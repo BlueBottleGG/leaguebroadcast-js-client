@@ -18,6 +18,6 @@ export class ingameScoreboardBottomPlayerData {
     creepScore: number = 0;
     visionScore: number = 0;
     shutdown: number = 0;
-    respawnTimeRemaining?: number;
+    respawnAt?: number;
     items?: itemWithAsset[];
 }

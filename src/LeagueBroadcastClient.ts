@@ -18,6 +18,10 @@ import { champSelectStateData } from "#types/pregame/champSelectStateData";
 import type { pickBanActionEventArgs } from "#types/pregame/pickbanactioneventargs";
 import { RestApi } from "./api/RestApi";
 import { smiteReactionResult } from "#types/ingame/smiteReaction/smiteReactionResult";
+import {
+  createIngameTimerUtils,
+  type BoundIngameTimerUtils,
+} from "./util/ingameTimerUtils";
 
 export interface LeagueBroadcastClientConfig {
   host: string;
@@ -66,9 +70,15 @@ export interface ChampSelectEventHandlers {
  * ```ts
  * const client = new LeagueBroadcastClient({ host: "localhost" });
  *
- * // In-game
+ * // In-game state & events
  * client.onIngameStateUpdate(data => console.log("Game time:", data.gameTime));
  * client.watchIngame(s => s.gameData.scoreboard?.teams[0]?.kills, kills => { });
+ * client.onIngameEvents({ onKillFeedEvent: e => console.log(e) });
+ *
+ * // Timer utilities — gameTime is read automatically
+ * client.timers.isPlayerDead(player);
+ * client.timers.getAbilityCooldownRemaining(ability);
+ * client.timers.getItemCooldownFraction(item); // 0 = just activated, 1 = ready
  *
  * // Pre-game
  * client.onChampSelectUpdate(data => console.log("Phase:", data.timer.phaseName));
@@ -99,6 +109,19 @@ export class LeagueBroadcastClient {
 
   /** Reactive store for **pre-game** (champion select) state. */
   public readonly preGameStore: ChampSelectStateStore;
+
+  /**
+   * Timer utilities pre-bound to this client's current game time.
+   * No need to pass `gameTime` manually — it is read from the latest
+   * in-game state on every call.
+   *
+   * @example
+   * ```ts
+   * const dead = client.timers.isPlayerDead(player);
+   * const remaining = client.timers.getAbilityCooldownRemaining(ability);
+   * ```
+   */
+  public readonly timers: BoundIngameTimerUtils;
 
   // -- REST API ---------------------------------------------------------------
 
@@ -172,6 +195,16 @@ export class LeagueBroadcastClient {
     const httpProtocol = this.config.useHttps ? "https" : "http";
     const apiBaseUrl = `${httpProtocol}://${this.config.host}:${this.config.port}${this.config.apiRoute}`;
     this.api = new RestApi(apiBaseUrl);
+
+    // Timer utilities bound to current game time, normalized by elapsed time since snapshot creation
+    this.timers = createIngameTimerUtils(() => {
+      const { gameTime, utcTime } = this.gameData;
+      if (utcTime && utcTime > 0) {
+        const elapsedSecs = (Date.now() - utcTime) / 1000;
+        return gameTime + elapsedSecs;
+      }
+      return gameTime;
+    });
 
     // Ingame
     this.ingameWs = new WebSocketManager();

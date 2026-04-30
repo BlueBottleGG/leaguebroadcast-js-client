@@ -19,7 +19,7 @@ export class damageGraphEntry {
     team?: number;
     damageByType: { [key: string]: number } = {};
     totalDamageDealt: number = 0;
-    respawnTime?: number;
+    respawnAt?: number;
     level?: number;
     health?: ingameHealthData;
     resource?: ingameResourceData;

@@ -2,11 +2,11 @@
  * Auto-generated REST API client for Game CRUD and draft (picks/bans) endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-04-28
+ * @generated 2026-04-30
  */
 
 import type { ApiClient } from "../ApiClient";
-import type { optionalGameData } from "#types/rest/optionalGameData";
+import type { optionalGameData } from "#types/rest/game/optionalGameData";
 import type { gameWithTeams } from "#types/shared/gameWithTeams";
 import type { simpleChampionData } from "#types/shared/simpleChampionData";
 import type { Team } from "#types/shared/style/team";
@@ -19,6 +19,11 @@ export class GameApi {
   /** `GET game/current` */
   async getCurrentGame(): Promise<gameWithTeams> {
     return this.client.get<gameWithTeams>('game/current');
+  }
+
+  /** `POST game/current/start` */
+  async startCurrentOrScheduledGame(): Promise<gameWithTeams> {
+    return this.client.post<gameWithTeams>('game/current/start');
   }
 
   /** `GET game/previous` */

@@ -6,11 +6,11 @@
 import { CustomOverlayMode } from "../../shared/customoverlay/customOverlayMode";
 
 export class registerOverlayRequest {
-  name: string = "";
-  mode: CustomOverlayMode = CustomOverlayMode.Static;
-  sourcePath: string = "";
-  devScript: string = "dev";
-  description?: string;
-  phase?: string;
-  version: string = "1.0.0";
+    name: string = "";
+    mode: CustomOverlayMode = CustomOverlayMode.Static;
+    sourcePath: string = "";
+    devScript: string = "";
+    description?: string;
+    phase?: string;
+    version: string = "";
 }

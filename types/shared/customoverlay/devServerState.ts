@@ -6,7 +6,7 @@
 import { DevServerStatus } from "./devServerStatus";
 
 export class devServerState {
-  status: DevServerStatus = DevServerStatus.Stopped;
-  url?: string;
-  error?: string;
+    status: DevServerStatus = DevServerStatus.Stopped;
+    url?: string;
+    error?: string;
 }

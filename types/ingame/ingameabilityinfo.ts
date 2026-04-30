@@ -11,7 +11,7 @@ export class ingameAbilityInfo {
     displayName: string = "";
     slot: SpellSlotIndex = SpellSlotIndex.Q;
     totalCooldown: number = 0;
-    cooldown: number = 0;
+    readyAt: number = 0;
     level: number = 0;
     charges: number = 0;
     assets?: championAbilityData;

@@ -13,7 +13,7 @@ export class itemWithAsset {
     count: number = 0;
     combineCost: number = 0;
     stats?: number[];
-    cooldown?: number;
+    readyAt?: number;
     maxCooldown?: number;
     stacks: number = 0;
 }

@@ -26,6 +26,7 @@ import type { iObjectiveRespawnData } from "./objective/iObjectiveRespawnData";
 
 export class ingameFrontendData {
     gameTime: number = 0;
+    utcTime?: number;
     playbackSpeed: number = 0;
     isTestingEnvironment?: boolean;
     gameVersion: string = "";

@@ -2,7 +2,7 @@
  * Auto-generated REST API client for Custom overlay management and hosting.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-04-28
+ * @generated 2026-04-30
  */
 
 import type { ApiClient } from "../ApiClient";

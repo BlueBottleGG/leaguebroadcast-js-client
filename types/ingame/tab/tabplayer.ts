@@ -27,5 +27,5 @@ export class tabPlayer {
     hasElder: boolean = false;
     level: number = 0;
     experience: ingameExperienceData = {} as ingameExperienceData;
-    timeToRespawn?: number;
+    respawnAt?: number;
 }
