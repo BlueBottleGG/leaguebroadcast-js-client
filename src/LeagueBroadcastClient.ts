@@ -23,6 +23,9 @@ import {
   type BoundIngameTimerUtils,
 } from "./util/ingameTimerUtils";
 
+// Module-level clock — one interval drives gameTime for all timer consumers
+let _clockInterval: ReturnType<typeof setInterval> | null = null;
+
 export interface LeagueBroadcastClientConfig {
   host: string;
   port?: number;
@@ -197,14 +200,7 @@ export class LeagueBroadcastClient {
     this.api = new RestApi(apiBaseUrl);
 
     // Timer utilities bound to current game time, normalized by elapsed time since snapshot creation
-    this.timers = createIngameTimerUtils(() => {
-      const { gameTime, utcTime } = this.gameData;
-      if (utcTime && utcTime > 0) {
-        const elapsedSecs = (Date.now() - utcTime) / 1000;
-        return gameTime + elapsedSecs;
-      }
-      return gameTime;
-    });
+    this.timers = createIngameTimerUtils(() => this.gameData.gameTime);
 
     // Ingame
     this.ingameWs = new WebSocketManager();
@@ -222,6 +218,32 @@ export class LeagueBroadcastClient {
 
     if (this.config.autoConnect) {
       this.connect();
+    }
+  }
+
+  // ===========================================================================
+  // Internal clock management
+  // ===========================================================================
+
+  private _startClock() {
+    if (_clockInterval !== null) return;
+    _clockInterval = setInterval(() => {
+      if (
+        this.gameState === GameState.Running ||
+        this.gameState === GameState.Mocking
+      ) {
+        this.gameData.gameTime += this.gameData.playbackSpeed ?? 1;
+        // Notify handlers of the updated gameTime
+        this.stateUpdateHandlers.forEach((handler) => handler(this.gameData));
+        this.ingameStore._setGameData(this.gameData);
+      }
+    }, 1000);
+  }
+
+  private _stopClock() {
+    if (_clockInterval !== null) {
+      clearInterval(_clockInterval);
+      _clockInterval = null;
     }
   }
 
@@ -583,10 +605,39 @@ export class LeagueBroadcastClient {
       gameStatus: GameState.OutOfGame,
       ...state,
     };
+
+    // Adjust gameTime for the time elapsed since the snapshot was captured
+    // (network + processing latency). utcTime is the lb-side
+    // UTC millisecond timestamp at snapshot time; Date.now() is the client's
+    // current UTC milliseconds. The difference is the age of the snapshot.
+    const snapshotAge =
+      state.utcTime != null
+        ? Math.max(0, (Date.now() - state.utcTime) / 1000)
+        : 0;
+    const correctedGameTime =
+      (state.gameTime ?? 0) + snapshotAge * (state.playbackSpeed ?? 1);
+    // Sync gameTime: snap on large drift (e.g. pause/resume), otherwise let
+    // the internal clock tick smoothly between backend updates.
+    if (Math.abs(correctedGameTime - (this.gameData.gameTime ?? 0)) > 2) {
+      nextData.gameTime = correctedGameTime;
+    } else {
+      nextData.gameTime = this.gameData.gameTime ?? 0;
+    }
+
     this.gameData = structuralShare(this.gameData, nextData);
 
     if (!state.gameTime || state.gameTime === 0) {
       this.handleGameStatusUpdate(GameState.OutOfGame, false);
+    }
+
+    // Start or stop the single client-level clock
+    const shouldRun =
+      state.gameStatus === GameState.Running ||
+      state.gameStatus === GameState.Mocking;
+    if (shouldRun) {
+      this._startClock();
+    } else {
+      this._stopClock();
     }
 
     this.ingameStore._setGameData(this.gameData);
@@ -609,6 +660,16 @@ export class LeagueBroadcastClient {
     }
 
     this.gameState = gameStatus;
+
+    // Manage the clock based on game status
+    const shouldRun =
+      gameStatus === GameState.Running || gameStatus === GameState.Mocking;
+    if (shouldRun) {
+      this._startClock();
+    } else {
+      this._stopClock();
+    }
+
     this.ingameStore._setGameState(gameStatus);
     this.gameStatusHandlers.forEach((handler) =>
       handler(gameStatus, isTestingEnvironment),
@@ -669,6 +730,8 @@ export class LeagueBroadcastClient {
 
   private endGame(): void {
     console.log("[LeagueBroadcastClient] Game ended, resetting data");
+
+    this._stopClock();
 
     this.gameData = new ingameFrontendData();
     this.gameState = GameState.OutOfGame;
