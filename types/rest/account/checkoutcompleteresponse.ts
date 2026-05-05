@@ -3,12 +3,12 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { Tier } from "../../shared/style/set/tier";
-
 export class checkoutCompleteResponse {
     redirect: boolean = false;
-    tier: Tier = Tier.Free;
     status?: string;
     planId?: string;
+    plan?: string;
+    tier?: string;
     endDate?: Date;
+    features?: string[];
 }

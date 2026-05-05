@@ -16,4 +16,5 @@ export class itemWithAsset {
     readyAt?: number;
     maxCooldown?: number;
     stacks: number = 0;
+    charges: number = 0;
 }

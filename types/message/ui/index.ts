@@ -34,4 +34,6 @@ export * from './styleSetUpdatedMessage';
 export * from './styleVariantUpdatedEventArgs';
 export * from './styleVariantUpdateMessage';
 export * from './teamDatabaseUpdateMessage';
+export * from './tier';
+export * from './userFeaturesUpdatedMessage';
 export * from './userTierUpdatedMessage';

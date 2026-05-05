@@ -3,12 +3,12 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { Tier } from "./tier";
+import { Feature } from "./feature";
 
 export class styleSetEntry {
     variant: string = "";
     category: string = "";
     isActive: boolean = false;
     uri?: string;
-    minimumTier?: Tier;
+    minimumFeature?: Feature;
 }

@@ -9,5 +9,7 @@ export enum IngameSideInfoPageType {
     CreepScore = 4,
     Damage = 8,
     None = 16,
-    SkinDisplay = 32
+    SkinDisplay = 32,
+    RoleQuest = 64,
+    TowerPlatings = 128
 }

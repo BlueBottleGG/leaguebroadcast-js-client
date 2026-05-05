@@ -45,7 +45,7 @@ export class websocketMessageTypes {
     static readonly hotkeyFired = "hotkey-fired";
     static readonly activeComponentChanged = "active-component-changed";
     static readonly disabledOverlaysUpdate = "disabled-overlays-update";
-    static readonly userTierUpdated = "user-tier-updated";
+    static readonly userFeaturesUpdated = "user-features-updated";
     static readonly damageEventHistoryUpdate = "damage-event-history-update";
     static readonly customOverlayUpdate = "custom-overlay-update";
 }

@@ -4,7 +4,6 @@
  */
 
 import { billingCycle } from "../billing_cycle/billingCycle";
-import { Tier } from "../../shared/style/set/tier";
 
 export class planDetails {
     planName: string = "";
@@ -12,6 +11,7 @@ export class planDetails {
     currency: string = "";
     nextBillingDate?: Date;
     status: string = "";
-    tier?: Tier;
+    plan?: string;
+    features: string[] = [];
     billing_cycle?: billingCycle;
 }

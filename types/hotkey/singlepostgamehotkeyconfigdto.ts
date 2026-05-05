@@ -3,11 +3,11 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+import { Feature } from "../shared/style/set/feature";
 import { Team } from "../shared/style/team";
-import { Tier } from "../shared/style/set/tier";
 
 export class singlePostgameHotkeyConfigDto {
-    minTier: Tier = Tier.Free;
+    minFeature?: Feature;
     id: number = 0;
     name: string = "";
     componentName: string = "";

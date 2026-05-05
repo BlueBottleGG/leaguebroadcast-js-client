@@ -13,5 +13,6 @@ export class ingameSideInfoPageRow {
     minValue?: number;
     curValue?: number;
     displayValue?: number;
+    displayValueSuffix?: string;
     maxValue?: number;
 }

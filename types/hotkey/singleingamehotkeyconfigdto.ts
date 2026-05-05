@@ -3,12 +3,12 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+import { Feature } from "../shared/style/set/feature";
 import { playerHotkeyDto } from "./playerHotkeyDto";
 import { Team } from "../shared/style/team";
-import { Tier } from "../shared/style/set/tier";
 
 export class singleIngameHotkeyConfigDto {
-    minTier: Tier = Tier.Free;
+    minFeature?: Feature;
     buttonId: string = "";
     name: string = "";
     hotkey?: string;

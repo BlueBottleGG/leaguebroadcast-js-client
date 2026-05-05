@@ -3,9 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { PaymentInterval } from "./paymentInterval";
-
-export class checkoutRequestDTO {
+export class planDescriptorRecord {
     plan: string = "";
-    interval: PaymentInterval = PaymentInterval.Monthly;
+    hidden: boolean = false;
+    features: string[] = [];
 }
