@@ -9,6 +9,7 @@ import { simpleChampionData } from "../../shared/simpleChampionData";
 export class ingameScoreboardBottomPlayerData {
     champion?: simpleChampionData;
     name: string = "";
+    displayName?: string;
     kills: number = 0;
     deaths: number = 0;
     assists: number = 0;

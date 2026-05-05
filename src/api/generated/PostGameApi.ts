@@ -2,18 +2,18 @@
  * Auto-generated REST API client for Post-game overview, stats, graphs, and analysis endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-04-27
+ * @generated 2026-05-05
  */
 
 import type { ApiClient } from "../ApiClient";
 import type { Lane } from "#types/hotkey/lane";
-import type { activeComponentChangedEventArgs } from "#types/message/ui/activecomponentchangedeventargs";
+import type { activeComponentChangedEventArgs } from "#types/message/ui/activeComponentChangedEventArgs";
 import type { postGameDamageGraph } from "#types/postgame/damage/postGameDamageGraph";
 import type { postGameGoldGraph } from "#types/postgame/gold/postGameGoldGraph";
-import type { matchOverviewData } from "#types/postgame/matchoverviewdata";
+import type { matchOverviewData } from "#types/postgame/matchOverviewData";
 import type { postGameOverview } from "#types/postgame/postGameOverview";
-import type { postGamePlayerRunesAndItems } from "#types/postgame/postgameplayerrunesanditems";
-import type { postGamePlayerStats } from "#types/postgame/postgameplayerstats";
+import type { postGamePlayerRunesAndItems } from "#types/postgame/postGamePlayerRunesAndItems";
+import type { postGamePlayerStats } from "#types/postgame/postGamePlayerStats";
 import type { postGameTeamOverview } from "#types/postgame/postGameTeamOverview";
 import type { matchWithGamesAndTeams } from "#types/shared/matchWithGamesAndTeams";
 import type { Team } from "#types/shared/style/team";
@@ -77,13 +77,13 @@ export class PostGameApi {
   }
 
   /** `GET postgame/matchdata` */
-  async getMatchDataRange(startDate: string | null, endDate: string | null, startGameId: number | null, endGameId: number | null, teamId: number | null): Promise<matchWithGamesAndTeams[]> {
-    return this.client.get<matchWithGamesAndTeams[]>(`postgame/matchdata?startDate=${encodeURIComponent(String(startDate))}&endDate=${encodeURIComponent(String(endDate))}&startGameId=${encodeURIComponent(String(startGameId))}&endGameId=${encodeURIComponent(String(endGameId))}&teamId=${encodeURIComponent(String(teamId))}`);
+  async getMatchDataRange(startDate: string | null, endDate: string | null, startGameId: number | null, endGameId: number | null, teamId: number | null, seasonId: number | null): Promise<matchWithGamesAndTeams[]> {
+    return this.client.get<matchWithGamesAndTeams[]>(`postgame/matchdata?startDate=${encodeURIComponent(String(startDate))}&endDate=${encodeURIComponent(String(endDate))}&startGameId=${encodeURIComponent(String(startGameId))}&endGameId=${encodeURIComponent(String(endGameId))}&teamId=${encodeURIComponent(String(teamId))}&seasonId=${encodeURIComponent(String(seasonId))}`);
   }
 
   /** `GET postgame/matchdata/mock/filter` */
-  async getMockMatchDataRange(startDate: string | null, endDate: string | null, startGameId: number | null, endGameId: number | null, teamId: number | null): Promise<matchWithGamesAndTeams[]> {
-    return this.client.get<matchWithGamesAndTeams[]>(`postgame/matchdata/mock/filter?startDate=${encodeURIComponent(String(startDate))}&endDate=${encodeURIComponent(String(endDate))}&startGameId=${encodeURIComponent(String(startGameId))}&endGameId=${encodeURIComponent(String(endGameId))}&teamId=${encodeURIComponent(String(teamId))}`);
+  async getMockMatchDataRange(startDate: string | null, endDate: string | null, startGameId: number | null, endGameId: number | null, teamId: number | null, seasonId: number | null): Promise<matchWithGamesAndTeams[]> {
+    return this.client.get<matchWithGamesAndTeams[]>(`postgame/matchdata/mock/filter?startDate=${encodeURIComponent(String(startDate))}&endDate=${encodeURIComponent(String(endDate))}&startGameId=${encodeURIComponent(String(startGameId))}&endGameId=${encodeURIComponent(String(endGameId))}&teamId=${encodeURIComponent(String(teamId))}&seasonId=${encodeURIComponent(String(seasonId))}`);
   }
 
   /** `GET postgame/matchoverview/{matchId}` */
