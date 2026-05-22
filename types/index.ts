@@ -4,6 +4,8 @@
  */
 
 export * from './cloud';
+export * from './config';
+export * from './discord';
 export * from './hotkey';
 export * from './ingame';
 export * from './message';

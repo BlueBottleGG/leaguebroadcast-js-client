@@ -14,4 +14,5 @@ export class pickSlot {
     summonerSpells: summonerSpellData[] = [];
     champion?: championData;
     championStatistics?: championStatistics;
+    videoStreamUrl?: string;
 }

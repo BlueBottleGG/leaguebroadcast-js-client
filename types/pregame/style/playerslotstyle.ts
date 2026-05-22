@@ -12,4 +12,5 @@ export class playerSlotStyle {
     backgroundColor: string | colorStyle = "";
     textStyle: textStyle = {} as textStyle;
     layout: layoutStyle = {} as layoutStyle;
+    useVideoBackground: boolean = false;
 }

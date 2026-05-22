@@ -10,4 +10,5 @@ export class tabLevelUpStyle {
     background: string | colorStyle = "";
     text: textStyle = {} as textStyle;
     animationDuration: number = 0;
+    showOnlyMajorLevelUps: boolean = false;
 }

@@ -8,6 +8,7 @@ import { championStatusStyle } from "./championStatusStyle";
 import { championTabContainerStyle } from "./championTabContainerStyle";
 import { championTabNameStyle } from "./championTabNameStyle";
 import { championUltimateStyle } from "./championUltimateStyle";
+import { tabLevelUpStyle } from "./tabLevelUpStyle";
 import { textStyle } from "../../../shared/style/textStyle";
 
 export class championTabsStyle {
@@ -18,4 +19,5 @@ export class championTabsStyle {
     championLevel: textStyle = {} as textStyle;
     championStatus: championStatusStyle = {} as championStatusStyle;
     fullChampionTabContainer: championTabContainerStyle = {} as championTabContainerStyle;
+    levelUpStyle?: tabLevelUpStyle;
 }

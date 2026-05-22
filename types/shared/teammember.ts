@@ -17,4 +17,5 @@ export class teamMember {
     familyName: string = "";
     givenName: string = "";
     displayName?: string;
+    videoStreamUrl?: string;
 }

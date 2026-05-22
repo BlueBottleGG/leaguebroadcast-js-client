@@ -18,6 +18,7 @@ export class websocketMessageTypes {
     static readonly fontsChanged = "fonts-changed";
     static readonly matchDatabaseUpdate = "match-database-update";
     static readonly gameDatabaseUpdate = "game-database-update";
+    static readonly gameTeamSidesSwapped = "game-team-sides-swapped";
     static readonly teamDatabaseUpdate = "team-database-update";
     static readonly seasonDatabaseUpdate = "season-database-update";
     static readonly appNotification = "app-notification";
@@ -48,4 +49,8 @@ export class websocketMessageTypes {
     static readonly userFeaturesUpdated = "user-features-updated";
     static readonly damageEventHistoryUpdate = "damage-event-history-update";
     static readonly customOverlayUpdate = "custom-overlay-update";
+    static readonly brushPresetsUpdate = "brush-presets-update";
+    static readonly telestratorConfigUpdate = "telestrator-config-update";
+    static readonly telestratorHotkeyFired = "telestrator-hotkey-fired";
+    static readonly scriptEditorSwitch = "script-editor-switch";
 }

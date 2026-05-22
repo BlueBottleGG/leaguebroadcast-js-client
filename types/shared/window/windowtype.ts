@@ -8,5 +8,6 @@ export enum WindowType {
     Startup = 1,
     Login = 2,
     Settings = 3,
-    Drawing = 4
+    Drawing = 4,
+    ScriptEditor = 5
 }
