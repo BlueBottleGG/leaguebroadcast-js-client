@@ -46,6 +46,7 @@ export interface IngameEventHandlers {
   onFirstTowerEvent?: (teamId: Team) => void;
   onAnnouncementEvent?: (event: announcerEvent) => void;
   onKillFeedEvent?: (event: killFeedEvent) => void;
+  onSmiteReactionEvent?: (event: smiteReactionResult) => void;
 }
 
 export interface ChampSelectEventHandlers {
@@ -154,8 +155,8 @@ export class LeagueBroadcastClient {
     onObjectiveEvent: Set<(event: ingameObjectiveEvent) => void>;
     onFirstTowerEvent: Set<(teamId: Team) => void>;
     onAnnouncementEvent: Set<(event: announcerEvent) => void>;
-    onSmiteReactionEvent: Set<(event: smiteReactionResult) => void>;
     onKillFeedEvent: Set<(event: killFeedEvent) => void>;
+    onSmiteReactionEvent: Set<(event: smiteReactionResult) => void>;
   } = {
     onPlayerEvent: new Set(),
     onTeamEvent: new Set(),
