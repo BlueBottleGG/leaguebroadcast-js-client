@@ -22,6 +22,7 @@ import {
   createIngameTimerUtils,
   type BoundIngameTimerUtils,
 } from "./util/ingameTimerUtils";
+import { startOverlayHealth, type OverlayHealthHandle } from "#overlay-health";
 
 // Module-level clock — one interval drives gameTime for all timer consumers
 let _clockInterval: ReturnType<typeof setInterval> | null = null;
@@ -37,6 +38,7 @@ export interface LeagueBroadcastClientConfig {
   cacheRoute?: string;
   useHttps?: boolean;
   autoConnect?: boolean;
+  overlayHealth?: boolean | { enabled?: boolean; name?: string };
 }
 
 export interface IngameEventHandlers {
@@ -96,6 +98,9 @@ export class LeagueBroadcastClient {
   private preGameWs: WebSocketManager;
 
   private config: Required<LeagueBroadcastClientConfig>;
+
+  // -- Frontend-health monitoring ---------------------------------------------
+  private _overlayHealth: OverlayHealthHandle | null = null;
 
   // -- In-game state ----------------------------------------------------------
   private gameData: ingameFrontendData;
@@ -193,6 +198,7 @@ export class LeagueBroadcastClient {
       cacheRoute: config.cacheRoute ?? "/cache",
       useHttps: config.useHttps ?? false,
       autoConnect: config.autoConnect ?? true,
+      overlayHealth: config.overlayHealth ?? true,
     };
 
     // REST API
@@ -259,6 +265,8 @@ export class LeagueBroadcastClient {
    * promise rejects, but the other connection may still succeed.
    */
   async connect(): Promise<void> {
+    this.startOverlayHealthIfEnabled();
+
     const protocol = this.config.useHttps ? "wss" : "ws";
     const base = `${protocol}://${this.config.host}:${this.config.port}`;
 
@@ -289,6 +297,32 @@ export class LeagueBroadcastClient {
   disconnect(): void {
     this.ingameWs.disconnect();
     this.preGameWs.disconnect();
+    this._overlayHealth?.stop();
+    this._overlayHealth = null;
+  }
+
+  /**
+   * Starts passive frontend-health monitoring once, unless disabled via the
+   * `overlayHealth` config. Guarded so it never throws into the client.
+   */
+  private startOverlayHealthIfEnabled(): void {
+    if (this._overlayHealth) return;
+
+    const setting = this.config.overlayHealth;
+    if (setting === false) return;
+    const opts = typeof setting === "object" ? setting : {};
+    if (opts.enabled === false) return;
+
+    try {
+      this._overlayHealth = startOverlayHealth({
+        source: { kind: "sdk", name: opts.name },
+        host: this.config.host,
+        port: this.config.port,
+        useHttps: this.config.useHttps,
+      });
+    } catch {
+      // Frontend-health monitoring must never break the client.
+    }
   }
 
   /**
@@ -713,12 +747,6 @@ export class LeagueBroadcastClient {
     if (events.killFeed) {
       events.killFeed.forEach((event) =>
         this.ingameEventHandlers.onKillFeedEvent.forEach((h) => h(event)),
-      );
-    }
-
-    if (events.announcements) {
-      events.announcements.forEach((event) =>
-        this.ingameEventHandlers.onAnnouncementEvent.forEach((h) => h(event)),
       );
     }
 

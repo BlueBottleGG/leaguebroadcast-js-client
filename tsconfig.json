@@ -14,7 +14,8 @@
     "resolveJsonModule": true,
     "paths": {
       "#types": ["./types"],
-      "#types/*": ["./types/*"]
+      "#types/*": ["./types/*"],
+      "#overlay-health": ["../shared-overlay-health/src/index.ts"]
     },
     "types": [
       "node"

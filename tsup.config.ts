@@ -9,10 +9,11 @@ export default defineConfig({
   splitting: false,
   treeshake: true,
   external: [],
-  noExternal: [/#types(\/.*)?/],
+  noExternal: [/#types(\/.*)?/, /#overlay-health/],
   esbuildOptions(options) {
     options.alias = {
       "#types": "./types",
+      "#overlay-health": "../shared-overlay-health/src/index.ts",
     };
   },
 });
