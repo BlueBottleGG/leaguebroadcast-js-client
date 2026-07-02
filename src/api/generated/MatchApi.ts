@@ -6,15 +6,15 @@
  */
 
 import type { ApiClient } from "../ApiClient";
-import type { matchData } from "#types/pregame/matchdata";
-import type { addMatchRequestArgs } from "#types/rest/match/addmatchrequestargs";
-import type { optionalMatchData } from "#types/rest/match/optionalmatchdata";
-import type { BestOfType } from "#types/shared/bestoftype";
-import type { gameWithTeams } from "#types/shared/gamewithteams";
-import type { MatchRuleSet } from "#types/shared/matchruleset";
-import type { matchWithGamesAndTeams } from "#types/shared/matchwithgamesandteams";
-import type { simpleChampionData } from "#types/shared/simplechampiondata";
-import type { teamWithMembers } from "#types/shared/teamwithmembers";
+import type { matchData } from "#types/pregame/matchData";
+import type { addMatchRequestArgs } from "#types/rest/match/addMatchRequestArgs";
+import type { optionalMatchData } from "#types/rest/match/optionalMatchData";
+import type { BestOfType } from "#types/shared/BestOfType";
+import type { gameWithTeams } from "#types/shared/gameWithTeams";
+import type { MatchRuleSet } from "#types/shared/MatchRuleSet";
+import type { matchWithGamesAndTeams } from "#types/shared/matchWithGamesAndTeams";
+import type { simpleChampionData } from "#types/shared/simpleChampionData";
+import type { teamWithMembers } from "#types/shared/teamWithMembers";
 
 export class MatchApi {
   constructor(private readonly client: ApiClient) {}

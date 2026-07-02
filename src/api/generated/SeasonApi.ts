@@ -6,10 +6,10 @@
  */
 
 import type { ApiClient } from "../ApiClient";
-import type { matchWithGamesAndTeams } from "#types/shared/matchwithgamesandteams";
-import type { seasonData } from "#types/shared/seasondata";
-import type { teamData } from "#types/shared/teamdata";
-import type { teamWithMembers } from "#types/shared/teamwithmembers";
+import type { matchWithGamesAndTeams } from "#types/shared/matchWithGamesAndTeams";
+import type { seasonData } from "#types/shared/seasonData";
+import type { teamData } from "#types/shared/teamData";
+import type { teamWithMembers } from "#types/shared/teamWithMembers";
 
 export class SeasonApi {
   constructor(private readonly client: ApiClient) {}

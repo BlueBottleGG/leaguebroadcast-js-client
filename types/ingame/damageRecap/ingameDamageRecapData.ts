@@ -5,7 +5,7 @@
 
 import { damageRecapEntry } from "./damageRecapEntry";
 import { damageRecapTimelineEntry } from "./damageRecapTimelineEntry";
-import { ObjectiveRecapDisplayMode } from "./objectiveRecapDisplayMode";
+import { ObjectiveRecapDisplayMode } from "./ObjectiveRecapDisplayMode";
 import { simpleChampionData } from "../../shared/simpleChampionData";
 import { smiteReactionResult } from "../smiteReaction/smiteReactionResult";
 import type { iSpellObjectResource } from "./iSpellObjectResource";

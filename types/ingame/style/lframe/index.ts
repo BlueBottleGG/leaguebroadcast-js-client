@@ -5,4 +5,4 @@
 
 export * from './lFrameRotation';
 export * from './transitionStyle';
-export * from './transitionType';
+export * from './TransitionType';

@@ -10,5 +10,5 @@ export * from './matchupScoreStyle';
 export * from './matchupTable';
 export * from './matchupTableContentStyle';
 export * from './matchupVersusStyle';
-export * from './scoreDisplayMode';
-export * from './scoreDotBorderMode';
+export * from './ScoreDisplayMode';
+export * from './ScoreDotBorderMode';

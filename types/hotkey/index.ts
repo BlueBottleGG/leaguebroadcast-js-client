@@ -4,7 +4,7 @@
  */
 
 export * from './casterModeConfigDto';
-export * from './lane';
+export * from './Lane';
 export * from './playerHotkeyDto';
 export * from './singleIngameHotkeyConfigDto';
 export * from './singlePostgameHotkeyConfigDto';

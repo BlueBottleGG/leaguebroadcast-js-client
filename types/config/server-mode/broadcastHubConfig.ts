@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { ServerMode } from "./serverMode";
+import { ServerMode } from "./ServerMode";
 
 export class broadcastHubConfig {
     serverMode: ServerMode = ServerMode.Local;

@@ -9,7 +9,7 @@ import type { ApiClient } from "../ApiClient";
 import type { optionalGameData } from "#types/rest/game/optionalGameData";
 import type { gameWithTeams } from "#types/shared/gameWithTeams";
 import type { simpleChampionData } from "#types/shared/simpleChampionData";
-import type { Team } from "#types/shared/style/team";
+import type { Team } from "#types/shared/style/Team";
 import type { teamMember } from "#types/shared/teamMember";
 import type { teamWithMembers } from "#types/shared/teamWithMembers";
 

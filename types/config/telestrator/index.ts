@@ -5,7 +5,7 @@
 
 export * from './telestratorConfig';
 export * from './telestratorConfigDto';
-export * from './telestratorHotkeyAction';
+export * from './TelestratorHotkeyAction';
 export * from './telestratorHotkeyBinding';
 export * from './telestratorHotkeysUpdateDto';
 export * from './telestratorPresetHotkeyBinding';

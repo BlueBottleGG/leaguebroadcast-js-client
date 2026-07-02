@@ -4,4 +4,4 @@
  */
 
 export * from './broadcastHubConfig';
-export * from './serverMode';
+export * from './ServerMode';

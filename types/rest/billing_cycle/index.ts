@@ -4,4 +4,4 @@
  */
 
 export * from './billingCycle';
-export * from './interval';
+export * from './Interval';

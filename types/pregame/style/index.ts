@@ -20,7 +20,7 @@ export { divider as PregameDivider } from './divider'; // renamed: conflicts wit
 export * from './fearLessByGame';
 export * from './fearlessChampionImage';
 export * from './fearLessSingleRow';
-export * from './heroStatsDisplayMode';
+export * from './HeroStatsDisplayMode';
 export * from './infoContentColorStyling';
 export * from './infoContentLayoutStyling';
 export * from './infoContentTextStyle';

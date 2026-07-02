@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { SpellClassification } from "../../shared/spellClassification";
+import { SpellClassification } from "../../shared/SpellClassification";
 
 export interface iSpellObjectResource {
     spellName: string;

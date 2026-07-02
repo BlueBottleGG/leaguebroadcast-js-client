@@ -1,4 +1,4 @@
-import type { ingameFrontendData } from "#types/ingame/ingamefrontenddata";
+import type { ingameFrontendData } from "#types/ingame/ingameFrontendData";
 import type { GameState } from "#types/shared/GameState";
 
 /**

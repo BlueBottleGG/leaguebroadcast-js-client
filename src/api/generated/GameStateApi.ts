@@ -6,7 +6,7 @@
  */
 
 import type { ApiClient } from "../ApiClient";
-import type { tabPlayer } from "#types/ingame/tab/tabplayer";
+import type { tabPlayer } from "#types/ingame/tab/tabPlayer";
 
 export class GameStateApi {
   constructor(private readonly client: ApiClient) {}

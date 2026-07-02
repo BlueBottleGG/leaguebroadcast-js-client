@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { DevServerStatus } from "./devServerStatus";
+import { DevServerStatus } from "./DevServerStatus";
 
 export class devServerState {
     status: DevServerStatus = DevServerStatus.Stopped;

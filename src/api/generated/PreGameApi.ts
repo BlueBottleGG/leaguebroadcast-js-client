@@ -6,7 +6,7 @@
  */
 
 import type { ApiClient } from "../ApiClient";
-import type { simpleChampionData } from "#types/shared/simplechampiondata";
+import type { simpleChampionData } from "#types/shared/simpleChampionData";
 
 export class PreGameApi {
   constructor(private readonly client: ApiClient) {}

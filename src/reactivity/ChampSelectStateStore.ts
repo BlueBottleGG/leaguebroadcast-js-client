@@ -1,4 +1,4 @@
-import type { champSelectStateData } from "#types/pregame/champselectstatedata";
+import type { champSelectStateData } from "#types/pregame/champSelectStateData";
 
 /**
  * A subscribable slice of state produced by `select()`.

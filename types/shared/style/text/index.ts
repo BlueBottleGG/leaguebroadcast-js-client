@@ -3,5 +3,5 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-export * from './textOrientation';
-export * from './writingMode';
+export * from './TextOrientation';
+export * from './WritingMode';
