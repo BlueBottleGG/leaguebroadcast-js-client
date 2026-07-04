@@ -4,4 +4,4 @@
  */
 
 export * from './damageEventHistoryEntry';
-export * from './damageEventType';
+export * from './DamageEventType';

@@ -5,7 +5,7 @@
 
 import { championData } from "../shared/championData";
 import { pickBanTimer } from "./pickBanTimer";
-import { TimeLineActionType } from "./timeLineActionType";
+import { TimeLineActionType } from "./TimeLineActionType";
 
 export class timelineEntry {
     type: TimeLineActionType = TimeLineActionType.HoverPick;

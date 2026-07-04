@@ -7,7 +7,7 @@
 
 import type { ApiClient } from "../ApiClient";
 import type { damageEventHistoryEntry } from "#types/ingame/damageEvent/damageEventHistoryEntry";
-import type { ObjectiveRecapDisplayMode } from "#types/ingame/damageRecap/objectiveRecapDisplayMode";
+import type { ObjectiveRecapDisplayMode } from "#types/ingame/damageRecap/ObjectiveRecapDisplayMode";
 
 export class IngameApi {
   constructor(private readonly client: ApiClient) {}

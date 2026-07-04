@@ -5,9 +5,9 @@
 
 import { bottomRowSizeStyle } from "./bottomrow/bottomRowSizeStyle";
 import { bottomRowTeamStyle } from "./bottomRowTeamStyle";
-import { bottomRowTournamentData } from "./bottomRow/bottomRowTournamentData";
+import { bottomRowTournamentData } from "./bottomrow/bottomRowTournamentData";
 import { colorStyle } from "../../shared/style/colorStyle";
-import { HeroStatsDisplayMode } from "./heroStatsDisplayMode";
+import { HeroStatsDisplayMode } from "./HeroStatsDisplayMode";
 
 export class bottomRowPickBanStyle {
     fileVersion: string = "1.0";

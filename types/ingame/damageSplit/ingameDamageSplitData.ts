@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { DamageSplitMode } from "./damageSplitMode";
+import { DamageSplitMode } from "./DamageSplitMode";
 import { damageSplitTargetEntry } from "./damageSplitTargetEntry";
 import { simpleChampionData } from "../../shared/simpleChampionData";
 

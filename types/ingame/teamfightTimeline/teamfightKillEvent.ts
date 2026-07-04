@@ -4,7 +4,7 @@
  */
 
 import { simpleChampionData } from "../../shared/simpleChampionData";
-import { Team } from "../../shared/style/team";
+import { Team } from "../../shared/style/Team";
 
 export class teamfightKillEvent {
     gameTime: number = 0;

@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { CustomOverlayMode } from "../../shared/customoverlay/customOverlayMode";
+import { CustomOverlayMode } from "../../shared/customoverlay/CustomOverlayMode";
 
 export class registerOverlayRequest {
     name: string = "";

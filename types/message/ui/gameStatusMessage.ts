@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { GameState } from "../../shared/gameState";
+import { GameState } from "../../shared/GameState";
 
 export class gameStatusMessage {
     type: string = "";

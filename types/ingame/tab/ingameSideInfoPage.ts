@@ -5,7 +5,7 @@
 
 import { ingameSideInfoPageDisplayData } from "./ingameSideInfoPageDisplayData";
 import { ingameSideInfoPageRow } from "./ingameSideInfoPageRow";
-import { IngameSideInfoPageType } from "./ingameSideInfoPageType";
+import { IngameSideInfoPageType } from "./IngameSideInfoPageType";
 
 export class ingameSideInfoPage {
     type: IngameSideInfoPageType = IngameSideInfoPageType.Gold;

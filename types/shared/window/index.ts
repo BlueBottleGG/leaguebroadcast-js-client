@@ -3,5 +3,5 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-export * from './appTheme';
-export * from './windowType';
+export * from './AppTheme';
+export * from './WindowType';

@@ -4,9 +4,9 @@
  */
 
 import { colorStyle } from "./colorStyle";
-import { TextOrientation } from "./text/textOrientation";
+import { TextOrientation } from "./text/TextOrientation";
 import { textOutline } from "./textOutline";
-import { WritingMode } from "./text/writingMode";
+import { WritingMode } from "./text/WritingMode";
 
 export class textStyle {
     fontFamily: string = "";

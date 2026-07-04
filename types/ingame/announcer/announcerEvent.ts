@@ -4,7 +4,7 @@
  */
 
 import { announcementParameter } from "./announcementParameter";
-import { AnnouncementType } from "./announcementType";
+import { AnnouncementType } from "./AnnouncementType";
 
 export class announcerEvent {
     source?: announcementParameter;

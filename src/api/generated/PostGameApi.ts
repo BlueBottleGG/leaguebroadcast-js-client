@@ -6,7 +6,7 @@
  */
 
 import type { ApiClient } from "../ApiClient";
-import type { Lane } from "#types/hotkey/lane";
+import type { Lane } from "#types/hotkey/Lane";
 import type { activeComponentChangedEventArgs } from "#types/message/ui/activeComponentChangedEventArgs";
 import type { postGameDamageGraph } from "#types/postgame/damage/postGameDamageGraph";
 import type { postGameGoldGraph } from "#types/postgame/gold/postGameGoldGraph";
@@ -16,7 +16,7 @@ import type { postGamePlayerRunesAndItems } from "#types/postgame/postGamePlayer
 import type { postGamePlayerStats } from "#types/postgame/postGamePlayerStats";
 import type { postGameTeamOverview } from "#types/postgame/postGameTeamOverview";
 import type { matchWithGamesAndTeams } from "#types/shared/matchWithGamesAndTeams";
-import type { Team } from "#types/shared/style/team";
+import type { Team } from "#types/shared/style/Team";
 
 export class PostGameApi {
   constructor(private readonly client: ApiClient) {}

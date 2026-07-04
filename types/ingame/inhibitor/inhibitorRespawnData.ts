@@ -3,8 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { CampLocation } from "../objective/campLocation";
-import { IngameObjectiveType } from "../objective/ingameObjectiveType";
+import { CampLocation } from "../objective/CampLocation";
+import { IngameObjectiveType } from "../objective/IngameObjectiveType";
 
 export class inhibitorRespawnData {
     type: IngameObjectiveType = IngameObjectiveType.GRUB;

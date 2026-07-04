@@ -5,7 +5,7 @@
 
 import { championIconStyle } from "../../../shared/style/championIconStyle";
 import { colorStyle } from "../../../shared/style/colorStyle";
-import { ContentAlign } from "../../../shared/style/contentAlign";
+import { ContentAlign } from "../../../shared/style/ContentAlign";
 import { layoutStyle } from "../../../shared/style/layoutStyle";
 import { textStyle } from "../../../shared/style/textStyle";
 

@@ -8,7 +8,7 @@ export * from './ingameFrontendData';
 export * from './ingameObjectivePowerPlay';
 export * from './ingameStateSettingsWrapper';
 export * from './itemWithAsset';
-export * from './spellSlotIndex';
+export * from './SpellSlotIndex';
 export * from './announcer';
 export * from './championDetail';
 export * from './damageComposition';

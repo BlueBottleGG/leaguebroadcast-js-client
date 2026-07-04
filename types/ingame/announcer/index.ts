@@ -4,5 +4,5 @@
  */
 
 export * from './announcementParameter';
-export * from './announcementType';
+export * from './AnnouncementType';
 export * from './announcerEvent';

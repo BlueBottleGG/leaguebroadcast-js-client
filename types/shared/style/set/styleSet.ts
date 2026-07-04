@@ -4,7 +4,7 @@
  */
 
 import { globalStyleProperties } from "./globalStyleProperties";
-import { SetPhaseType } from "./setPhaseType";
+import { SetPhaseType } from "./SetPhaseType";
 
 export class styleSet {
     uri: string = "";

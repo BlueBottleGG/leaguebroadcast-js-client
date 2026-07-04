@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { Tier } from "./tier";
+import { Tier } from "./Tier";
 
 export class userTierUpdatedMessage {
     type: string = "";

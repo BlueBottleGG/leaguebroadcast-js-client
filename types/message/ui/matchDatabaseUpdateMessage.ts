@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { DatabaseUpdateType } from "../../shared/databaseUpdateType";
+import { DatabaseUpdateType } from "../../shared/DatabaseUpdateType";
 import { matchWithGamesAndTeams } from "../../shared/matchWithGamesAndTeams";
 
 export class matchDatabaseUpdateMessage {

@@ -3,8 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { Feature } from "../shared/style/set/feature";
-import { Team } from "../shared/style/team";
+import { Feature } from "../shared/style/set/Feature";
+import { Team } from "../shared/style/Team";
 
 export class singlePostgameHotkeyConfigDto {
     minFeature?: Feature;

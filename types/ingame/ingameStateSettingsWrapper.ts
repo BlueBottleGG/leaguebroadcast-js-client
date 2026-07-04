@@ -3,9 +3,9 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { ObjectiveRecapDisplayMode } from "./damageRecap/objectiveRecapDisplayMode";
+import { ObjectiveRecapDisplayMode } from "./damageRecap/ObjectiveRecapDisplayMode";
 import { playerHotkeyDto } from "../hotkey/playerHotkeyDto";
-import { Team } from "../shared/style/team";
+import { Team } from "../shared/style/Team";
 
 export class ingameStateSettingsWrapper {
     timePeriod?: number;

@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { MatchRuleSet } from "./matchRuleSet";
+import { MatchRuleSet } from "./MatchRuleSet";
 import { teamWithMembers } from "./teamWithMembers";
 
 export class gameWithTeams {

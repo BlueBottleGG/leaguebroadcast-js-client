@@ -15,7 +15,7 @@ export * from './emailResendCodeRequest';
 export * from './emailResetPasswordRequest';
 export * from './emailSignUpRequest';
 export * from './localizedPriceData';
-export * from './paymentInterval';
+export * from './PaymentInterval';
 export * from './planDescriptorRecord';
 export * from './planDetails';
 export * from './portalSessionResponse';

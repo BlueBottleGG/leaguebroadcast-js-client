@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { SetPhaseType } from "../shared/style/set/setPhaseType";
+import { SetPhaseType } from "../shared/style/set/SetPhaseType";
 
 export class localSyncState {
     cloudId: string = "";

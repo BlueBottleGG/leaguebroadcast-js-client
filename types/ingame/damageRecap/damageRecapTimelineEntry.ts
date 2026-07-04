@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { DamageType } from "./damageType";
+import { DamageType } from "./DamageType";
 
 export class damageRecapTimelineEntry {
     gameTime: number = 0;

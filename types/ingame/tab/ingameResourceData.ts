@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { ResourceType } from "./resourceType";
+import { ResourceType } from "./ResourceType";
 
 export class ingameResourceData {
     type: ResourceType = ResourceType.mana;

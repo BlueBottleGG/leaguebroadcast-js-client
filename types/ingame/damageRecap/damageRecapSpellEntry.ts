@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { DamageType } from "./damageType";
+import { DamageType } from "./DamageType";
 import type { iSpellObjectResource } from "./iSpellObjectResource";
 
 export class damageRecapSpellEntry {

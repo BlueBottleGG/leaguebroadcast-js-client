@@ -4,9 +4,9 @@
  */
 
 import { colorRGBA } from "./colorRGBA";
-import { StrokeLayer } from "./strokeLayer";
-import { StrokeLineStyle } from "./strokeLineStyle";
-import { StrokeTipStyle } from "./strokeTipStyle";
+import { StrokeLayer } from "./StrokeLayer";
+import { StrokeLineStyle } from "./StrokeLineStyle";
+import { StrokeTipStyle } from "./StrokeTipStyle";
 
 export class partialStrokeProperties {
     active?: boolean;

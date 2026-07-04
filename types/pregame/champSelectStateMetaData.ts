@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { BestOfType } from "../shared/bestOfType";
+import { BestOfType } from "../shared/BestOfType";
 import { champSelectStatePerformanceData } from "./champSelectStatePerformanceData";
 import { matchData } from "./matchData";
 

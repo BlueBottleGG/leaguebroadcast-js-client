@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { Feature } from "./feature";
+import { Feature } from "./Feature";
 
 export class styleSetEntry {
     variant: string = "";

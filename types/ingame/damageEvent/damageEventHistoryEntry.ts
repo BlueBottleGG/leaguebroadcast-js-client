@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { DamageEventType } from "./damageEventType";
+import { DamageEventType } from "./DamageEventType";
 import { simpleChampionData } from "../../shared/simpleChampionData";
 
 export class damageEventHistoryEntry {

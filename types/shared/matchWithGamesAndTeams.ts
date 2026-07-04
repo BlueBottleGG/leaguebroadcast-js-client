@@ -3,9 +3,9 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { BestOfType } from "./bestOfType";
+import { BestOfType } from "./BestOfType";
 import { gameWithTeams } from "./gameWithTeams";
-import { MatchRuleSet } from "./matchRuleSet";
+import { MatchRuleSet } from "./MatchRuleSet";
 import { teamWithMembers } from "./teamWithMembers";
 
 export class matchWithGamesAndTeams {

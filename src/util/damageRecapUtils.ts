@@ -1,5 +1,5 @@
-import { DamageType } from "#types/ingame/damageRecap/damageType";
-import { SpellClassification } from "#types/shared/spellClassification";
+import { DamageType } from "#types/ingame/damageRecap/DamageType";
+import { SpellClassification } from "#types/shared/SpellClassification";
 import type { damageRecapEntry } from "#types/ingame/damageRecap/damageRecapEntry";
 import type { damageRecapSpellEntry } from "#types/ingame/damageRecap/damageRecapSpellEntry";
 import type { iSpellObjectResource } from "#types/ingame/damageRecap/iSpellObjectResource";

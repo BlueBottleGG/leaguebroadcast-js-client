@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { SpellClassification } from "./spellClassification";
+import { SpellClassification } from "./SpellClassification";
 
 export class championAbilityData {
     spellName: string = "";

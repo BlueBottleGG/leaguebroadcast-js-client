@@ -6,7 +6,7 @@
 import { centerContent } from "./centerContent";
 import { championSlot } from "./championSlot";
 import { coachSlot } from "./coachSlot";
-import { HeroStatsDisplayMode } from "./heroStatsDisplayMode";
+import { HeroStatsDisplayMode } from "./HeroStatsDisplayMode";
 import { layoutStyle } from "../../shared/style/layoutStyle";
 import { phaseTimer } from "./phaseTimer";
 import { pickBans } from "./pickBans";

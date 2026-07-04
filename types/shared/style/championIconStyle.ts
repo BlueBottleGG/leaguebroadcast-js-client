@@ -4,8 +4,8 @@
  */
 
 import { borderStyle } from "./borderStyle";
-import { ChampionIconType } from "./championIconType";
-import { ObjectFit } from "./objectFit";
+import { ChampionIconType } from "./ChampionIconType";
+import { ObjectFit } from "./ObjectFit";
 
 export class championIconStyle {
     type: ChampionIconType = ChampionIconType.Splash;

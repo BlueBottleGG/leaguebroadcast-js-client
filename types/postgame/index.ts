@@ -8,7 +8,7 @@ export * from './matchOverviewData';
 export * from './matchOverviewGameSummary';
 export * from './matchOverviewTeamSummary';
 export * from './playerDeath';
-export * from './postGameDataType';
+export * from './PostGameDataType';
 export * from './postGameOverview';
 export * from './postGamePlayerInfo';
 export * from './postGamePlayerPage';
