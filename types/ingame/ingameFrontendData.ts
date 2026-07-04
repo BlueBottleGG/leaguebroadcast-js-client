@@ -4,6 +4,7 @@
  */
 
 import { GameState } from "../shared/gameState";
+import { championDetailData } from "./championDetail/championDetailData";
 import { ingameDamageCompositionData } from "./damageComposition/ingameDamageCompositionData";
 import { ingameDamageFlowData } from "./damageFlow/ingameDamageFlowData";
 import { ingameDamageGraphData } from "./damageGraph/ingameDamageGraphData";
@@ -56,4 +57,5 @@ export class ingameFrontendData {
     damageComposition?: ingameDamageCompositionData;
     damageFlow?: ingameDamageFlowData;
     skinDisplay?: ingameSkinDisplayData;
+    championDetail: championDetailData | null = null;
 }

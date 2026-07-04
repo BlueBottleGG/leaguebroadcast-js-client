@@ -10,6 +10,7 @@ export * from './ingameStateSettingsWrapper';
 export * from './itemWithAsset';
 export * from './spellSlotIndex';
 export * from './announcer';
+export * from './championDetail';
 export * from './damageComposition';
 export * from './damageEvent';
 export * from './damageFlow';
