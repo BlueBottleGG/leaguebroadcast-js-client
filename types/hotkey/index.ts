@@ -6,5 +6,6 @@
 export * from './casterModeConfigDto';
 export * from './lane';
 export * from './playerHotkeyDto';
+export * from './singleChampionDetailHotkeyConfigDto';
 export * from './singleIngameHotkeyConfigDto';
 export * from './singlePostgameHotkeyConfigDto';

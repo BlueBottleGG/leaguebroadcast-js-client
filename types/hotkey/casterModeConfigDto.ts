@@ -3,10 +3,12 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+import { singleChampionDetailHotkeyConfigDto } from "./singleChampionDetailHotkeyConfigDto";
 import { singleIngameHotkeyConfigDto } from "./singleIngameHotkeyConfigDto";
 import { singlePostgameHotkeyConfigDto } from "./singlePostgameHotkeyConfigDto";
 
 export class casterModeConfigDto {
     ingame?: singleIngameHotkeyConfigDto[];
     postgame?: singlePostgameHotkeyConfigDto[];
+    championDetail?: singleChampionDetailHotkeyConfigDto[];
 }
