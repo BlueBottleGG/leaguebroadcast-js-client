@@ -9,3 +9,7 @@ export type {
 export { ChampSelectStateStore } from "./ChampSelectStateStore";
 
 export type { ChampSelectSnapshot } from "./ChampSelectStateStore";
+
+export { PostGameStateStore } from "./PostGameStateStore";
+
+export type { PostGameSnapshot } from "./PostGameStateStore";

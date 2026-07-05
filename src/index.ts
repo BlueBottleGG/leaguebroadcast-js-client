@@ -4,6 +4,7 @@ export type {
   LeagueBroadcastClientConfig,
   IngameEventHandlers,
   ChampSelectEventHandlers,
+  PostGameEventHandlers,
 } from "./LeagueBroadcastClient";
 
 // WebSocket manager
@@ -19,6 +20,9 @@ export type {
 
 export { ChampSelectStateStore } from "./reactivity/ChampSelectStateStore";
 export type { ChampSelectSnapshot } from "./reactivity/ChampSelectStateStore";
+
+export { PostGameStateStore } from "./reactivity/PostGameStateStore";
+export type { PostGameSnapshot } from "./reactivity/PostGameStateStore";
 
 // All types – auto-generated barrel exports (run `npm run generate-barrels` to update)
 export * from "#types/cloud";
@@ -83,3 +87,12 @@ export type {
   EntityType,
   NormalizedDamageEntry,
 } from "./util/damageRecapUtils";
+
+export {
+  getPostGameSides,
+  buildGoldSeries,
+  buildGoldDiffSeries,
+  formatGameClock,
+  damageGraphTeamTotal,
+  sortDamageEntries,
+} from "./util/postGameUtils";

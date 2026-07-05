@@ -1,10 +1,12 @@
 import { WebSocketManager } from "./WebSocketManager";
 import { GameStateStore } from "./reactivity/GameStateStore";
 import { ChampSelectStateStore } from "./reactivity/ChampSelectStateStore";
+import { PostGameStateStore } from "./reactivity/PostGameStateStore";
 import { structuralShare } from "./reactivity/structuralShare";
 import type { Subscribable, EqualityFn } from "./reactivity/GameStateStore";
 import type { GameStateSnapshot } from "./reactivity/GameStateStore";
 import type { ChampSelectSnapshot } from "./reactivity/ChampSelectStateStore";
+import type { PostGameSnapshot } from "./reactivity/PostGameStateStore";
 import { ingameFrontendData } from "#types/ingame/ingameFrontendData";
 import { GameState } from "#types/shared/GameState";
 import type { transitionEvents } from "#types/ingame/event/transitionEvents";
@@ -16,6 +18,9 @@ import type { killFeedEvent } from "#types/ingame/event/killFeedEvent";
 import { Team } from "#types/shared/style/Team";
 import { champSelectStateData } from "#types/pregame/champSelectStateData";
 import type { pickBanActionEventArgs } from "#types/pregame/pickBanActionEventArgs";
+import { postGameStateData } from "#types/postgame/postGameStateData";
+import type { postGameOverview } from "#types/postgame/postGameOverview";
+import type { activeComponentChangedEventArgs } from "#types/message/ui/activeComponentChangedEventArgs";
 import { RestApi } from "./api/RestApi";
 import { smiteReactionResult } from "#types/ingame/smiteReaction/smiteReactionResult";
 import {
@@ -34,6 +39,11 @@ export interface LeagueBroadcastClientConfig {
   ingameWsRoute?: string;
   /** Pre-game (champion select) WebSocket route. @default "/ws/pre" */
   preGameWsRoute?: string;
+  /**
+   * Post-game (analysis) WebSocket route. @default "/ws/post"
+   * Set to `false` to disable the post-game WebSocket connection entirely.
+   */
+  postGameWsRoute?: string | false;
   apiRoute?: string;
   cacheRoute?: string;
   useHttps?: boolean;
@@ -62,15 +72,30 @@ export interface ChampSelectEventHandlers {
   onRouteUpdate?: (uri: string) => void;
 }
 
+export interface PostGameEventHandlers {
+  /** Fired when the backend broadcasts a postgame route change ("postgame-route-change" or "frontend-route-update"). */
+  onRouteUpdate?: (uri: string) => void;
+  /** Fired when postgame mocking is toggled on the backend. */
+  onMockingUpdate?: (mocking: boolean) => void;
+  /** Fired when the active postgame analysis component changes. */
+  onActiveComponentChanged?: (args: activeComponentChangedEventArgs) => void;
+  /** Fired when postgame becomes active via showPostGame(). */
+  onPostGameShow?: (overview: postGameOverview) => void;
+  /** Fired when postgame is hidden/reset. */
+  onPostGameHide?: () => void;
+}
+
 /**
  * Main client for connecting to the League Broadcast backend.
  *
- * Internally manages **two** WebSocket connections:
- * - `/ws/in`  — real-time in-game data
- * - `/ws/pre` — champion-select (pre-game) data
+ * Internally manages **three** WebSocket connections:
+ * - `/ws/in`   — real-time in-game data
+ * - `/ws/pre`  — champion-select (pre-game) data
+ * - `/ws/post` — post-game (analysis) data
  *
- * Both connections are opened on {@link connect} (or automatically if
- * `autoConnect` is `true`) and share the same host / port.
+ * All connections are opened on {@link connect} (or automatically if
+ * `autoConnect` is `true`) and share the same host / port. The post-game
+ * connection can be disabled by setting `postGameWsRoute` to `false`.
  *
  * @example
  * ```ts
@@ -90,12 +115,19 @@ export interface ChampSelectEventHandlers {
  * client.onChampSelectUpdate(data => console.log("Phase:", data.timer.phaseName));
  * client.onChampSelectEvents({ onAction: a => console.log(a) });
  * client.selectChampSelect(s => s.champSelectData.timer);
+ *
+ * // Post-game
+ * const overview = await client.showPostGame();
+ * client.onPostGameUpdate(data => console.log("Winner:", data.overview?.winnerSide));
+ * client.onPostGameEvents({ onActiveComponentChanged: a => console.log(a) });
+ * client.selectPostGame(s => s.postGameData.overview);
  * ```
  */
 export class LeagueBroadcastClient {
   // -- WebSocket connections --------------------------------------------------
   private ingameWs: WebSocketManager;
   private preGameWs: WebSocketManager;
+  private postGameWs: WebSocketManager;
 
   private config: Required<LeagueBroadcastClientConfig>;
 
@@ -111,6 +143,9 @@ export class LeagueBroadcastClient {
   private champSelectData: champSelectStateData;
   private champSelectWasActive: boolean = false;
 
+  // -- Post-game state --------------------------------------------------------
+  private postGameData: postGameStateData;
+
   // -- Reactive stores --------------------------------------------------------
 
   /** Reactive store for **in-game** state. */
@@ -118,6 +153,9 @@ export class LeagueBroadcastClient {
 
   /** Reactive store for **pre-game** (champion select) state. */
   public readonly preGameStore: ChampSelectStateStore;
+
+  /** Reactive store for **post-game** (analysis) state. */
+  public readonly postGameStore: PostGameStateStore;
 
   /**
    * Timer utilities pre-bound to this client's current game time.
@@ -188,12 +226,32 @@ export class LeagueBroadcastClient {
     onRouteUpdate: new Set(),
   };
 
+  // -- Post-game event handlers -----------------------------------------------
+  private postGameUpdateHandlers: Set<(state: postGameStateData) => void> =
+    new Set();
+  private postGameEventHandlers: {
+    onRouteUpdate: Set<(uri: string) => void>;
+    onMockingUpdate: Set<(mocking: boolean) => void>;
+    onActiveComponentChanged: Set<
+      (args: activeComponentChangedEventArgs) => void
+    >;
+    onPostGameShow: Set<(overview: postGameOverview) => void>;
+    onPostGameHide: Set<() => void>;
+  } = {
+    onRouteUpdate: new Set(),
+    onMockingUpdate: new Set(),
+    onActiveComponentChanged: new Set(),
+    onPostGameShow: new Set(),
+    onPostGameHide: new Set(),
+  };
+
   constructor(config: LeagueBroadcastClientConfig) {
     this.config = {
       host: config.host,
       port: config.port ?? 58869,
       ingameWsRoute: config.ingameWsRoute ?? "/ws/in",
       preGameWsRoute: config.preGameWsRoute ?? "/ws/pre",
+      postGameWsRoute: config.postGameWsRoute ?? "/ws/post",
       apiRoute: config.apiRoute ?? "/api",
       cacheRoute: config.cacheRoute ?? "/cache",
       useHttps: config.useHttps ?? false,
@@ -222,6 +280,12 @@ export class LeagueBroadcastClient {
     this.preGameStore = new ChampSelectStateStore(this.champSelectData);
     this.setupPreGameMessageHandler();
     this.preGameWs.onDisconnect(() => this.endChampSelect());
+
+    // Post-game
+    this.postGameWs = new WebSocketManager();
+    this.postGameData = new postGameStateData();
+    this.postGameStore = new PostGameStateStore(this.postGameData);
+    this.setupPostGameMessageHandler();
 
     if (this.config.autoConnect) {
       this.connect();
@@ -273,10 +337,18 @@ export class LeagueBroadcastClient {
     const ingameUrl = `${base}${this.config.ingameWsRoute}`;
     const preGameUrl = `${base}${this.config.preGameWsRoute}`;
 
-    const results = await Promise.allSettled([
+    const connections = [
       this.ingameWs.connect(ingameUrl),
       this.preGameWs.connect(preGameUrl),
-    ]);
+    ];
+
+    // Post-game connection is optional — skipped when disabled via config.
+    if (this.config.postGameWsRoute !== false) {
+      const postGameUrl = `${base}${this.config.postGameWsRoute}`;
+      connections.push(this.postGameWs.connect(postGameUrl));
+    }
+
+    const results = await Promise.allSettled(connections);
 
     const failures = results.filter((r) => r.status === "rejected");
     if (failures.length > 0) {
@@ -297,6 +369,7 @@ export class LeagueBroadcastClient {
   disconnect(): void {
     this.ingameWs.disconnect();
     this.preGameWs.disconnect();
+    this.postGameWs.disconnect();
     this._overlayHealth?.stop();
     this._overlayHealth = null;
   }
@@ -339,6 +412,13 @@ export class LeagueBroadcastClient {
     return this.preGameWs.isConnected();
   }
 
+  /**
+   * Whether the post-game WebSocket is connected.
+   */
+  isPostGameConnected(): boolean {
+    return this.postGameWs.isConnected();
+  }
+
   // ===========================================================================
   // In-game data access
   // ===========================================================================
@@ -370,6 +450,20 @@ export class LeagueBroadcastClient {
   /** Whether champion select is currently active. */
   isChampSelectActive(): boolean {
     return this.champSelectData.isActive;
+  }
+
+  // ===========================================================================
+  // Post-game data access
+  // ===========================================================================
+
+  /** Get the current post-game state. */
+  getPostGameData(): postGameStateData {
+    return this.postGameData;
+  }
+
+  /** Whether post-game is currently active. */
+  isPostGameActive(): boolean {
+    return this.postGameData.isActive;
   }
 
   // ===========================================================================
@@ -451,6 +545,38 @@ export class LeagueBroadcastClient {
   }
 
   // ===========================================================================
+  // Post-game event handlers
+  // ===========================================================================
+
+  /** Register a handler for post-game state updates. */
+  onPostGameUpdate(handler: (state: postGameStateData) => void): () => void {
+    this.postGameUpdateHandlers.add(handler);
+    return () => this.postGameUpdateHandlers.delete(handler);
+  }
+
+  /** Register handlers for post-game lifecycle and analysis events. Returns an unsubscribe function. */
+  onPostGameEvents(handlers: PostGameEventHandlers): () => void {
+    const entries = Object.entries(handlers) as [
+      keyof PostGameEventHandlers,
+      NonNullable<PostGameEventHandlers[keyof PostGameEventHandlers]>,
+    ][];
+    for (const [key, handler] of entries) {
+      if (handler) {
+        (this.postGameEventHandlers[key] as Set<typeof handler>).add(handler);
+      }
+    }
+    return () => {
+      for (const [key, handler] of entries) {
+        if (handler) {
+          (this.postGameEventHandlers[key] as Set<typeof handler>).delete(
+            handler,
+          );
+        }
+      }
+    };
+  }
+
+  // ===========================================================================
   // Connection event handlers
   // ===========================================================================
 
@@ -482,6 +608,21 @@ export class LeagueBroadcastClient {
   /** Register a handler for pre-game connection errors. */
   onPreGameError(handler: (error: Event) => void): () => void {
     return this.preGameWs.onError(handler);
+  }
+
+  /** Register a handler for post-game connection. */
+  onPostGameConnect(handler: () => void): () => void {
+    return this.postGameWs.onConnect(handler);
+  }
+
+  /** Register a handler for post-game disconnection. */
+  onPostGameDisconnect(handler: () => void): () => void {
+    return this.postGameWs.onDisconnect(handler);
+  }
+
+  /** Register a handler for post-game connection errors. */
+  onPostGameError(handler: (error: Event) => void): () => void {
+    return this.postGameWs.onError(handler);
   }
 
   // ===========================================================================
@@ -566,6 +707,47 @@ export class LeagueBroadcastClient {
     equalityFn?: EqualityFn<S>,
   ): () => void {
     return this.preGameStore.watch(selector, callback, equalityFn);
+  }
+
+  // ===========================================================================
+  // Reactive API — post-game (convenience wrappers around this.postGameStore)
+  // ===========================================================================
+
+  /**
+   * Create a subscribable slice of **post-game** (analysis) state.
+   *
+   * ```tsx
+   * const overview = client.selectPostGame(s => s.postGameData.overview);
+   * function Winner() {
+   *   const value = useSyncExternalStore(overview.subscribe, overview.getSnapshot);
+   *   return <span>{value?.winnerSide}</span>;
+   * }
+   * ```
+   */
+  selectPostGame<S>(
+    selector: (snapshot: PostGameSnapshot) => S,
+    equalityFn?: EqualityFn<S>,
+  ): Subscribable<S> {
+    return this.postGameStore.select(selector, equalityFn);
+  }
+
+  /**
+   * Watch a derived **post-game** value and invoke `callback` whenever it
+   * changes. Returns an unsubscribe function.
+   *
+   * ```ts
+   * client.watchPostGame(
+   *   s => s.postGameData.overview?.winnerSide,
+   *   (winner, prev) => console.log(`Winner: ${prev} → ${winner}`),
+   * );
+   * ```
+   */
+  watchPostGame<S>(
+    selector: (snapshot: PostGameSnapshot) => S,
+    callback: (value: S, prev: S) => void,
+    equalityFn?: EqualityFn<S>,
+  ): () => void {
+    return this.postGameStore.watch(selector, callback, equalityFn);
   }
 
   // ===========================================================================
@@ -843,6 +1025,122 @@ export class LeagueBroadcastClient {
     this.champSelectEventHandlers.onChampSelectEnd.forEach((h) => h());
     this.champSelectUpdateHandlers.forEach((handler) =>
       handler(this.champSelectData),
+    );
+  }
+
+  // ===========================================================================
+  // Private — post-game message handling
+  // ===========================================================================
+
+  private setupPostGameMessageHandler(): void {
+    this.postGameWs.onMessage((messageData: any) => {
+      switch (messageData.type) {
+        case "postgame-route-change":
+        case "frontend-route-update":
+          this.handlePostGameRouteUpdate(messageData.uri);
+          break;
+        case "postgame-mocking-update":
+          this.handlePostGameMockingUpdate(
+            messageData.mockingState ?? messageData.mocking,
+          );
+          break;
+        case "active-component-changed":
+          this.handleActiveComponentChanged(messageData);
+          break;
+      }
+    });
+  }
+
+  private handlePostGameRouteUpdate(uri: unknown): void {
+    if (typeof uri !== "string" || uri.length === 0) return;
+    this.postGameEventHandlers.onRouteUpdate.forEach((h) => h(uri));
+  }
+
+  private handlePostGameMockingUpdate(mocking: unknown): void {
+    const isMocking = Boolean(mocking);
+
+    const nextData: postGameStateData = {
+      ...this.postGameData,
+      isMocking,
+    };
+    this.postGameData = structuralShare(this.postGameData, nextData);
+
+    this.postGameStore._setPostGameData(this.postGameData);
+    this.postGameUpdateHandlers.forEach((handler) =>
+      handler(this.postGameData),
+    );
+    this.postGameEventHandlers.onMockingUpdate.forEach((h) => h(isMocking));
+  }
+
+  private handleActiveComponentChanged(messageData: any): void {
+    // The payload may arrive either as the args object itself or wrapped in
+    // an `args` field — accept both, stripping the message `type` when present.
+    const { type: _type, ...rest } = messageData ?? {};
+    const args: activeComponentChangedEventArgs =
+      messageData?.args ?? (rest as activeComponentChangedEventArgs);
+
+    const nextData: postGameStateData = {
+      ...this.postGameData,
+      activeComponent: args,
+    };
+    this.postGameData = structuralShare(this.postGameData, nextData);
+
+    this.postGameStore._setPostGameData(this.postGameData);
+    this.postGameUpdateHandlers.forEach((handler) =>
+      handler(this.postGameData),
+    );
+    this.postGameEventHandlers.onActiveComponentChanged.forEach((h) => h(args));
+  }
+
+  // ===========================================================================
+  // Post-game data methods
+  // ===========================================================================
+
+  /** Fetch the postgame overview (current game, a specific game, or the mock overview when mocking) and activate the postgame state. */
+  async showPostGame(gameId?: number): Promise<postGameOverview> {
+    const overview = this.postGameData.isMocking
+      ? await this.api.postGame.getMockGameOverview()
+      : gameId !== undefined
+        ? await this.api.postGame.getGameOverview(gameId)
+        : await this.api.postGame.getCurrentGameOverview();
+
+    const nextData: postGameStateData = {
+      ...this.postGameData,
+      isActive: true,
+      gameId,
+      overview,
+    };
+    this.postGameData = structuralShare(this.postGameData, nextData);
+
+    this.postGameStore._setPostGameData(this.postGameData);
+    this.postGameUpdateHandlers.forEach((handler) =>
+      handler(this.postGameData),
+    );
+    this.postGameEventHandlers.onPostGameShow.forEach((h) => h(overview));
+
+    return overview;
+  }
+
+  /** Re-fetch the postgame overview using the stored game id / mocking state. No-op when postgame is not active. */
+  async refreshPostGame(): Promise<void> {
+    if (!this.postGameData.isActive) return;
+    await this.showPostGame(this.postGameData.gameId);
+  }
+
+  /** Hide / reset the postgame state (preserves `isMocking` and `isConnected`). */
+  hidePostGame(): void {
+    console.log("[LeagueBroadcastClient] Post-game hidden, resetting data");
+
+    const reset = new postGameStateData();
+    reset.isMocking = this.postGameData.isMocking;
+    reset.isConnected = this.postGameData.isConnected;
+    this.postGameData = reset;
+
+    this.postGameStore._reset(this.postGameData);
+
+    this.postGameEventHandlers.onPostGameHide.forEach((h) => h());
+    this.postGameUpdateHandlers.forEach((handler) =>
+      handler(this.postGameData),
     );
   }
 }
