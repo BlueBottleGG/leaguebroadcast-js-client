@@ -672,6 +672,132 @@ async function testWebSocketConnection(
   }
 }
 
+// ─── Post-game REST seeding tests ────────────────────────────────────────────
+
+/**
+ * Verifies that a client connecting while post-game state already exists on
+ * the backend (mocking enabled / component active) seeds that state via REST
+ * on connect instead of waiting for the next WS broadcast.
+ *
+ * Returns the extra clients it created so the caller can disconnect them at
+ * the end of the run.
+ */
+async function testPostGameSeeding(
+  client: LeagueBroadcastClient,
+  host: string,
+  port: number,
+): Promise<LeagueBroadcastClient[]> {
+  heading("Post-game — REST state seeding");
+
+  const extraClients: LeagueBroadcastClient[] = [];
+
+  let originalMocking: boolean;
+  try {
+    originalMocking = await client.api.postGame.getMocking();
+  } catch (e) {
+    skip(
+      "Post-game seeding tests",
+      `GET postgame/mock failed (${e instanceof Error ? e.message : e})`,
+    );
+    return extraClients;
+  }
+
+  const connectFreshClient = async () => {
+    const fresh = new LeagueBroadcastClient({
+      host,
+      port,
+      autoConnect: false,
+      overlayHealth: false,
+    });
+    extraClients.push(fresh);
+    const mockingEvents: boolean[] = [];
+    fresh.onPostGameEvents({
+      onMockingUpdate: (m) => mockingEvents.push(m),
+    });
+    await fresh.connect();
+    return { fresh, mockingEvents };
+  };
+
+  try {
+    // ── Backend mocking ON → fresh client must seed isMocking=true ──
+    await client.api.postGame.setMocking(true);
+    const { fresh, mockingEvents } = await connectFreshClient();
+
+    await runTest(
+      "isMocking is seeded from REST when connecting mid-session",
+      () => {
+        assert(
+          fresh.getPostGameData().isMocking === true,
+          `expected isMocking=true after connect, got ${fresh.getPostGameData().isMocking}`,
+        );
+      },
+    );
+
+    await runTest("postGameStore snapshot reflects the seeded state", () => {
+      const snap = fresh.postGameStore.getSnapshot();
+      assert(
+        snap.postGameData.isMocking === true,
+        "store snapshot should have isMocking=true",
+      );
+    });
+
+    await runTest("onMockingUpdate fired exactly once with true", () => {
+      assert(
+        mockingEvents.length === 1 && mockingEvents[0] === true,
+        `expected [true], got [${mockingEvents.join(", ")}]`,
+      );
+    });
+
+    await runTestAllowHttpStatus(
+      "activeComponent seed matches GET postgame/active-component",
+      [404],
+      async () => {
+        const active = await client.api.postGame.getActivePostGameAnalysis();
+        const seeded = fresh.getPostGameData().activeComponent;
+        if (active == null) {
+          assert(
+            seeded == null,
+            `expected no seeded activeComponent, got ${JSON.stringify(seeded)}`,
+          );
+        } else {
+          assert(
+            seeded?.componentName === active.componentName,
+            `expected seeded componentName ${active.componentName}, got ${seeded?.componentName}`,
+          );
+        }
+      },
+    );
+
+    // ── Backend mocking OFF → fresh client stays silent (no spurious events) ──
+    await client.api.postGame.setMocking(false);
+    const second = await connectFreshClient();
+
+    await runTest("isMocking stays false when backend is not mocking", () => {
+      assert(
+        second.fresh.getPostGameData().isMocking === false,
+        "expected isMocking=false after connect",
+      );
+    });
+
+    await runTest(
+      "onMockingUpdate does not fire spuriously when nothing changed",
+      () => {
+        assert(
+          second.mockingEvents.length === 0,
+          `expected no events, got [${second.mockingEvents.join(", ")}]`,
+        );
+      },
+    );
+  } catch (e) {
+    fail("Post-game seeding tests", e);
+  } finally {
+    log(`  ${DIM}Restoring postgame mocking to ${originalMocking}...${RESET}`);
+    await client.api.postGame.setMocking(originalMocking).catch(() => {});
+  }
+
+  return extraClients;
+}
+
 // ─── Data accessor tests ─────────────────────────────────────────────────────
 
 async function testDataAccessors(client: LeagueBroadcastClient) {
@@ -838,9 +964,24 @@ Options:
     skip("WebSocket tests", "--skip-ws");
   }
 
+  // ── Post-game seeding tests (need both REST and WS) ──
+
+  let extraClients: LeagueBroadcastClient[] = [];
+  if (!opts.skipWs && !opts.skipRest) {
+    try {
+      extraClients = await testPostGameSeeding(client, opts.host, opts.port);
+    } catch (err) {
+      fail("Post-game seeding test suite", err);
+    }
+  } else {
+    heading("Post-game — REST state seeding");
+    skip("Post-game seeding tests", "requires both REST and WS");
+  }
+
   // ── Cleanup ──
 
   client.disconnect();
+  extraClients.forEach((c) => c.disconnect());
 
   // ── Results ──
 

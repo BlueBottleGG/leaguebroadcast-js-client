@@ -145,6 +145,7 @@ export class LeagueBroadcastClient {
 
   // -- Post-game state --------------------------------------------------------
   private postGameData: postGameStateData;
+  private postGameSeedPromise: Promise<void> | null = null;
 
   // -- Reactive stores --------------------------------------------------------
 
@@ -286,6 +287,11 @@ export class LeagueBroadcastClient {
     this.postGameData = new postGameStateData();
     this.postGameStore = new PostGameStateStore(this.postGameData);
     this.setupPostGameMessageHandler();
+    // The post-game WS only broadcasts *changes*, so seed the current
+    // backend state via REST on every (re)connect.
+    this.postGameWs.onConnect(() => {
+      this.postGameSeedPromise = this.seedPostGameState();
+    });
 
     if (this.config.autoConnect) {
       this.connect();
@@ -323,10 +329,16 @@ export class LeagueBroadcastClient {
   // ===========================================================================
 
   /**
-   * Connect to both in-game and pre-game WebSocket endpoints.
+   * Connect to the in-game, pre-game, and (unless disabled) post-game
+   * WebSocket endpoints.
    *
-   * Both connections are attempted in parallel. If either fails the returned
-   * promise rejects, but the other connection may still succeed.
+   * All connections are attempted in parallel. If any fails the returned
+   * promise rejects, but the other connections may still succeed.
+   *
+   * On a successful post-game connection the current post-game state
+   * (`isMocking`, `activeComponent`) is seeded from the REST API before the
+   * promise resolves, so pages that connect mid-session see the live backend
+   * state instead of stale defaults.
    */
   async connect(): Promise<void> {
     this.startOverlayHealthIfEnabled();
@@ -361,6 +373,12 @@ export class LeagueBroadcastClient {
       );
       throw reasons[0];
     }
+
+    // Wait for the REST seed kicked off by the post-game onConnect handler so
+    // post-game state is populated once connect() resolves. Never rejects.
+    if (this.postGameSeedPromise) {
+      await this.postGameSeedPromise;
+    }
   }
 
   /**
@@ -370,7 +388,11 @@ export class LeagueBroadcastClient {
     this.ingameWs.disconnect();
     this.preGameWs.disconnect();
     this.postGameWs.disconnect();
-    this._overlayHealth?.stop();
+    try {
+      this._overlayHealth?.stop();
+    } catch {
+      // Frontend-health monitoring must never break the client.
+    }
     this._overlayHealth = null;
   }
 
@@ -1049,6 +1071,59 @@ export class LeagueBroadcastClient {
           break;
       }
     });
+  }
+
+  /**
+   * Seed `isMocking` and `activeComponent` from the REST API.
+   *
+   * The post-game WebSocket only broadcasts changes, so a client that
+   * connects while mocking is already enabled or a component is already
+   * active would keep the stale defaults until the next broadcast. Runs on
+   * every (re)connect; event handlers fire only for values that actually
+   * changed. Never rejects — a failed request leaves that field untouched.
+   */
+  private async seedPostGameState(): Promise<void> {
+    const [mockingResult, activeComponentResult] = await Promise.allSettled([
+      this.api.postGame.getMocking(),
+      this.api.postGame.getActivePostGameAnalysis(),
+    ]);
+
+    const nextData: postGameStateData = { ...this.postGameData };
+    if (mockingResult.status === "fulfilled") {
+      nextData.isMocking = Boolean(mockingResult.value);
+    }
+    if (activeComponentResult.status === "fulfilled") {
+      const active = activeComponentResult.value ?? null;
+      // Skip a null seed when the value is already nullish so a fresh
+      // connect with no active component stays silent.
+      if (active !== null || this.postGameData.activeComponent != null) {
+        nextData.activeComponent = active;
+      }
+    }
+
+    const prevData = this.postGameData;
+    this.postGameData = structuralShare(prevData, nextData);
+    if (this.postGameData === prevData) return;
+
+    this.postGameStore._setPostGameData(this.postGameData);
+    this.postGameUpdateHandlers.forEach((handler) =>
+      handler(this.postGameData),
+    );
+
+    if (this.postGameData.isMocking !== prevData.isMocking) {
+      this.postGameEventHandlers.onMockingUpdate.forEach((h) =>
+        h(this.postGameData.isMocking),
+      );
+    }
+    const activeComponent = this.postGameData.activeComponent;
+    if (
+      activeComponent != null &&
+      activeComponent !== prevData.activeComponent
+    ) {
+      this.postGameEventHandlers.onActiveComponentChanged.forEach((h) =>
+        h(activeComponent),
+      );
+    }
   }
 
   private handlePostGameRouteUpdate(uri: unknown): void {
