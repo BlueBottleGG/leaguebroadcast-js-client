@@ -14,7 +14,6 @@ export * from './postGamePlayerInfo';
 export * from './postGamePlayerPage';
 export * from './postGamePlayerRunesAndItems';
 export * from './postGamePlayerStats';
-export * from './postGameStateData';
 export * from './postGameTeamInfo';
 export * from './postGameTeamOverview';
 export * from './vector3';

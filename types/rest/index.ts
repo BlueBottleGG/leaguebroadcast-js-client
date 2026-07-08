@@ -8,3 +8,4 @@ export * from './billing_cycle';
 export * from './customoverlay';
 export * from './game';
 export * from './match';
+export * from './overlayhealth';

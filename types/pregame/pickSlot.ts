@@ -5,6 +5,7 @@
 
 import { championData } from "../shared/championData";
 import { championStatistics } from "../shared/championStatistics";
+import { championStatisticsBySource } from "../shared/championStatisticsBySource";
 import { summonerSpellData } from "../shared/summonerSpellData";
 
 export class pickSlot {
@@ -14,5 +15,6 @@ export class pickSlot {
     summonerSpells: summonerSpellData[] = [];
     champion?: championData;
     championStatistics?: championStatistics;
+    championStatisticsBySource?: championStatisticsBySource;
     videoStreamUrl?: string;
 }

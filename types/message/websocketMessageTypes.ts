@@ -10,6 +10,7 @@ export class websocketMessageTypes {
     static readonly cDragonV2Progress = "cDragonV2Progress";
     static readonly cDragonV2Status = "cDragonV2Status";
     static readonly gameStatus = "gameStatus";
+    static readonly appStatus = "appStatus";
     static readonly champSelectState = "champion-select-state-update";
     static readonly champSelectAction = "champion-select-action";
     static readonly ingameState = "ingame-state-update";
@@ -21,6 +22,8 @@ export class websocketMessageTypes {
     static readonly gameTeamSidesSwapped = "game-team-sides-swapped";
     static readonly teamDatabaseUpdate = "team-database-update";
     static readonly seasonDatabaseUpdate = "season-database-update";
+    static readonly databaseReloaded = "database-reloaded";
+    static readonly cloudDatabaseStatus = "cloud-database-status";
     static readonly appNotification = "app-notification";
     static readonly appNotificationCompleted = "app-notification-completed";
     static readonly ingameStyleUpdate = "ingame-style-update";
@@ -53,4 +56,6 @@ export class websocketMessageTypes {
     static readonly telestratorConfigUpdate = "telestrator-config-update";
     static readonly telestratorHotkeyFired = "telestrator-hotkey-fired";
     static readonly scriptEditorSwitch = "script-editor-switch";
+    static readonly overlayHealth = "overlay-health";
+    static readonly postGameOverview = "postgame-overview-update";
 }

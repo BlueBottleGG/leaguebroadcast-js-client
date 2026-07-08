@@ -18,7 +18,7 @@ import type { killFeedEvent } from "#types/ingame/event/killFeedEvent";
 import { Team } from "#types/shared/style/Team";
 import { champSelectStateData } from "#types/pregame/champSelectStateData";
 import type { pickBanActionEventArgs } from "#types/pregame/pickBanActionEventArgs";
-import { postGameStateData } from "#types/postgame/postGameStateData";
+import { postGameStateData } from "./PostGameStateData";
 import type { postGameOverview } from "#types/postgame/postGameOverview";
 import type { activeComponentChangedEventArgs } from "#types/message/ui/activeComponentChangedEventArgs";
 import { RestApi } from "./api/RestApi";

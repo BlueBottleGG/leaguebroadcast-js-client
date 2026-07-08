@@ -2,7 +2,7 @@
  * Auto-generated REST API client for In-game overlay and serialization endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-04-27
+ * @generated 2026-07-08
  */
 
 import type { ApiClient } from "../ApiClient";
@@ -60,6 +60,16 @@ export class IngameApi {
   /** `POST ingame/showing/{socketid}` */
   async setCurrentFrontendSerializationOptions(socketid: string, data: Record<string, unknown>): Promise<void> {
     return this.client.post<void>(`ingame/showing/${socketid}`, data);
+  }
+
+  /** `POST ingame/showing/teamfight/{active}` */
+  async setCurrentTeamfightSerializationOptions(active: boolean, trackDamage?: boolean): Promise<void> {
+    return this.client.post<void>(`ingame/showing/teamfight/${active}${trackDamage !== undefined ? `?trackDamage=${encodeURIComponent(String(trackDamage))}` : ''}`);
+  }
+
+  /** `POST ingame/showing/teamfight/damage/{active}` */
+  async setCurrentTeamfightDamageTracking(active: boolean): Promise<void> {
+    return this.client.post<void>(`ingame/showing/teamfight/damage/${active}`);
   }
 
   /** `GET ingame/stage/{stageSide}/{playerSlot}/networkId` */

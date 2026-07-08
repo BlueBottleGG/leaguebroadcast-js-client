@@ -9,6 +9,7 @@ export type {
 
 // WebSocket manager
 export { WebSocketManager } from "./WebSocketManager";
+export { postGameStateData } from "./PostGameStateData";
 
 // Reactive stores
 export { GameStateStore, shallowEqual } from "./reactivity/GameStateStore";

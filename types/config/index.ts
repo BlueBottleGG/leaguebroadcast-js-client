@@ -5,5 +5,6 @@
 
 export * from './analytics';
 export * from './brush-presets';
-export * from './server-mode';
+export * from './mirror-sync';
+export * from './server-connection';
 export * from './telestrator';

@@ -10,6 +10,9 @@ export class profileResponse {
     lastName?: string;
     name?: string;
     picture?: string;
+    referralCode?: string;
+    referralBasicUntil?: Date;
+    referralRewardCount: number = 0;
     canEditProfile: boolean = false;
     canChangePassword: boolean = false;
 }

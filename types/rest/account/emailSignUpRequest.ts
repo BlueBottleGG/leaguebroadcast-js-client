@@ -6,4 +6,5 @@
 export class emailSignUpRequest {
     email: string = "";
     password: string = "";
+    referralCode?: string;
 }

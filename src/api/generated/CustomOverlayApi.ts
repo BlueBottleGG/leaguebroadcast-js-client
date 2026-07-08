@@ -2,7 +2,7 @@
  * Auto-generated REST API client for Custom overlay management and hosting.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-04-30
+ * @generated 2026-07-08
  */
 
 import type { ApiClient } from "../ApiClient";
@@ -39,6 +39,11 @@ export class CustomOverlayApi {
   /** `GET customoverlay/{id:guid}/url` */
   async getUrl(id: string): Promise<unknown> {
     return this.client.get<unknown>(`customoverlay/${id}/url`);
+  }
+
+  /** `POST customoverlay/{id:guid}/browse` */
+  async browse(id: string): Promise<void> {
+    return this.client.post<void>(`customoverlay/${id}/browse`);
   }
 
   /** `GET customoverlay/{id:guid}/devserver/status` */

@@ -2,7 +2,7 @@
  * Auto-generated REST API client for Post-game overview, stats, graphs, and analysis endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-05-05
+ * @generated 2026-07-08
  */
 
 import type { ApiClient } from "../ApiClient";
@@ -34,6 +34,16 @@ export class PostGameApi {
   /** `GET postgame/mock` */
   async getMocking(): Promise<boolean> {
     return this.client.get<boolean>('postgame/mock');
+  }
+
+  /** `POST postgame/mock/component/{componentType}/{enabled}` */
+  async setMockComponentPin(componentType: string, enabled: boolean): Promise<void> {
+    return this.client.post<void>(`postgame/mock/component/${componentType}/${enabled}`);
+  }
+
+  /** `GET postgame/mock/component` */
+  async getMockComponentPin(): Promise<unknown> {
+    return this.client.get<unknown>('postgame/mock/component');
   }
 
   /** `GET postgame/frontend` */

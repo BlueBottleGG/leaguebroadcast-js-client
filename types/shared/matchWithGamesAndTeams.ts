@@ -5,6 +5,7 @@
 
 import { BestOfType } from "./BestOfType";
 import { gameWithTeams } from "./gameWithTeams";
+import { MatchLifecycleState } from "./MatchLifecycleState";
 import { MatchRuleSet } from "./MatchRuleSet";
 import { teamWithMembers } from "./teamWithMembers";
 
@@ -21,6 +22,7 @@ export class matchWithGamesAndTeams {
     loserNextMatchId?: number;
     name?: string;
     date?: Date;
+    lifecycleState: MatchLifecycleState = MatchLifecycleState.Scheduled;
     ruleSet: MatchRuleSet = MatchRuleSet.Standard;
     onStage: boolean = false;
 }

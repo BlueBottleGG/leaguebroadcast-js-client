@@ -9,3 +9,4 @@ export * from './TelestratorHotkeyAction';
 export * from './telestratorHotkeyBinding';
 export * from './telestratorHotkeysUpdateDto';
 export * from './telestratorPresetHotkeyBinding';
+export * from './telestratorVanishDto';

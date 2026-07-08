@@ -20,6 +20,8 @@ export * from './planDescriptorRecord';
 export * from './planDetails';
 export * from './portalSessionResponse';
 export * from './profileResponse';
+export * from './referralInfoResponse';
+export * from './scheduledChangeInfo';
 export * from './startCheckoutResponse';
 export * from './updateNameRequest';
 export * from './verifyEmailRequest';

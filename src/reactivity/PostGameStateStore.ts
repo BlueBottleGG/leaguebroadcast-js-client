@@ -1,4 +1,4 @@
-import type { postGameStateData } from "#types/postgame/postGameStateData";
+import type { postGameStateData } from "../PostGameStateData";
 
 /**
  * A subscribable slice of state produced by `select()`.

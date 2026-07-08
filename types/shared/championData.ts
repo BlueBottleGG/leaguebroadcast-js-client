@@ -11,6 +11,7 @@ export class championData {
     alias: string = "";
     name: string = "";
     attackSpeed: number = 0;
+    attackSpeedPerLevel: number = 0;
     splashCenteredImg: string = "";
     splashImg: string = "";
     loadingImg: string = "";

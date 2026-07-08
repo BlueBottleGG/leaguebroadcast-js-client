@@ -12,4 +12,11 @@ export class brushPreset {
     startTip?: string;
     endTip?: string;
     lineStyle?: string;
+    vanishTime?: number;
+    timeMode?: string;
+    areaMode?: string;
+    outlineColor?: string;
+    hasOutline?: boolean;
+    fillColor?: string;
+    fillOpacity?: number;
 }

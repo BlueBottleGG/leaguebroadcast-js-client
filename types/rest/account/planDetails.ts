@@ -4,6 +4,7 @@
  */
 
 import { billingCycle } from "../billing_cycle/billingCycle";
+import { scheduledChangeInfo } from "./scheduledChangeInfo";
 
 export class planDetails {
     planName: string = "";
@@ -12,6 +13,10 @@ export class planDetails {
     nextBillingDate?: Date;
     status: string = "";
     plan?: string;
+    tier?: string;
     features: string[] = [];
+    referralCode?: string;
+    referralFeaturesUntil?: Date;
     billing_cycle?: billingCycle;
+    scheduledChange?: scheduledChangeInfo;
 }

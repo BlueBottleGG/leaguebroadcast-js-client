@@ -9,5 +9,10 @@ export enum Feature {
     EnterpriseTier = 2,
     Decals = 3,
     Models = 4,
-    Strokes = 5
+    Strokes = 5,
+    Strokes_Cloud = 6,
+    Coaching = 7,
+    Coaching_Cloud = 8,
+    Develop = 9,
+    Cinematics = 10
 }

@@ -3,8 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { GameState } from "../shared/GameState";
 import { championDetailData } from "./championDetail/championDetailData";
+import { GameState } from "../shared/GameState";
 import { ingameDamageCompositionData } from "./damageComposition/ingameDamageCompositionData";
 import { ingameDamageFlowData } from "./damageFlow/ingameDamageFlowData";
 import { ingameDamageGraphData } from "./damageGraph/ingameDamageGraphData";
@@ -57,5 +57,5 @@ export class ingameFrontendData {
     damageComposition?: ingameDamageCompositionData;
     damageFlow?: ingameDamageFlowData;
     skinDisplay?: ingameSkinDisplayData;
-    championDetail: championDetailData | null = null;
+    championDetail?: championDetailData;
 }

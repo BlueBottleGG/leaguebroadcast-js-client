@@ -8,4 +8,5 @@ import { PaymentInterval } from "./PaymentInterval";
 export class checkoutRequestDTO {
     plan: string = "";
     interval: PaymentInterval = PaymentInterval.Monthly;
+    referralCode?: string;
 }

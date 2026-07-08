@@ -5,7 +5,6 @@
 
 export * from './iWebsocketMessage';
 export * from './websocketMessageTypes';
-export * from './hub';
 export * from './ingame';
 export * from './pregame';
 export * from './ui';

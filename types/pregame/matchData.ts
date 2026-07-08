@@ -4,6 +4,7 @@
  */
 
 import { BestOfType } from "../shared/BestOfType";
+import { MatchLifecycleState } from "../shared/MatchLifecycleState";
 import { MatchRuleSet } from "../shared/MatchRuleSet";
 
 export class matchData {
@@ -17,6 +18,7 @@ export class matchData {
     loserNextMatchId?: number;
     name?: string;
     date?: Date;
+    lifecycleState: MatchLifecycleState = MatchLifecycleState.Scheduled;
     ruleSet: MatchRuleSet = MatchRuleSet.Standard;
     onStage: boolean = false;
 }

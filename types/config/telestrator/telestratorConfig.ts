@@ -11,4 +11,6 @@ export class telestratorConfig {
     thicknessPresets: string[] = [];
     hotkeys: telestratorHotkeyBinding[] = [];
     presetHotkeys: telestratorPresetHotkeyBinding[] = [];
+    defaultVanishTime: number = 0;
+    defaultTimeMode: string = "";
 }

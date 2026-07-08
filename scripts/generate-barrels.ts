@@ -80,6 +80,7 @@ function canonicalizeFileNames(dir: string): void {
     } else if (
       entry.isFile() &&
       entry.name.endsWith(".ts") &&
+      !entry.name.endsWith(".d.ts") &&
       entry.name !== "index.ts"
     ) {
       const src = readFileSync(full, "utf-8");
@@ -176,6 +177,7 @@ function normalizeSpecifiers(dir: string): void {
     if (entry.isDirectory()) {
       normalizeSpecifiers(full);
     } else if (entry.isFile() && entry.name.endsWith(".ts")) {
+      if (entry.name.endsWith(".d.ts")) continue;
       const src = readFileSync(full, "utf-8");
       let changed = false;
       const updated = src.replace(SPECIFIER_RE, (match, lead, quote, spec) => {
@@ -209,6 +211,7 @@ function generateBarrel(dir: string): void {
     } else if (
       entry.isFile() &&
       entry.name.endsWith(".ts") &&
+      !entry.name.endsWith(".d.ts") &&
       entry.name !== "index.ts"
     ) {
       files.push(entry.name.slice(0, -3));
@@ -246,6 +249,7 @@ function collectExports(dir: string, out: Map<string, string>): void {
     } else if (
       entry.isFile() &&
       entry.name.endsWith(".ts") &&
+      !entry.name.endsWith(".d.ts") &&
       entry.name !== "index.ts"
     ) {
       const src = readFileSync(full, "utf-8");

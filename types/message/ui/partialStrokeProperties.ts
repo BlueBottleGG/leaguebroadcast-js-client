@@ -6,6 +6,7 @@
 import { colorRGBA } from "./colorRGBA";
 import { StrokeLayer } from "./StrokeLayer";
 import { StrokeLineStyle } from "./StrokeLineStyle";
+import { StrokeTimeMode } from "./StrokeTimeMode";
 import { StrokeTipStyle } from "./StrokeTipStyle";
 
 export class partialStrokeProperties {
@@ -16,4 +17,8 @@ export class partialStrokeProperties {
     startTip?: StrokeTipStyle;
     endTip?: StrokeTipStyle;
     lineStyle?: StrokeLineStyle;
+    vanishTime?: number;
+    timeMode?: StrokeTimeMode;
+    fillColor?: colorRGBA;
+    hasOutline?: boolean;
 }
