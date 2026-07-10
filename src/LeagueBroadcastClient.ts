@@ -83,6 +83,12 @@ export interface PostGameEventHandlers {
   onPostGameShow?: (overview: postGameOverview) => void;
   /** Fired when postgame is hidden/reset. */
   onPostGameHide?: () => void;
+  /**
+   * Fired when the backend has finished persisting a completed game's
+   * post-game stats ("postgame-stats-available"). REST post-game endpoints
+   * are guaranteed to serve the new game's data from this point on.
+   */
+  onStatsAvailable?: (gameId?: number) => void;
 }
 
 /**
@@ -238,12 +244,14 @@ export class LeagueBroadcastClient {
     >;
     onPostGameShow: Set<(overview: postGameOverview) => void>;
     onPostGameHide: Set<() => void>;
+    onStatsAvailable: Set<(gameId?: number) => void>;
   } = {
     onRouteUpdate: new Set(),
     onMockingUpdate: new Set(),
     onActiveComponentChanged: new Set(),
     onPostGameShow: new Set(),
     onPostGameHide: new Set(),
+    onStatsAvailable: new Set(),
   };
 
   constructor(config: LeagueBroadcastClientConfig) {
@@ -1069,6 +1077,9 @@ export class LeagueBroadcastClient {
         case "active-component-changed":
           this.handleActiveComponentChanged(messageData);
           break;
+        case "postgame-stats-available":
+          this.handlePostGameStatsAvailable(messageData.gameId);
+          break;
       }
     });
   }
@@ -1147,6 +1158,39 @@ export class LeagueBroadcastClient {
     this.postGameEventHandlers.onMockingUpdate.forEach((h) => h(isMocking));
   }
 
+  /**
+   * The backend finished persisting a completed game's post-game stats.
+   * Bumps `statsVersion` (so store subscribers can re-fetch REST data),
+   * notifies `onStatsAvailable` handlers, and — when post-game is already
+   * active and not mocking — re-fetches the overview so an on-screen scene
+   * updates to the latest data without a reload.
+   */
+  private handlePostGameStatsAvailable(gameId: unknown): void {
+    const id = typeof gameId === "number" ? gameId : undefined;
+
+    const nextData: postGameStateData = {
+      ...this.postGameData,
+      statsVersion: (this.postGameData.statsVersion ?? 0) + 1,
+      latestStatsGameId: id ?? this.postGameData.latestStatsGameId,
+    };
+    this.postGameData = nextData;
+
+    this.postGameStore._setPostGameData(this.postGameData);
+    this.postGameUpdateHandlers.forEach((handler) =>
+      handler(this.postGameData),
+    );
+    this.postGameEventHandlers.onStatsAvailable.forEach((h) => h(id));
+
+    if (this.postGameData.isActive && !this.postGameData.isMocking) {
+      this.refreshPostGame().catch((err) => {
+        console.debug(
+          "[LeagueBroadcastClient] Post-game refresh after stats update failed",
+          err,
+        );
+      });
+    }
+  }
+
   private handleActiveComponentChanged(messageData: any): void {
     // The payload may arrive either as the args object itself or wrapped in
     // an `args` field — accept both, stripping the message `type` when present.
@@ -1202,13 +1246,17 @@ export class LeagueBroadcastClient {
     await this.showPostGame(this.postGameData.gameId);
   }
 
-  /** Hide / reset the postgame state (preserves `isMocking` and `isConnected`). */
+  /** Hide / reset the postgame state (preserves `isMocking`, `isConnected` and the stats-update counter). */
   hidePostGame(): void {
     console.log("[LeagueBroadcastClient] Post-game hidden, resetting data");
 
     const reset = new postGameStateData();
     reset.isMocking = this.postGameData.isMocking;
     reset.isConnected = this.postGameData.isConnected;
+    // Keep the counter monotonic so `statsVersion` watchers never see a
+    // reset-then-reincrement as a spurious change.
+    reset.statsVersion = this.postGameData.statsVersion ?? 0;
+    reset.latestStatsGameId = this.postGameData.latestStatsGameId;
     this.postGameData = reset;
 
     this.postGameStore._reset(this.postGameData);
