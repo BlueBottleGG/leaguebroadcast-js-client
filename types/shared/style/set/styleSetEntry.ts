@@ -11,4 +11,7 @@ export class styleSetEntry {
     isActive: boolean = false;
     uri?: string;
     minimumFeature?: Feature;
+    displayName?: string;
+    hiddenInEditor: boolean = false;
+    replacementIdentifier?: string;
 }

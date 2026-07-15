@@ -9,4 +9,5 @@ export class ingameGoldGraphData {
     current: singleGameGoldGraphData = {} as singleGameGoldGraphData;
     previousGames?: singleGameGoldGraphData[];
     title?: string;
+    showPreviousGames: boolean = false;
 }

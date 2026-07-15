@@ -15,3 +15,4 @@ export * from './teamfightDamageEntryStyle';
 export * from './teamFightDamageStyle';
 export * from './ultiAbilityStyle';
 export * from './goldGraph';
+export * from './goldGraphV2';

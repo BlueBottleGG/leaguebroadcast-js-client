@@ -43,8 +43,19 @@ assignedId():bigint {
   return offset ? this.bb!.readUint64(this.bb_pos + offset) : BigInt('0');
 }
 
+/**
+ * Original file path for externally-created entities (e.g. file drop).
+ * Allows the host to copy the asset into its managed directory.
+ */
+sourcePath():string|null
+sourcePath(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+sourcePath(optionalEncoding?:any):string|Uint8Array|null {
+  const offset = this.bb!.__offset(this.bb_pos, 10);
+  return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
+}
+
 static startEntityAssignment(builder:flatbuffers.Builder) {
-  builder.startObject(3);
+  builder.startObject(4);
 }
 
 static addClientIndex(builder:flatbuffers.Builder, clientIndex:number) {
@@ -59,16 +70,21 @@ static addAssignedId(builder:flatbuffers.Builder, assignedId:bigint) {
   builder.addFieldInt64(2, assignedId, BigInt('0'));
 }
 
+static addSourcePath(builder:flatbuffers.Builder, sourcePathOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(3, sourcePathOffset, 0);
+}
+
 static endEntityAssignment(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   return offset;
 }
 
-static createEntityAssignment(builder:flatbuffers.Builder, clientIndex:number, requestedId:bigint, assignedId:bigint):flatbuffers.Offset {
+static createEntityAssignment(builder:flatbuffers.Builder, clientIndex:number, requestedId:bigint, assignedId:bigint, sourcePathOffset:flatbuffers.Offset):flatbuffers.Offset {
   EntityAssignment.startEntityAssignment(builder);
   EntityAssignment.addClientIndex(builder, clientIndex);
   EntityAssignment.addRequestedId(builder, requestedId);
   EntityAssignment.addAssignedId(builder, assignedId);
+  EntityAssignment.addSourcePath(builder, sourcePathOffset);
   return EntityAssignment.endEntityAssignment(builder);
 }
 }

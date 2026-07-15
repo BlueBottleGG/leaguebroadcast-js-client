@@ -18,6 +18,8 @@ export class customOverlay {
     version: string = "";
     cloudId?: string;
     isManagedPackage: boolean = false;
+    previewWidth: number = 0;
+    previewHeight: number = 0;
     createdAt: Date = new Date();
     updatedAt: Date = new Date();
 }

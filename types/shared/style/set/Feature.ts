@@ -14,5 +14,6 @@ export enum Feature {
     Coaching = 7,
     Coaching_Cloud = 8,
     Develop = 9,
-    Cinematics = 10
+    Cinematics = 10,
+    HostedWorkspaces = 11
 }

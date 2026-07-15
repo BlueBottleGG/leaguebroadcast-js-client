@@ -15,6 +15,8 @@ export class customOverlayDescriptor {
     phase?: SetPhaseType;
     version: string = "";
     cloudId?: string;
+    previewWidth: number = 0;
+    previewHeight: number = 0;
     createdAt: Date = new Date();
     updatedAt: Date = new Date();
 }

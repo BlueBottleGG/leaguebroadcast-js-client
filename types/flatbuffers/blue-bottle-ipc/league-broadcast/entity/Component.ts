@@ -6,6 +6,7 @@ import { ComponentDecalProjector } from '../../../blue-bottle-ipc/league-broadca
 import { ComponentEditState } from '../../../blue-bottle-ipc/league-broadcast/entity/component-edit-state.js';
 import { ComponentMeshRenderer } from '../../../blue-bottle-ipc/league-broadcast/entity/component-mesh-renderer.js';
 import { ComponentScript } from '../../../blue-bottle-ipc/league-broadcast/entity/component-script.js';
+import { ComponentSpriteRenderer } from '../../../blue-bottle-ipc/league-broadcast/entity/component-sprite-renderer.js';
 import { ComponentStreamSource } from '../../../blue-bottle-ipc/league-broadcast/entity/component-stream-source.js';
 import { ComponentTextRenderer } from '../../../blue-bottle-ipc/league-broadcast/entity/component-text-renderer.js';
 import { ComponentTransform } from '../../../blue-bottle-ipc/league-broadcast/entity/component-transform.js';
@@ -21,13 +22,14 @@ export enum Component {
   MeshRenderer = 5,
   DecalProjector = 6,
   TextRenderer = 7,
-  StreamSource = 8
+  StreamSource = 8,
+  SpriteRenderer = 9
 }
 
 export function unionToComponent(
   type: Component,
-  accessor: (obj:ComponentDecalProjector|ComponentEditState|ComponentMeshRenderer|ComponentScript|ComponentStreamSource|ComponentTextRenderer|ComponentTransform|ComponentVisibility) => ComponentDecalProjector|ComponentEditState|ComponentMeshRenderer|ComponentScript|ComponentStreamSource|ComponentTextRenderer|ComponentTransform|ComponentVisibility|null
-): ComponentDecalProjector|ComponentEditState|ComponentMeshRenderer|ComponentScript|ComponentStreamSource|ComponentTextRenderer|ComponentTransform|ComponentVisibility|null {
+  accessor: (obj:ComponentDecalProjector|ComponentEditState|ComponentMeshRenderer|ComponentScript|ComponentSpriteRenderer|ComponentStreamSource|ComponentTextRenderer|ComponentTransform|ComponentVisibility) => ComponentDecalProjector|ComponentEditState|ComponentMeshRenderer|ComponentScript|ComponentSpriteRenderer|ComponentStreamSource|ComponentTextRenderer|ComponentTransform|ComponentVisibility|null
+): ComponentDecalProjector|ComponentEditState|ComponentMeshRenderer|ComponentScript|ComponentSpriteRenderer|ComponentStreamSource|ComponentTextRenderer|ComponentTransform|ComponentVisibility|null {
   switch(Component[type]) {
     case 'NONE': return null; 
     case 'Transform': return accessor(new ComponentTransform())! as ComponentTransform;
@@ -38,15 +40,16 @@ export function unionToComponent(
     case 'DecalProjector': return accessor(new ComponentDecalProjector())! as ComponentDecalProjector;
     case 'TextRenderer': return accessor(new ComponentTextRenderer())! as ComponentTextRenderer;
     case 'StreamSource': return accessor(new ComponentStreamSource())! as ComponentStreamSource;
+    case 'SpriteRenderer': return accessor(new ComponentSpriteRenderer())! as ComponentSpriteRenderer;
     default: return null;
   }
 }
 
 export function unionListToComponent(
   type: Component, 
-  accessor: (index: number, obj:ComponentDecalProjector|ComponentEditState|ComponentMeshRenderer|ComponentScript|ComponentStreamSource|ComponentTextRenderer|ComponentTransform|ComponentVisibility) => ComponentDecalProjector|ComponentEditState|ComponentMeshRenderer|ComponentScript|ComponentStreamSource|ComponentTextRenderer|ComponentTransform|ComponentVisibility|null, 
+  accessor: (index: number, obj:ComponentDecalProjector|ComponentEditState|ComponentMeshRenderer|ComponentScript|ComponentSpriteRenderer|ComponentStreamSource|ComponentTextRenderer|ComponentTransform|ComponentVisibility) => ComponentDecalProjector|ComponentEditState|ComponentMeshRenderer|ComponentScript|ComponentSpriteRenderer|ComponentStreamSource|ComponentTextRenderer|ComponentTransform|ComponentVisibility|null, 
   index: number
-): ComponentDecalProjector|ComponentEditState|ComponentMeshRenderer|ComponentScript|ComponentStreamSource|ComponentTextRenderer|ComponentTransform|ComponentVisibility|null {
+): ComponentDecalProjector|ComponentEditState|ComponentMeshRenderer|ComponentScript|ComponentSpriteRenderer|ComponentStreamSource|ComponentTextRenderer|ComponentTransform|ComponentVisibility|null {
   switch(Component[type]) {
     case 'NONE': return null; 
     case 'Transform': return accessor(index, new ComponentTransform())! as ComponentTransform;
@@ -57,6 +60,7 @@ export function unionListToComponent(
     case 'DecalProjector': return accessor(index, new ComponentDecalProjector())! as ComponentDecalProjector;
     case 'TextRenderer': return accessor(index, new ComponentTextRenderer())! as ComponentTextRenderer;
     case 'StreamSource': return accessor(index, new ComponentStreamSource())! as ComponentStreamSource;
+    case 'SpriteRenderer': return accessor(index, new ComponentSpriteRenderer())! as ComponentSpriteRenderer;
     default: return null;
   }
 }

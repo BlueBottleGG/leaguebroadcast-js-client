@@ -3,6 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+import { GameEndCause } from "./GameEndCause";
 import { MatchRuleSet } from "./MatchRuleSet";
 import { teamWithMembers } from "./teamWithMembers";
 
@@ -15,6 +16,7 @@ export class gameWithTeams {
     isActive: boolean = false;
     isComplete: boolean = false;
     gameTime?: number;
+    endCause: GameEndCause = GameEndCause.Unknown;
     gameDate?: Date;
     ruleSet: MatchRuleSet = MatchRuleSet.Standard;
     patch: string = "";

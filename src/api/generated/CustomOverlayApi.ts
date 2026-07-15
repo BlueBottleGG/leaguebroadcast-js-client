@@ -2,15 +2,17 @@
  * Auto-generated REST API client for Custom overlay management and hosting.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-07-08
+ * @generated 2026-07-15
  */
 
 import type { ApiClient } from "../ApiClient";
 import type { cloudSyncResult } from "#types/cloud/cloudSyncResult";
 import type { cloudOverlaysResponse } from "#types/cloud/overlay/cloudOverlaysResponse";
+import type { customOverlayRuntimeCollection } from "#types/rest/customoverlay/customOverlayRuntimeCollection";
 import type { registerOverlayRequest } from "#types/rest/customoverlay/registerOverlayRequest";
 import type { updateOverlayRequest } from "#types/rest/customoverlay/updateOverlayRequest";
 import type { customOverlayDescriptor } from "#types/shared/customoverlay/customOverlayDescriptor";
+import type { customOverlayDetails } from "#types/shared/customoverlay/customOverlayDetails";
 import type { devServerState } from "#types/shared/customoverlay/devServerState";
 
 export class CustomOverlayApi {
@@ -27,8 +29,18 @@ export class CustomOverlayApi {
   }
 
   /** `PUT customoverlay/{id:guid}` */
-  async update(id: string, req: updateOverlayRequest): Promise<customOverlayDescriptor> {
-    return this.client.put<customOverlayDescriptor>(`customoverlay/${id}`, req);
+  async update(id: string, req: updateOverlayRequest): Promise<customOverlayDetails> {
+    return this.client.put<customOverlayDetails>(`customoverlay/${id}`, req);
+  }
+
+  /** `GET customoverlay/{id:guid}/details` */
+  async getDetails(id: string): Promise<customOverlayDetails> {
+    return this.client.get<customOverlayDetails>(`customoverlay/${id}/details`);
+  }
+
+  /** `GET customoverlay/runtime` */
+  async getRuntime(): Promise<customOverlayRuntimeCollection> {
+    return this.client.get<customOverlayRuntimeCollection>('customoverlay/runtime');
   }
 
   /** `DELETE customoverlay/{id:guid}` */

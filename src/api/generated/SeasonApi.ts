@@ -2,13 +2,16 @@
  * Auto-generated REST API client for Season management endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-03-11
+ * @generated 2026-07-15
  */
 
 import type { ApiClient } from "../ApiClient";
 import type { matchWithGamesAndTeams } from "#types/shared/matchWithGamesAndTeams";
 import type { seasonData } from "#types/shared/seasonData";
+import type { seasonStandingRow } from "#types/shared/seasonStandingRow";
+import type { seasonUsage } from "#types/shared/seasonUsage";
 import type { teamData } from "#types/shared/teamData";
+import type { teamScore } from "#types/shared/teamScore";
 import type { teamWithMembers } from "#types/shared/teamWithMembers";
 
 export class SeasonApi {
@@ -89,6 +92,21 @@ export class SeasonApi {
     return this.client.get<teamWithMembers[]>(`season/${seasonId}/teamswithmembers`);
   }
 
+  /** `GET season/{seasonId}/usage` */
+  async getSeasonUsage(seasonId: number): Promise<seasonUsage> {
+    return this.client.get<seasonUsage>(`season/${seasonId}/usage`);
+  }
+
+  /** `GET season/{seasonId}/standings` */
+  async getSeasonStandings(seasonId: number): Promise<seasonStandingRow[]> {
+    return this.client.get<seasonStandingRow[]>(`season/${seasonId}/standings`);
+  }
+
+  /** `PUT season/{seasonId}/standings/{teamId}` */
+  async setSeasonStanding(seasonId: number, teamId: number, score: teamScore): Promise<void> {
+    return this.client.put<void>(`season/${seasonId}/standings/${teamId}`, score);
+  }
+
   /** `POST season` */
   async createOrUpdateSeason(seasonData: seasonData): Promise<number> {
     return this.client.post<number>('season', seasonData);
@@ -105,8 +123,8 @@ export class SeasonApi {
   }
 
   /** `DELETE season/{seasonId}` */
-  async deleteSeason(seasonId: number): Promise<void> {
-    return this.client.delete<void>(`season/${seasonId}`);
+  async deleteSeason(seasonId: number): Promise<unknown> {
+    return this.client.delete<unknown>(`season/${seasonId}`);
   }
 }
 

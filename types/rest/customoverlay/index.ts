@@ -3,5 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+export * from './customOverlayRuntimeCollection';
+export * from './customOverlayRuntimeDescriptor';
 export * from './registerOverlayRequest';
 export * from './updateOverlayRequest';

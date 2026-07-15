@@ -4,5 +4,8 @@
  */
 
 export * from './twitchChatVote';
+export * from './twitchChatVoteV2';
 export * from './twitchPoll';
+export * from './twitchPollV2';
 export * from './twitchPrediction';
+export * from './twitchPredictionV2';

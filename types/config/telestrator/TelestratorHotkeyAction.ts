@@ -13,5 +13,15 @@ export enum TelestratorHotkeyAction {
     CycleLayerNext = 6,
     CycleLayerPrevious = 7,
     IncreaseWidth = 8,
-    DecreaseWidth = 9
+    DecreaseWidth = 9,
+    SelectAnchorBlue1 = 10,
+    SelectAnchorBlue2 = 11,
+    SelectAnchorBlue3 = 12,
+    SelectAnchorBlue4 = 13,
+    SelectAnchorBlue5 = 14,
+    SelectAnchorRed1 = 15,
+    SelectAnchorRed2 = 16,
+    SelectAnchorRed3 = 17,
+    SelectAnchorRed4 = 18,
+    SelectAnchorRed5 = 19
 }

@@ -23,4 +23,9 @@ export class singleIngameHotkeyConfigDto {
     allowSinglePlayers: boolean = false;
     allowTimePeriod: boolean = false;
     customSettings?: { [key: string]: any };
+    pageId?: string;
+    position: number = 0;
+    label?: string;
+    actionType?: string;
+    targetPageId?: string;
 }

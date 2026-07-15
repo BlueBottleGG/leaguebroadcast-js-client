@@ -21,7 +21,7 @@ static sizeOf():number {
   return 64;
 }
 
-static createMatrix4x4(builder:flatbuffers.Builder, m: number[]):flatbuffers.Offset {
+static createMatrix4x4(builder:flatbuffers.Builder, m: number[]|null):flatbuffers.Offset {
   builder.prep(4, 64);
 
   for (let i = 15; i >= 0; --i) {

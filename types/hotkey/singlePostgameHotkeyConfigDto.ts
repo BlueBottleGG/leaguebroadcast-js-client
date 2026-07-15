@@ -22,4 +22,6 @@ export class singlePostgameHotkeyConfigDto {
     allowStats: boolean = false;
     selectedStats?: string[];
     requiresCompletedGame: boolean = false;
+    pageId?: string;
+    position: number = 0;
 }

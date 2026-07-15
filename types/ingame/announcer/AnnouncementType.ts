@@ -36,5 +36,7 @@ export enum AnnouncementType {
     Dragon_Rift_Hextech = 29,
     Dragon_Rift_Chemtech = 30,
     GameStart = 31,
-    MinionSpawn = 32
+    MinionSpawn = 32,
+    GrompKill = 33,
+    ScuttleKill = 34
 }

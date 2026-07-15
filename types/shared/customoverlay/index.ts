@@ -5,6 +5,7 @@
 
 export * from './customOverlay';
 export * from './customOverlayDescriptor';
+export * from './customOverlayDetails';
 export * from './CustomOverlayMode';
 export * from './devServerState';
 export * from './DevServerStatus';

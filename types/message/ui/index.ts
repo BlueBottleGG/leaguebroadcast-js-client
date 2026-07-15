@@ -15,6 +15,7 @@ export * from './appStatusPhaseSnapshot';
 export * from './AssetType';
 export * from './brushPresetsChangedMessage';
 export * from './CacheOperation';
+export * from './casterPageSwitchedMessage';
 export * from './colorRGBA';
 export * from './communityDragonCacheProgressMessage';
 export * from './communityDragonV2ProgressMessage';

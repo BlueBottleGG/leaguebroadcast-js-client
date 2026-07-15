@@ -8,6 +8,7 @@ export { ComponentEditState } from './entity/component-edit-state.js';
 export { ComponentKind } from './entity/component-kind.js';
 export { ComponentMeshRenderer } from './entity/component-mesh-renderer.js';
 export { ComponentScript } from './entity/component-script.js';
+export { ComponentSpriteRenderer } from './entity/component-sprite-renderer.js';
 export { ComponentStreamSource } from './entity/component-stream-source.js';
 export { ComponentTextRenderer } from './entity/component-text-renderer.js';
 export { ComponentTransform } from './entity/component-transform.js';

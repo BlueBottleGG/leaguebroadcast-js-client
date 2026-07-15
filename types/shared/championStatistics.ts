@@ -7,4 +7,6 @@ export class championStatistics {
     winRate: number = 0;
     pickRate: number = 0;
     banRate: number = 0;
+    wins?: number;
+    losses?: number;
 }

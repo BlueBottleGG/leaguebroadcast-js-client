@@ -44,4 +44,7 @@ export * from './textComponentStyling';
 export * from './textStyleWithBorder';
 export * from './tournamentData';
 export * from './bottomrow';
+export * from './bottomRowV2';
+export * from './championSelectEUV2';
+export * from './fearlessBanV2';
 export * from './legacy';

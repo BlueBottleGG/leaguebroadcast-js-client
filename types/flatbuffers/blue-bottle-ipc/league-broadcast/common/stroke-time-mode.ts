@@ -4,5 +4,6 @@
 
 export enum StrokeTimeMode {
   wallClock = 0,
-  gameTime = 1
+  gameTime = 1,
+  wallClockReveal = 2
 }

@@ -10,6 +10,9 @@ export class ingameScoreboardTeamData {
     teamName: string = "";
     teamTag: string = "";
     teamIconUrl: string = "";
+    primaryColor: string = "";
+    secondaryColor: string = "";
+    tertiaryColor: string = "";
     seriesScore: teamScore = {} as teamScore;
     totalScore: teamScore = {} as teamScore;
     infoText: string = "";

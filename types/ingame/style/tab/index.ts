@@ -12,3 +12,4 @@ export * from './championUltimateStyle';
 export * from './progressBarStyle';
 export * from './tabLevelUpStyle';
 export * from './tabsStyle';
+export * from './championTabsV2';

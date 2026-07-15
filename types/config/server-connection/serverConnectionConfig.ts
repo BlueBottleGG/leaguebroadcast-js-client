@@ -9,7 +9,7 @@ export class serverConnectionConfig {
     authToken?: string;
     autoLaunch: boolean = false;
     autoLaunchExePath?: string;
-    lastRoomId?: string;
+    lastRoomName?: string;
     lastServerUrl?: string;
     memberDisplayName?: string;
 }

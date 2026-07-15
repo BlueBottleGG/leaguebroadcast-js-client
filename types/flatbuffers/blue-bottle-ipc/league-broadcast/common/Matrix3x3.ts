@@ -21,7 +21,7 @@ static sizeOf():number {
   return 36;
 }
 
-static createMatrix3x3(builder:flatbuffers.Builder, m: number[]):flatbuffers.Offset {
+static createMatrix3x3(builder:flatbuffers.Builder, m: number[]|null):flatbuffers.Offset {
   builder.prep(4, 36);
 
   for (let i = 8; i >= 0; --i) {

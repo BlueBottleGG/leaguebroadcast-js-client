@@ -47,6 +47,7 @@ export class websocketMessageTypes {
     static readonly frontendRouteUpdate = "frontend-route-update";
     static readonly strokePropertiesUpdate = "stroke-properties-update";
     static readonly hotkeyFired = "hotkey-fired";
+    static readonly casterPageSwitched = "caster-page-switched";
     static readonly activeComponentChanged = "active-component-changed";
     static readonly disabledOverlaysUpdate = "disabled-overlays-update";
     static readonly userFeaturesUpdated = "user-features-updated";
@@ -58,4 +59,5 @@ export class websocketMessageTypes {
     static readonly scriptEditorSwitch = "script-editor-switch";
     static readonly overlayHealth = "overlay-health";
     static readonly postGameOverview = "postgame-overview-update";
+    static readonly postGameStatsAvailable = "postgame-stats-available";
 }

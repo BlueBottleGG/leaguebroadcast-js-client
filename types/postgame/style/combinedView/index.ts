@@ -5,4 +5,3 @@
 
 export * from './combinedViewStyle';
 export * from './combinedViewTransitionStyle';
-export * from './CombinedViewTransitionType';

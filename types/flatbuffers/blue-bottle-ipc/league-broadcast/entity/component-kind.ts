@@ -14,5 +14,6 @@ export enum ComponentKind {
   MeshRenderer = 4,
   DecalProjector = 5,
   TextRenderer = 6,
-  StreamSource = 7
+  StreamSource = 7,
+  SpriteRenderer = 8
 }

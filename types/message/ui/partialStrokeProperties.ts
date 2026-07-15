@@ -21,4 +21,6 @@ export class partialStrokeProperties {
     timeMode?: StrokeTimeMode;
     fillColor?: colorRGBA;
     hasOutline?: boolean;
+    anchorMode?: boolean;
+    selectedAnchorNetworkId?: number;
 }

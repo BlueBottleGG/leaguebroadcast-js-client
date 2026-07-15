@@ -13,4 +13,6 @@ export class registerOverlayRequest {
     description?: string;
     phase?: string;
     version: string = "";
+    previewWidth: number = 0;
+    previewHeight: number = 0;
 }

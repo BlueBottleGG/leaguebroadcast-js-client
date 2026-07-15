@@ -6,7 +6,10 @@
 export class updateOverlayRequest {
     name?: string;
     description?: string;
+    sourcePath?: string;
     devScript?: string;
     phase?: string;
     version?: string;
+    previewWidth?: number;
+    previewHeight?: number;
 }

@@ -9,6 +9,7 @@ import { telestratorPresetHotkeyBinding } from "./telestratorPresetHotkeyBinding
 export class telestratorConfig {
     colors: string[] = [];
     thicknessPresets: string[] = [];
+    hotkeysEnabled: boolean = false;
     hotkeys: telestratorHotkeyBinding[] = [];
     presetHotkeys: telestratorPresetHotkeyBinding[] = [];
     defaultVanishTime: number = 0;
