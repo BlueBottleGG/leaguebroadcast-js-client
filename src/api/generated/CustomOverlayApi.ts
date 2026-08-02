@@ -2,7 +2,7 @@
  * Auto-generated REST API client for Custom overlay management and hosting.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-07-15
+ * @generated 2026-07-23
  */
 
 import type { ApiClient } from "../ApiClient";
@@ -13,6 +13,7 @@ import type { registerOverlayRequest } from "#types/rest/customoverlay/registerO
 import type { updateOverlayRequest } from "#types/rest/customoverlay/updateOverlayRequest";
 import type { customOverlayDescriptor } from "#types/shared/customoverlay/customOverlayDescriptor";
 import type { customOverlayDetails } from "#types/shared/customoverlay/customOverlayDetails";
+import type { devServerLogEntry } from "#types/shared/customoverlay/devServerLogEntry";
 import type { devServerState } from "#types/shared/customoverlay/devServerState";
 
 export class CustomOverlayApi {
@@ -71,6 +72,11 @@ export class CustomOverlayApi {
   /** `POST customoverlay/{id:guid}/devserver/stop` */
   async stopDevServer(id: string): Promise<void> {
     return this.client.post<void>(`customoverlay/${id}/devserver/stop`);
+  }
+
+  /** `GET customoverlay/{id:guid}/devserver/logs` */
+  async getDevServerLogs(id: string): Promise<devServerLogEntry[]> {
+    return this.client.get<devServerLogEntry[]>(`customoverlay/${id}/devserver/logs`);
   }
 
   /** `GET customoverlay/{id:guid}/export` */

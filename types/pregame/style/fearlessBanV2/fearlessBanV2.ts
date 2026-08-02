@@ -11,9 +11,11 @@ import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
 export class fearlessBanV2 {
     _node: styleNodeMeta = {} as styleNodeMeta;
     container: containerStyleV2 = {} as containerStyleV2;
-    gameRow: containerElementStyleV2 = {} as containerElementStyleV2;
     blueTeam: fearlessBanTeamStyleV2 = {} as fearlessBanTeamStyleV2;
+    centerDivider: containerElementStyleV2 = {} as containerElementStyleV2;
     redTeam: fearlessBanTeamStyleV2 = {} as fearlessBanTeamStyleV2;
+    compactAtGameCount: number = 0;
+    compactChampionSize: string = "";
     gameRevealIntervalMs: number = 0;
     rowRevealDelayMs: number = 0;
     portraitRevealDelayMs: number = 0;

@@ -4,7 +4,8 @@
  */
 
 export class changeDetectionResponse {
-    hasChanges: boolean = false;
+    hasChanges?: boolean;
     localHash?: string;
     cloudHash?: string;
+    errorMessage?: string;
 }

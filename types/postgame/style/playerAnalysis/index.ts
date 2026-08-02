@@ -8,7 +8,6 @@ export * from './championStats';
 export * from './championStatsContainer';
 export * from './divider';
 export * from './fearlessDraftStyle';
-export * from './fearlessDraftStylePregame';
 export * from './itemIcon';
 export * from './itemStats';
 export * from './laneIconStyle';

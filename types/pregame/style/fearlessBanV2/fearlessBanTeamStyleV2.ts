@@ -12,8 +12,9 @@ import { textElementStyleV2 } from "../../../shared/style/textElementStyleV2";
 export class fearlessBanTeamStyleV2 {
     _node: styleNodeMeta = {} as styleNodeMeta;
     container: containerStyleV2 = {} as containerStyleV2;
-    gameTitle: textElementStyleV2 = {} as textElementStyleV2;
-    divider: containerElementStyleV2 = {} as containerElementStyleV2;
+    gameGroup: containerElementStyleV2 = {} as containerElementStyleV2;
+    gameLabel: textElementStyleV2 = {} as textElementStyleV2;
     champions: containerElementStyleV2 = {} as containerElementStyleV2;
     champion: imageElementStyleV2 = {} as imageElementStyleV2;
+    banMark: containerElementStyleV2 = {} as containerElementStyleV2;
 }

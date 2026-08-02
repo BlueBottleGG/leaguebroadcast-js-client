@@ -10,4 +10,5 @@ export class casterPageDto {
     hotkey?: string;
     hotkeyCode?: string;
     hotkeyModifiers?: string[];
+    visibleToRemote?: boolean;
 }

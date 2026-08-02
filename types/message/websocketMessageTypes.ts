@@ -7,8 +7,7 @@ export class websocketMessageTypes {
     static readonly applicationLifetime = "application-lifetime";
     static readonly appSettingsUpdated = "app-settings-updated";
     static readonly cDragonCacheProgress = "cDragonCacheProgress";
-    static readonly cDragonV2Progress = "cDragonV2Progress";
-    static readonly cDragonV2Status = "cDragonV2Status";
+    static readonly assetCacheJobSnapshot = "assetCacheJobSnapshot";
     static readonly gameStatus = "gameStatus";
     static readonly appStatus = "appStatus";
     static readonly champSelectState = "champion-select-state-update";
@@ -58,6 +57,7 @@ export class websocketMessageTypes {
     static readonly telestratorHotkeyFired = "telestrator-hotkey-fired";
     static readonly scriptEditorSwitch = "script-editor-switch";
     static readonly overlayHealth = "overlay-health";
+    static readonly customOverlayDevServerLog = "custom-overlay-devserver-log";
     static readonly postGameOverview = "postgame-overview-update";
     static readonly postGameStatsAvailable = "postgame-stats-available";
 }

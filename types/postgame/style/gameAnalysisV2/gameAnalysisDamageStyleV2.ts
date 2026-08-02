@@ -4,13 +4,14 @@
  */
 
 import { containerElementStyleV2 } from "../../../shared/style/containerElementStyleV2";
+import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
 import { gameAnalysisDamageTeamStyleV2 } from "./gameAnalysisDamageTeamStyleV2";
 import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
 import { textElementStyleV2 } from "../../../shared/style/textElementStyleV2";
 
 export class gameAnalysisDamageStyleV2 {
     _node: styleNodeMeta = {} as styleNodeMeta;
-    panel: containerElementStyleV2 = {} as containerElementStyleV2;
+    container: containerStyleV2 = {} as containerStyleV2;
     title: textElementStyleV2 = {} as textElementStyleV2;
     teams: containerElementStyleV2 = {} as containerElementStyleV2;
     blueTeam: gameAnalysisDamageTeamStyleV2 = {} as gameAnalysisDamageTeamStyleV2;

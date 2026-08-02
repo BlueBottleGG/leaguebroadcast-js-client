@@ -10,4 +10,7 @@ export class colorGradientDataV2 {
     colorSpace: string = "";
     type: string = "";
     stops: colorStopV2[] = [];
+    hueInterpolation?: string;
+    cx?: string;
+    cy?: string;
 }

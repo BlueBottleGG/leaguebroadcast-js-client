@@ -7,7 +7,6 @@ import { globalStyleProperties } from "./globalStyleProperties";
 import { SetPhaseType } from "./SetPhaseType";
 
 export class styleSet {
-    uri: string = "";
     name: string = "";
     globalProperties: globalStyleProperties = {} as globalStyleProperties;
     phase: SetPhaseType = SetPhaseType.Pre;

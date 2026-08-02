@@ -4,13 +4,14 @@
  */
 
 import { containerElementStyleV2 } from "../../../shared/style/containerElementStyleV2";
+import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
 import { imageElementStyleV2 } from "../../../shared/style/imageElementStyleV2";
 import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
 import { textElementStyleV2 } from "../../../shared/style/textElementStyleV2";
 
 export class championSelectPlayerStyleV2 {
     _node: styleNodeMeta = {} as styleNodeMeta;
-    card: containerElementStyleV2 = {} as containerElementStyleV2;
+    container: containerStyleV2 = {} as containerStyleV2;
     portrait: imageElementStyleV2 = {} as imageElementStyleV2;
     name: textElementStyleV2 = {} as textElementStyleV2;
     champion: textElementStyleV2 = {} as textElementStyleV2;

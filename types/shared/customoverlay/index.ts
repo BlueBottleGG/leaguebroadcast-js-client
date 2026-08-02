@@ -7,5 +7,7 @@ export * from './customOverlay';
 export * from './customOverlayDescriptor';
 export * from './customOverlayDetails';
 export * from './CustomOverlayMode';
+export * from './devServerLogEntry';
+export * from './DevServerLogLevel';
 export * from './devServerState';
 export * from './DevServerStatus';

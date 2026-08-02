@@ -4,15 +4,19 @@
  */
 
 import { containerElementStyleV2 } from "../../../shared/style/containerElementStyleV2";
+import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
 import { imageElementStyleV2 } from "../../../shared/style/imageElementStyleV2";
 import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
 import { textElementStyleV2 } from "../../../shared/style/textElementStyleV2";
 
 export class gameAnalysisDamageTeamStyleV2 {
     _node: styleNodeMeta = {} as styleNodeMeta;
-    roster: containerElementStyleV2 = {} as containerElementStyleV2;
+    container: containerStyleV2 = {} as containerStyleV2;
     player: containerElementStyleV2 = {} as containerElementStyleV2;
     champion: imageElementStyleV2 = {} as imageElementStyleV2;
+    details: containerElementStyleV2 = {} as containerElementStyleV2;
+    header: containerElementStyleV2 = {} as containerElementStyleV2;
+    playerName: textElementStyleV2 = {} as textElementStyleV2;
     total: textElementStyleV2 = {} as textElementStyleV2;
     track: containerElementStyleV2 = {} as containerElementStyleV2;
     physical: containerElementStyleV2 = {} as containerElementStyleV2;

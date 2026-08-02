@@ -38,6 +38,7 @@ export * from './positionTransformStyleV2';
 export * from './shadowStyleV2';
 export * from './sizingStyleV2';
 export * from './styleNodeMeta';
+export * from './styleVariantLoadFailure';
 export * from './Team';
 export * from './TeamColorType';
 export * from './textElementStyleV2';

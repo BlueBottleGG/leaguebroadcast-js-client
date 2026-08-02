@@ -4,6 +4,7 @@
  */
 
 import { cloudStyleSetMetadata } from "./cloudStyleSetMetadata";
+import { localSyncState } from "./localSyncState";
 
 export class cloudSyncResult {
     success: boolean = false;
@@ -12,4 +13,5 @@ export class cloudSyncResult {
     styleSetsSynced: number = 0;
     warnings: string[] = [];
     stubbed: boolean = false;
+    updatedSyncStates: localSyncState[] = [];
 }

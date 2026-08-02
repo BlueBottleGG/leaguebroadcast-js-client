@@ -3,4 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-export * from './scoreboardDamageGraphV2';
+export enum DevServerLogLevel {
+    Info = 0,
+    Warn = 1,
+    Error = 2
+}

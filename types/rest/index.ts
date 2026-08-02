@@ -5,7 +5,9 @@
 
 export * from './account';
 export * from './billing_cycle';
+export * from './companion';
 export * from './customoverlay';
 export * from './game';
 export * from './match';
 export * from './overlayhealth';
+export * from './webhooks';

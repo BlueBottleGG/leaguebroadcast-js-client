@@ -7,6 +7,7 @@ import { simpleChampionData } from "../../shared/simpleChampionData";
 
 export class postGameDamageGraphEntry {
     champion?: simpleChampionData;
+    playerName: string = "";
     damage: number = 0;
     magicDamage: number = 0;
     physicalDamage: number = 0;

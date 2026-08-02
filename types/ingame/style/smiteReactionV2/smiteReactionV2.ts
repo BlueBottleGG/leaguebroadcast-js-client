@@ -12,7 +12,7 @@ import { textElementStyleV2 } from "../../../shared/style/textElementStyleV2";
 export class smiteReactionV2 {
     _node: styleNodeMeta = {} as styleNodeMeta;
     container: containerStyleV2 = {} as containerStyleV2;
-    accent: containerElementStyleV2 = {} as containerElementStyleV2;
+    body: containerElementStyleV2 = {} as containerElementStyleV2;
     portraitRing: containerElementStyleV2 = {} as containerElementStyleV2;
     portrait: imageElementStyleV2 = {} as imageElementStyleV2;
     content: containerElementStyleV2 = {} as containerElementStyleV2;
@@ -27,9 +27,6 @@ export class smiteReactionV2 {
     securedBadge: textElementStyleV2 = {} as textElementStyleV2;
     missedBadge: textElementStyleV2 = {} as textElementStyleV2;
     playerName: textElementStyleV2 = {} as textElementStyleV2;
-    metrics: containerElementStyleV2 = {} as containerElementStyleV2;
-    smiteDamage: textElementStyleV2 = {} as textElementStyleV2;
-    thresholdHealth: textElementStyleV2 = {} as textElementStyleV2;
     sponsor: containerElementStyleV2 = {} as containerElementStyleV2;
     sponsorLabel: textElementStyleV2 = {} as textElementStyleV2;
     sponsorLogo: imageElementStyleV2 = {} as imageElementStyleV2;

@@ -4,10 +4,12 @@
  */
 
 export { PreGameApi } from "./PreGameApi";
+export { CompanionPairingApi } from "./CompanionPairingApi";
 export { CustomOverlayApi } from "./CustomOverlayApi";
 export { GameApi } from "./GameApi";
 export { GameStateApi } from "./GameStateApi";
 export { MatchApi } from "./MatchApi";
 export { SeasonApi } from "./SeasonApi";
+export { WebhookSettingsApi } from "./WebhookSettingsApi";
 export { IngameApi } from "./IngameApi";
 export { PostGameApi } from "./PostGameApi";
