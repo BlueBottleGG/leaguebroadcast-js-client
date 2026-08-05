@@ -880,6 +880,112 @@ async function testShallowEqual() {
   });
 }
 
+// ─── Game clock tests (synchronous, no backend data needed) ──────────────────
+
+async function testGameClock() {
+  heading("Game clock");
+
+  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  // Feeds a snapshot the way the in-game socket handler would.
+  const push = (
+    client: LeagueBroadcastClient,
+    gameTime: number,
+    capturedMsAgo: number,
+    gameStatus: GameState = GameState.Running,
+  ) =>
+    (client as any).handleStateUpdate({
+      gameTime,
+      playbackSpeed: 1,
+      gameVersion: "test",
+      gameStatus,
+      utcTime: Date.now() - capturedMsAgo,
+    });
+
+  const newClient = () =>
+    new LeagueBroadcastClient({ host: "localhost", autoConnect: false });
+
+  await runTest("snapshot age is added to the reported game time", () => {
+    const client = newClient();
+    push(client, 600, 250);
+    const reported = client.getGameTime();
+    assert(
+      reported >= 600.25 && reported < 600.35,
+      `expected ~600.25s for a 250ms-old snapshot, got ${reported.toFixed(3)}`,
+    );
+  });
+
+  await runTest("clock advances between snapshots", async () => {
+    const client = newClient();
+    push(client, 600, 0);
+    await sleep(200);
+    const reported = client.getGameTime();
+    assert(
+      reported >= 600.15 && reported < 600.35,
+      `expected ~600.2s after 200ms, got ${reported.toFixed(3)}`,
+    );
+  });
+
+  await runTest("stale local time is corrected, not left to drift", () => {
+    const client = newClient();
+    push(client, 600, 0);
+    // A snapshot only 1.5s ahead used to fall inside the old two-second dead band
+    // and be discarded, leaving every timer running that far behind.
+    push(client, 601.5, 0);
+    const reported = client.getGameTime();
+    assert(
+      reported >= 601.5 && reported < 601.6,
+      `expected the clock to follow the snapshot, got ${reported.toFixed(3)}`,
+    );
+  });
+
+  await runTest("sub-second jitter does not rewind the clock", () => {
+    const client = newClient();
+    push(client, 600, 300);
+    const before = client.getGameTime();
+    push(client, 600.1, 0);
+    const after = client.getGameTime();
+    assert(
+      after >= before,
+      `clock went backwards: ${before.toFixed(3)} -> ${after.toFixed(3)}`,
+    );
+  });
+
+  await runTest("a real regression snaps (new game / replay seek)", () => {
+    const client = newClient();
+    push(client, 600, 0);
+    push(client, 30, 0);
+    const reported = client.getGameTime();
+    assert(
+      reported >= 30 && reported < 31,
+      `expected a snap back to ~30s, got ${reported.toFixed(3)}`,
+    );
+  });
+
+  await runTest("a paused game does not advance", async () => {
+    const client = newClient();
+    push(client, 600, 0, GameState.Paused);
+    const before = client.getGameTime();
+    await sleep(150);
+    assert(
+      client.getGameTime() === before,
+      "clock advanced while the game was paused",
+    );
+  });
+
+  await runTest("timer utilities read the interpolated clock", async () => {
+    const client = newClient();
+    push(client, 600, 0);
+    const first = client.timers.getRemaining(700);
+    await sleep(150);
+    const second = client.timers.getRemaining(700);
+    assert(
+      second < first,
+      `expected the remaining time to fall, got ${first.toFixed(3)} -> ${second.toFixed(3)}`,
+    );
+  });
+}
+
 // ─── Main ────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -916,6 +1022,7 @@ Options:
 
   await testUrls(client, opts.host, opts.port);
   await testShallowEqual();
+  await testGameClock();
   await testReactiveStores(client);
   await testDataAccessors(client);
 

@@ -29,8 +29,11 @@ import {
 } from "./util/ingameTimerUtils";
 import { startOverlayHealth, type OverlayHealthHandle } from "#overlay-health";
 
-// Module-level clock — one interval drives gameTime for all timer consumers
-let _clockInterval: ReturnType<typeof setInterval> | null = null;
+/** A snapshot older than this is treated as backend/browser wall-clock skew, not real delay. */
+const MAX_SNAPSHOT_AGE_SECONDS = 2;
+
+/** Backwards corrections below this are absorbed; larger ones snap (new game, replay seek). */
+const MAX_ABSORBED_REWIND_SECONDS = 1;
 
 export interface LeagueBroadcastClientConfig {
   host: string;
@@ -193,6 +196,12 @@ export class LeagueBroadcastClient {
    */
   public readonly api: RestApi;
 
+  // -- Game clock -------------------------------------------------------------
+  private clockAnchorGameTime: number = 0;
+  private clockAnchorPerf: number = 0;
+  private clockPlaybackSpeed: number = 1;
+  private clockHasAnchor: boolean = false;
+
   // -- In-game event handlers -------------------------------------------------
   private stateUpdateHandlers: Set<(state: ingameFrontendData) => void> =
     new Set();
@@ -273,8 +282,8 @@ export class LeagueBroadcastClient {
     const apiBaseUrl = `${httpProtocol}://${this.config.host}:${this.config.port}${this.config.apiRoute}`;
     this.api = new RestApi(apiBaseUrl);
 
-    // Timer utilities bound to current game time, normalized by elapsed time since snapshot creation
-    this.timers = createIngameTimerUtils(() => this.gameData.gameTime);
+    // Timer utilities bound to the interpolated clock, so they stay accurate between snapshots
+    this.timers = createIngameTimerUtils(() => this.getGameTime());
 
     // Ingame
     this.ingameWs = new WebSocketManager();
@@ -310,26 +319,76 @@ export class LeagueBroadcastClient {
   // Internal clock management
   // ===========================================================================
 
-  private _startClock() {
-    if (_clockInterval !== null) return;
-    _clockInterval = setInterval(() => {
-      if (
-        this.gameState === GameState.Running ||
-        this.gameState === GameState.Mocking
-      ) {
-        this.gameData.gameTime += this.gameData.playbackSpeed ?? 1;
-        // Notify handlers of the updated gameTime
-        this.stateUpdateHandlers.forEach((handler) => handler(this.gameData));
-        this.ingameStore._setGameData(this.gameData);
-      }
-    }, 1000);
+  /**
+   * Current game time in seconds, interpolated from the most recent backend snapshot.
+   *
+   * `getIngameData().gameTime` only changes when a snapshot arrives, so a countdown driven
+   * by it steps at the backend's update rate. This advances continuously against
+   * `performance.now()` instead — call it from an animation frame for timers that have to
+   * line up with the ones in the game client. `client.timers.*` already reads it.
+   *
+   * Returns the last known game time while the game is not running, and `0` out of game.
+   *
+   * @example
+   * ```ts
+   * const tick = () => {
+   *   render(client.getGameTime());
+   *   requestAnimationFrame(tick);
+   * };
+   * ```
+   */
+  getGameTime(): number {
+    // Read from the snapshot's own status rather than `gameState`, which only moves when the
+    // backend sends a separate gameStatus message — a paused clock must not keep running.
+    const status = this.gameData.gameStatus;
+    if (status !== GameState.Running && status !== GameState.Mocking) {
+      return this.clockAnchorGameTime;
+    }
+    return (
+      this.clockAnchorGameTime +
+      ((performance.now() - this.clockAnchorPerf) / 1000) *
+        this.clockPlaybackSpeed
+    );
   }
 
-  private _stopClock() {
-    if (_clockInterval !== null) {
-      clearInterval(_clockInterval);
-      _clockInterval = null;
-    }
+  /**
+   * Re-anchor the clock onto a freshly received snapshot. `utcTime` is the lb-side UTC
+   * millisecond timestamp at capture, so its distance from `Date.now()` is the age of the
+   * snapshot — the delay the timers have to be pushed forward by to match the game client.
+   */
+  private syncClock(state: ingameFrontendData): number {
+    const snapshotAge =
+      state.utcTime != null
+        ? Math.min(
+            Math.max(0, (Date.now() - state.utcTime) / 1000),
+            MAX_SNAPSHOT_AGE_SECONDS,
+          )
+        : 0;
+    this.clockPlaybackSpeed = state.playbackSpeed ?? 1;
+
+    const syncedGameTime =
+      (state.gameTime ?? 0) + snapshotAge * this.clockPlaybackSpeed;
+    // Transport jitter must not rewind the clock, or countdown text flickers between two
+    // values whenever a snapshot lands a few milliseconds later than the one before it.
+    const rewind = this.clockHasAnchor
+      ? this.getGameTime() - syncedGameTime
+      : 0;
+
+    this.clockAnchorGameTime =
+      rewind > 0 && rewind < MAX_ABSORBED_REWIND_SECONDS
+        ? syncedGameTime + rewind
+        : syncedGameTime;
+    this.clockAnchorPerf = performance.now();
+    this.clockHasAnchor = true;
+
+    return this.clockAnchorGameTime;
+  }
+
+  private resetClock(): void {
+    this.clockAnchorGameTime = 0;
+    this.clockAnchorPerf = performance.now();
+    this.clockPlaybackSpeed = 1;
+    this.clockHasAnchor = false;
   }
 
   // ===========================================================================
@@ -853,38 +912,12 @@ export class LeagueBroadcastClient {
       ...state,
     };
 
-    // Adjust gameTime for the time elapsed since the snapshot was captured
-    // (network + processing latency). utcTime is the lb-side
-    // UTC millisecond timestamp at snapshot time; Date.now() is the client's
-    // current UTC milliseconds. The difference is the age of the snapshot.
-    const snapshotAge =
-      state.utcTime != null
-        ? Math.max(0, (Date.now() - state.utcTime) / 1000)
-        : 0;
-    const correctedGameTime =
-      (state.gameTime ?? 0) + snapshotAge * (state.playbackSpeed ?? 1);
-    // Sync gameTime: snap on large drift (e.g. pause/resume), otherwise let
-    // the internal clock tick smoothly between backend updates.
-    if (Math.abs(correctedGameTime - (this.gameData.gameTime ?? 0)) > 2) {
-      nextData.gameTime = correctedGameTime;
-    } else {
-      nextData.gameTime = this.gameData.gameTime ?? 0;
-    }
+    nextData.gameTime = this.syncClock(state);
 
     this.gameData = structuralShare(this.gameData, nextData);
 
     if (!state.gameTime || state.gameTime === 0) {
       this.handleGameStatusUpdate(GameState.OutOfGame, false);
-    }
-
-    // Start or stop the single client-level clock
-    const shouldRun =
-      state.gameStatus === GameState.Running ||
-      state.gameStatus === GameState.Mocking;
-    if (shouldRun) {
-      this._startClock();
-    } else {
-      this._stopClock();
     }
 
     this.ingameStore._setGameData(this.gameData);
@@ -907,15 +940,6 @@ export class LeagueBroadcastClient {
     }
 
     this.gameState = gameStatus;
-
-    // Manage the clock based on game status
-    const shouldRun =
-      gameStatus === GameState.Running || gameStatus === GameState.Mocking;
-    if (shouldRun) {
-      this._startClock();
-    } else {
-      this._stopClock();
-    }
 
     this.ingameStore._setGameState(gameStatus);
     this.gameStatusHandlers.forEach((handler) =>
@@ -972,7 +996,7 @@ export class LeagueBroadcastClient {
   private endGame(): void {
     console.log("[LeagueBroadcastClient] Game ended, resetting data");
 
-    this._stopClock();
+    this.resetClock();
 
     this.gameData = new ingameFrontendData();
     this.gameState = GameState.OutOfGame;

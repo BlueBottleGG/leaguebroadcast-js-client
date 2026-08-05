@@ -151,8 +151,27 @@ client.isPreGameConnected(): boolean
 ```typescript
 client.getIngameData(): ingameFrontendData
 client.getIngameState(): GameState
+client.getGameTime(): number
 client.isInTestingEnvironment(): boolean
 ```
+
+`getIngameData().gameTime` is the game time of the most recent backend snapshot, corrected
+for how long that snapshot took to arrive — so it is accurate when it changes, but it only
+changes at the backend's update rate. For timers that have to line up with the ones in the
+game client, read `client.getGameTime()` from an animation frame instead: it advances
+continuously from the last snapshot and is what `client.timers.*` already uses.
+
+```typescript
+const tick = () => {
+  render(client.getGameTime());
+  requestAnimationFrame(tick);
+};
+requestAnimationFrame(tick);
+```
+
+Read it through a value quantized to what you actually draw — whole seconds of text, whole
+degrees of a cooldown sweep — so a component re-renders when it changes on screen rather
+than on every frame.
 
 ##### Pre-Game Data Access
 
