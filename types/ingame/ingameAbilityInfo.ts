@@ -14,5 +14,6 @@ export class ingameAbilityInfo {
     readyAt: number = 0;
     level: number = 0;
     charges: number = 0;
+    isToggled: boolean = false;
     assets?: championAbilityData;
 }
