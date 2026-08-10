@@ -8,6 +8,7 @@ import { bottomRowTeamStyleV2 } from "./bottomRowTeamStyleV2";
 import { containerElementStyleV2 } from "../../../shared/style/containerElementStyleV2";
 import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
 import { HeroStatsDisplayMode } from "../HeroStatsDisplayMode";
+import { HeroStatsValueDisplay } from "../HeroStatsValueDisplay";
 import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
 
 export class bottomRowV2 {
@@ -22,6 +23,8 @@ export class bottomRowV2 {
     redTeam: bottomRowTeamStyleV2 = {} as bottomRowTeamStyleV2;
     activePickWidthMultiplier: number = 0;
     heroStats: HeroStatsDisplayMode = HeroStatsDisplayMode.None;
+    heroStatsValue: HeroStatsValueDisplay = HeroStatsValueDisplay.Percentage;
+    heroStatsMinSampleGames: number = 0;
     heroStatDurationSeconds: number = 0;
     showTournament: boolean = false;
     customCss?: string;

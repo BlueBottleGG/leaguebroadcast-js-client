@@ -9,5 +9,7 @@ export enum WindowType {
     Login = 2,
     Settings = 3,
     Drawing = 4,
-    ScriptEditor = 5
+    ScriptEditor = 5,
+    Console = 6,
+    SceneEditor = 7
 }

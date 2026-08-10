@@ -9,4 +9,7 @@ export class championStatistics {
     banRate: number = 0;
     wins?: number;
     losses?: number;
+    eligibleGames?: number;
+    pickCount?: number;
+    banCount?: number;
 }

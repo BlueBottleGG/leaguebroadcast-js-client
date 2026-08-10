@@ -5,6 +5,7 @@
 
 export * from './animationDirectionStyleV2';
 export * from './animationStyleV2';
+export * from './backgroundColorVariantV2';
 export * from './backgroundStyleV2';
 export * from './borderStyle';
 export * from './borderStyleV2';

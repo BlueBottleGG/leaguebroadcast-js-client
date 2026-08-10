@@ -17,5 +17,6 @@ export enum IngameObjectiveType {
     INHIBITOR_L0 = 12,
     INHIBITOR_L1 = 13,
     INHIBITOR_L2 = 14,
+    DRAGON_CLASSIC = 15,
     UNDEFINED = 32767
 }

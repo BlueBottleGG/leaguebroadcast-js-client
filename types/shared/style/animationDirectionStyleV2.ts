@@ -15,4 +15,5 @@ export class animationDirectionStyleV2 {
     startScale: string = "";
     startOpacity: string = "";
     blurStrength: string = "";
+    stagger: string = "";
 }

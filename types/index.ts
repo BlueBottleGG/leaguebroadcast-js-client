@@ -3,6 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+export * from './api';
 export * from './cloud';
 export * from './config';
 export * from './discord';

@@ -18,6 +18,7 @@ import { ScriptCreate } from '../../../blue-bottle-ipc/league-broadcast/scene/sc
 import { ScriptDelete } from '../../../blue-bottle-ipc/league-broadcast/scene/script-delete.js';
 import { ScriptListRequest } from '../../../blue-bottle-ipc/league-broadcast/scene/script-list-request.js';
 import { ScriptUpdate } from '../../../blue-bottle-ipc/league-broadcast/scene/script-update.js';
+import { ScriptValidate } from '../../../blue-bottle-ipc/league-broadcast/scene/script-validate.js';
 import { SetComponentBatch } from '../../../blue-bottle-ipc/league-broadcast/scene/set-component-batch.js';
 
 
@@ -39,13 +40,14 @@ export enum SceneCommand {
   ScriptCreate = 14,
   ScriptUpdate = 15,
   ScriptDelete = 16,
-  ScriptListRequest = 17
+  ScriptListRequest = 17,
+  ScriptValidate = 18
 }
 
 export function unionToSceneCommand(
   type: SceneCommand,
-  accessor: (obj:EntityCreateBatch|EntityDestroy|GetComponents|RemoveComponent|SceneCreate|SceneListRequest|SceneSetEditable|SceneSetSelection|SceneSetVisibility|SceneSetZOrder|SceneSnapshotRequest|SceneUnload|ScriptCreate|ScriptDelete|ScriptListRequest|ScriptUpdate|SetComponentBatch) => EntityCreateBatch|EntityDestroy|GetComponents|RemoveComponent|SceneCreate|SceneListRequest|SceneSetEditable|SceneSetSelection|SceneSetVisibility|SceneSetZOrder|SceneSnapshotRequest|SceneUnload|ScriptCreate|ScriptDelete|ScriptListRequest|ScriptUpdate|SetComponentBatch|null
-): EntityCreateBatch|EntityDestroy|GetComponents|RemoveComponent|SceneCreate|SceneListRequest|SceneSetEditable|SceneSetSelection|SceneSetVisibility|SceneSetZOrder|SceneSnapshotRequest|SceneUnload|ScriptCreate|ScriptDelete|ScriptListRequest|ScriptUpdate|SetComponentBatch|null {
+  accessor: (obj:EntityCreateBatch|EntityDestroy|GetComponents|RemoveComponent|SceneCreate|SceneListRequest|SceneSetEditable|SceneSetSelection|SceneSetVisibility|SceneSetZOrder|SceneSnapshotRequest|SceneUnload|ScriptCreate|ScriptDelete|ScriptListRequest|ScriptUpdate|ScriptValidate|SetComponentBatch) => EntityCreateBatch|EntityDestroy|GetComponents|RemoveComponent|SceneCreate|SceneListRequest|SceneSetEditable|SceneSetSelection|SceneSetVisibility|SceneSetZOrder|SceneSnapshotRequest|SceneUnload|ScriptCreate|ScriptDelete|ScriptListRequest|ScriptUpdate|ScriptValidate|SetComponentBatch|null
+): EntityCreateBatch|EntityDestroy|GetComponents|RemoveComponent|SceneCreate|SceneListRequest|SceneSetEditable|SceneSetSelection|SceneSetVisibility|SceneSetZOrder|SceneSnapshotRequest|SceneUnload|ScriptCreate|ScriptDelete|ScriptListRequest|ScriptUpdate|ScriptValidate|SetComponentBatch|null {
   switch(SceneCommand[type]) {
     case 'NONE': return null; 
     case 'SceneCreate': return accessor(new SceneCreate())! as SceneCreate;
@@ -65,15 +67,16 @@ export function unionToSceneCommand(
     case 'ScriptUpdate': return accessor(new ScriptUpdate())! as ScriptUpdate;
     case 'ScriptDelete': return accessor(new ScriptDelete())! as ScriptDelete;
     case 'ScriptListRequest': return accessor(new ScriptListRequest())! as ScriptListRequest;
+    case 'ScriptValidate': return accessor(new ScriptValidate())! as ScriptValidate;
     default: return null;
   }
 }
 
 export function unionListToSceneCommand(
   type: SceneCommand, 
-  accessor: (index: number, obj:EntityCreateBatch|EntityDestroy|GetComponents|RemoveComponent|SceneCreate|SceneListRequest|SceneSetEditable|SceneSetSelection|SceneSetVisibility|SceneSetZOrder|SceneSnapshotRequest|SceneUnload|ScriptCreate|ScriptDelete|ScriptListRequest|ScriptUpdate|SetComponentBatch) => EntityCreateBatch|EntityDestroy|GetComponents|RemoveComponent|SceneCreate|SceneListRequest|SceneSetEditable|SceneSetSelection|SceneSetVisibility|SceneSetZOrder|SceneSnapshotRequest|SceneUnload|ScriptCreate|ScriptDelete|ScriptListRequest|ScriptUpdate|SetComponentBatch|null, 
+  accessor: (index: number, obj:EntityCreateBatch|EntityDestroy|GetComponents|RemoveComponent|SceneCreate|SceneListRequest|SceneSetEditable|SceneSetSelection|SceneSetVisibility|SceneSetZOrder|SceneSnapshotRequest|SceneUnload|ScriptCreate|ScriptDelete|ScriptListRequest|ScriptUpdate|ScriptValidate|SetComponentBatch) => EntityCreateBatch|EntityDestroy|GetComponents|RemoveComponent|SceneCreate|SceneListRequest|SceneSetEditable|SceneSetSelection|SceneSetVisibility|SceneSetZOrder|SceneSnapshotRequest|SceneUnload|ScriptCreate|ScriptDelete|ScriptListRequest|ScriptUpdate|ScriptValidate|SetComponentBatch|null, 
   index: number
-): EntityCreateBatch|EntityDestroy|GetComponents|RemoveComponent|SceneCreate|SceneListRequest|SceneSetEditable|SceneSetSelection|SceneSetVisibility|SceneSetZOrder|SceneSnapshotRequest|SceneUnload|ScriptCreate|ScriptDelete|ScriptListRequest|ScriptUpdate|SetComponentBatch|null {
+): EntityCreateBatch|EntityDestroy|GetComponents|RemoveComponent|SceneCreate|SceneListRequest|SceneSetEditable|SceneSetSelection|SceneSetVisibility|SceneSetZOrder|SceneSnapshotRequest|SceneUnload|ScriptCreate|ScriptDelete|ScriptListRequest|ScriptUpdate|ScriptValidate|SetComponentBatch|null {
   switch(SceneCommand[type]) {
     case 'NONE': return null; 
     case 'SceneCreate': return accessor(index, new SceneCreate())! as SceneCreate;
@@ -93,6 +96,7 @@ export function unionListToSceneCommand(
     case 'ScriptUpdate': return accessor(index, new ScriptUpdate())! as ScriptUpdate;
     case 'ScriptDelete': return accessor(index, new ScriptDelete())! as ScriptDelete;
     case 'ScriptListRequest': return accessor(index, new ScriptListRequest())! as ScriptListRequest;
+    case 'ScriptValidate': return accessor(index, new ScriptValidate())! as ScriptValidate;
     default: return null;
   }
 }

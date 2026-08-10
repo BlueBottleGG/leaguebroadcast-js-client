@@ -14,3 +14,4 @@ export * from './matchupV2';
 export * from './playerAnalysis';
 export * from './playerAnalysisV2';
 export * from './postGameTransitionV2';
+export * from './seasonStatsV2';

@@ -21,6 +21,7 @@ export * from './fearLessByGame';
 export * from './fearlessChampionImage';
 export * from './fearLessSingleRow';
 export * from './HeroStatsDisplayMode';
+export * from './HeroStatsValueDisplay';
 export * from './infoContentColorStyling';
 export * from './infoContentLayoutStyling';
 export * from './infoContentTextStyle';

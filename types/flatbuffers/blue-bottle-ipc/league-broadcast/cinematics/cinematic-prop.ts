@@ -6,6 +6,7 @@ import * as flatbuffers from 'flatbuffers';
 
 import { BoundTextSource } from '../../../blue-bottle-ipc/league-broadcast/cinematics/bound-text-source.js';
 import { CinematicTrack } from '../../../blue-bottle-ipc/league-broadcast/cinematics/cinematic-track.js';
+import { PlayerSlot } from '../../../blue-bottle-ipc/league-broadcast/cinematics/player-slot.js';
 import { PropKind } from '../../../blue-bottle-ipc/league-broadcast/cinematics/prop-kind.js';
 import { PropStyle } from '../../../blue-bottle-ipc/league-broadcast/cinematics/prop-style.js';
 import { TeamSlot } from '../../../blue-bottle-ipc/league-broadcast/cinematics/team-slot.js';
@@ -75,8 +76,13 @@ style(obj?:PropStyle):PropStyle|null {
   return offset ? (obj || new PropStyle()).__init(this.bb!.__indirect(this.bb_pos + offset), this.bb!) : null;
 }
 
+playerSlot():PlayerSlot {
+  const offset = this.bb!.__offset(this.bb_pos, 18);
+  return offset ? this.bb!.readUint8(this.bb_pos + offset) : PlayerSlot.Player1;
+}
+
 static startCinematicProp(builder:flatbuffers.Builder) {
-  builder.startObject(7);
+  builder.startObject(8);
 }
 
 static addId(builder:flatbuffers.Builder, idOffset:flatbuffers.Offset) {
@@ -117,6 +123,10 @@ static startTracksVector(builder:flatbuffers.Builder, numElems:number) {
 
 static addStyle(builder:flatbuffers.Builder, styleOffset:flatbuffers.Offset) {
   builder.addFieldOffset(6, styleOffset, 0);
+}
+
+static addPlayerSlot(builder:flatbuffers.Builder, playerSlot:PlayerSlot) {
+  builder.addFieldInt8(7, playerSlot, PlayerSlot.Player1);
 }
 
 static endCinematicProp(builder:flatbuffers.Builder):flatbuffers.Offset {

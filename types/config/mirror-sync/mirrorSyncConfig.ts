@@ -7,6 +7,7 @@ import { hotkeyBinding } from "./hotkeyBinding";
 
 export class mirrorSyncConfig {
     timeOffset: number = 0;
+    keepSynced: boolean = false;
     hotkeysEnabled: boolean = false;
     resyncHotkey: hotkeyBinding = {} as hotkeyBinding;
     cameraPeekHotkey: hotkeyBinding = {} as hotkeyBinding;

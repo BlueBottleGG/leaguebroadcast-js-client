@@ -9,6 +9,7 @@ export class styleNodeMeta {
     type: string = "";
     order: number = 0;
     visible: boolean = false;
+    isList: boolean = false;
     translateX: string = "";
     translateY: string = "";
 }

@@ -3,16 +3,14 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { containerElementStyleV2 } from "../../../shared/style/containerElementStyleV2";
+import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
+import { playerAnalysisStatisticsRowStyleV2 } from "./playerAnalysisStatisticsRowStyleV2";
+import { playerAnalysisStatisticsTitleStyleV2 } from "./playerAnalysisStatisticsTitleStyleV2";
 import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
-import { textElementStyleV2 } from "../../../shared/style/textElementStyleV2";
 
 export class playerAnalysisStatisticsStyleV2 {
+    title: playerAnalysisStatisticsTitleStyleV2 = {} as playerAnalysisStatisticsTitleStyleV2;
+    row: playerAnalysisStatisticsRowStyleV2 = {} as playerAnalysisStatisticsRowStyleV2;
     _node: styleNodeMeta = {} as styleNodeMeta;
-    container: containerElementStyleV2 = {} as containerElementStyleV2;
-    title: textElementStyleV2 = {} as textElementStyleV2;
-    row: containerElementStyleV2 = {} as containerElementStyleV2;
-    label: textElementStyleV2 = {} as textElementStyleV2;
-    value: textElementStyleV2 = {} as textElementStyleV2;
-    divider: containerElementStyleV2 = {} as containerElementStyleV2;
+    container: containerStyleV2 = {} as containerStyleV2;
 }

@@ -2,6 +2,9 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
+export { AnimationStateDefinition } from './entity/animation-state-definition.js';
+export { AnimationTransitionCondition } from './entity/animation-transition-condition.js';
+export { AnimationTransitionDefinition } from './entity/animation-transition-definition.js';
 export { Component } from './entity/Component.js';
 export { ComponentDecalProjector } from './entity/component-decal-projector.js';
 export { ComponentEditState } from './entity/component-edit-state.js';

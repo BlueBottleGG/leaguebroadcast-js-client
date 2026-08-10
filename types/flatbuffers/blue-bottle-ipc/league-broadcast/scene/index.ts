@@ -48,6 +48,7 @@ export * from './script-library';
 export * from './script-list-request';
 export * from './script-log-level';
 export * from './script-update';
+export * from './script-validate';
 export * from './script-variable-snapshot';
 export * from './set-component';
 export * from './set-component-batch';

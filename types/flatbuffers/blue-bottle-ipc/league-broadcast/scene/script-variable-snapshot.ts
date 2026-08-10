@@ -4,6 +4,10 @@
 
 import * as flatbuffers from 'flatbuffers';
 
+import { ScriptVariableEnumOption } from '../../../blue-bottle-ipc/league-broadcast/common/script-variable-enum-option.js';
+import { ScriptVariableValue } from '../../../blue-bottle-ipc/league-broadcast/common/script-variable-value.js';
+
+
 export class ScriptVariableSnapshot {
   bb: flatbuffers.ByteBuffer|null = null;
   bb_pos = 0;
@@ -50,8 +54,30 @@ displayName(optionalEncoding?:any):string|Uint8Array|null {
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
+typedValue(obj?:ScriptVariableValue):ScriptVariableValue|null {
+  const offset = this.bb!.__offset(this.bb_pos, 12);
+  return offset ? (obj || new ScriptVariableValue()).__init(this.bb!.__indirect(this.bb_pos + offset), this.bb!) : null;
+}
+
+enumType():string|null
+enumType(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+enumType(optionalEncoding?:any):string|Uint8Array|null {
+  const offset = this.bb!.__offset(this.bb_pos, 14);
+  return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
+}
+
+enumOptions(index: number, obj?:ScriptVariableEnumOption):ScriptVariableEnumOption|null {
+  const offset = this.bb!.__offset(this.bb_pos, 16);
+  return offset ? (obj || new ScriptVariableEnumOption()).__init(this.bb!.__indirect(this.bb!.__vector(this.bb_pos + offset) + index * 4), this.bb!) : null;
+}
+
+enumOptionsLength():number {
+  const offset = this.bb!.__offset(this.bb_pos, 16);
+  return offset ? this.bb!.__vector_len(this.bb_pos + offset) : 0;
+}
+
 static startScriptVariableSnapshot(builder:flatbuffers.Builder) {
-  builder.startObject(4);
+  builder.startObject(7);
 }
 
 static addName(builder:flatbuffers.Builder, nameOffset:flatbuffers.Offset) {
@@ -70,18 +96,34 @@ static addDisplayName(builder:flatbuffers.Builder, displayNameOffset:flatbuffers
   builder.addFieldOffset(3, displayNameOffset, 0);
 }
 
+static addTypedValue(builder:flatbuffers.Builder, typedValueOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(4, typedValueOffset, 0);
+}
+
+static addEnumType(builder:flatbuffers.Builder, enumTypeOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(5, enumTypeOffset, 0);
+}
+
+static addEnumOptions(builder:flatbuffers.Builder, enumOptionsOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(6, enumOptionsOffset, 0);
+}
+
+static createEnumOptionsVector(builder:flatbuffers.Builder, data:flatbuffers.Offset[]):flatbuffers.Offset {
+  builder.startVector(4, data.length, 4);
+  for (let i = data.length - 1; i >= 0; i--) {
+    builder.addOffset(data[i]!);
+  }
+  return builder.endVector();
+}
+
+static startEnumOptionsVector(builder:flatbuffers.Builder, numElems:number) {
+  builder.startVector(4, numElems, 4);
+}
+
 static endScriptVariableSnapshot(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   builder.requiredField(offset, 4) // name
   return offset;
 }
 
-static createScriptVariableSnapshot(builder:flatbuffers.Builder, nameOffset:flatbuffers.Offset, typeOffset:flatbuffers.Offset, defaultValueOffset:flatbuffers.Offset, displayNameOffset:flatbuffers.Offset):flatbuffers.Offset {
-  ScriptVariableSnapshot.startScriptVariableSnapshot(builder);
-  ScriptVariableSnapshot.addName(builder, nameOffset);
-  ScriptVariableSnapshot.addType(builder, typeOffset);
-  ScriptVariableSnapshot.addDefaultValue(builder, defaultValueOffset);
-  ScriptVariableSnapshot.addDisplayName(builder, displayNameOffset);
-  return ScriptVariableSnapshot.endScriptVariableSnapshot(builder);
-}
 }

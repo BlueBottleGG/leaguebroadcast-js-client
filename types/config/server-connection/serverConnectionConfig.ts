@@ -10,6 +10,9 @@ export class serverConnectionConfig {
     autoLaunch: boolean = false;
     autoLaunchExePath?: string;
     lastRoomName?: string;
+    autoStartRemoteBrush: boolean = false;
+    autoStartRemoteCaster: boolean = false;
     lastServerUrl?: string;
     memberDisplayName?: string;
+    roomSessionId?: string;
 }

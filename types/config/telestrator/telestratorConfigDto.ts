@@ -13,4 +13,5 @@ export class telestratorConfigDto {
     presetHotkeys: telestratorPresetHotkeyBinding[] = [];
     defaultVanishTime: number = 0;
     defaultTimeMode: string = "";
+    autoActivateDrawingOnToolSelection: boolean = false;
 }

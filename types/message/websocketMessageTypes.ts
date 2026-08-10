@@ -15,6 +15,7 @@ export class websocketMessageTypes {
     static readonly ingameState = "ingame-state-update";
     static readonly ingameRewind = "ingame-rewind";
     static readonly ingameTelemetry = "ingame-telemetry";
+    static readonly ingameDiagnostics = "ingame-diagnostics";
     static readonly fontsChanged = "fonts-changed";
     static readonly matchDatabaseUpdate = "match-database-update";
     static readonly gameDatabaseUpdate = "game-database-update";
@@ -45,6 +46,7 @@ export class websocketMessageTypes {
     static readonly gamePaused = "game-state-paused";
     static readonly frontendRouteUpdate = "frontend-route-update";
     static readonly strokePropertiesUpdate = "stroke-properties-update";
+    static readonly penEraserStateUpdate = "pen-eraser-state-update";
     static readonly hotkeyFired = "hotkey-fired";
     static readonly casterPageSwitched = "caster-page-switched";
     static readonly activeComponentChanged = "active-component-changed";

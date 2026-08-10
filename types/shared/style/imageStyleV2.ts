@@ -13,6 +13,7 @@ export class imageStyleV2 {
     images: imageContentStyleV2[] = [];
     objectFit: string = "";
     objectPosition: string = "";
+    championAsset: string = "";
     sizing: sizingStyleV2 = {} as sizingStyleV2;
     shadows: shadowStyleV2 = {} as shadowStyleV2;
     customCss?: string;

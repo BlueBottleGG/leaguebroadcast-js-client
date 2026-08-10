@@ -5,8 +5,10 @@
 
 import { containerElementStyleV2 } from "../../../../shared/style/containerElementStyleV2";
 import { containerStyleV2 } from "../../../../shared/style/containerStyleV2";
+import { goldGraphEventMarkerStyleV2 } from "./goldGraphEventMarkerStyleV2";
 import { goldGraphGridStyleV2 } from "./goldGraphGridStyleV2";
 import { goldGraphSeriesStyleV2 } from "./goldGraphSeriesStyleV2";
+import { goldGraphTeamfightStyleV2 } from "./goldGraphTeamfightStyleV2";
 import { styleNodeMeta } from "../../../../shared/style/styleNodeMeta";
 import { textElementStyleV2 } from "../../../../shared/style/textElementStyleV2";
 import { textStyleV2 } from "../../../../shared/style/textStyleV2";
@@ -24,8 +26,12 @@ export class goldGraphV2 {
     grid: goldGraphGridStyleV2 = {} as goldGraphGridStyleV2;
     blueSeries: goldGraphSeriesStyleV2 = {} as goldGraphSeriesStyleV2;
     redSeries: goldGraphSeriesStyleV2 = {} as goldGraphSeriesStyleV2;
+    eventMarkers: goldGraphEventMarkerStyleV2 = {} as goldGraphEventMarkerStyleV2;
+    teamfightBands: goldGraphTeamfightStyleV2 = {} as goldGraphTeamfightStyleV2;
     extendToSide: boolean = false;
     showPreviousGames: boolean = false;
+    showEvents: boolean = false;
+    showTeamfights: boolean = false;
     customCss?: string;
     fileVersion: string = "1.0";
 }

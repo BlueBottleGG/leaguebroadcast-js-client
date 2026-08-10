@@ -8,6 +8,7 @@ import { bottomRowTeamStyle } from "./bottomRowTeamStyle";
 import { bottomRowTournamentData } from "./bottomrow/bottomRowTournamentData";
 import { colorStyle } from "../../shared/style/colorStyle";
 import { HeroStatsDisplayMode } from "./HeroStatsDisplayMode";
+import { HeroStatsValueDisplay } from "./HeroStatsValueDisplay";
 
 export class bottomRowPickBanStyle {
     fileVersion: string = "1.0";
@@ -18,5 +19,7 @@ export class bottomRowPickBanStyle {
     leftTeam: bottomRowTeamStyle = {} as bottomRowTeamStyle;
     rightTeam: bottomRowTeamStyle = {} as bottomRowTeamStyle;
     heroStats: HeroStatsDisplayMode = HeroStatsDisplayMode.None;
+    heroStatsValue: HeroStatsValueDisplay = HeroStatsValueDisplay.Percentage;
+    heroStatsMinSampleGames: number = 0;
     heroStatDurationSeconds: number = 0;
 }

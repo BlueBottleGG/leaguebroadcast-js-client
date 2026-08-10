@@ -4,8 +4,9 @@
  */
 
 export class referralInfoResponse {
-    referralCode: string = "";
+    referralCode?: string;
     referralFeaturesUntil?: Date;
     referralRewardFeatures: string[] = [];
     referralRewardCount: number = 0;
+    provisioned: boolean = false;
 }

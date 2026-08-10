@@ -5,5 +5,6 @@
 
 export * from './runeDisplayPerkRowStyleV2';
 export * from './runeDisplayPlayerStyleV2';
+export * from './runeDisplayRosterStyleV2';
 export * from './runeDisplayStyleV2';
 export * from './runeDisplayTeamStyleV2';

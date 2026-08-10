@@ -3,6 +3,9 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+export * from './animation-state-definition';
+export * from './animation-transition-condition';
+export * from './animation-transition-definition';
 export * from './Component';
 export * from './component-decal-projector';
 export * from './component-edit-state';

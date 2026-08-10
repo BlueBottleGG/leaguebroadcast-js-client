@@ -4,13 +4,16 @@
 
 import * as flatbuffers from 'flatbuffers';
 
+import { ScriptVariableValue } from '../../../blue-bottle-ipc/league-broadcast/common/script-variable-value.js';
+
+
 /**
- * Lua script attached to the entity. Detaching = RemoveComponent(Script).
+ * AngelScript class attached to the entity. Detaching = RemoveComponent(Script).
  * An entity can carry multiple scripts; each ScriptEntry gets its own
- * sandboxed Lua environment with `self` pointing to the owning entity.
+ * sandboxed object with `self` pointing to the owning entity.
  *
- * script_id + variable_overrides are persistence-only fields used by C# to
- * resolve library references. lblib ignores them and only reads name/content/enabled.
+ * script_id is a persistence-only field used by C# to resolve library references.
+ * lblib applies variable_overrides to matching fields on the script object.
  */
 export class ScriptVariableOverride {
   bb: flatbuffers.ByteBuffer|null = null;
@@ -44,8 +47,13 @@ value(optionalEncoding?:any):string|Uint8Array|null {
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
+typedValue(obj?:ScriptVariableValue):ScriptVariableValue|null {
+  const offset = this.bb!.__offset(this.bb_pos, 8);
+  return offset ? (obj || new ScriptVariableValue()).__init(this.bb!.__indirect(this.bb_pos + offset), this.bb!) : null;
+}
+
 static startScriptVariableOverride(builder:flatbuffers.Builder) {
-  builder.startObject(2);
+  builder.startObject(3);
 }
 
 static addName(builder:flatbuffers.Builder, nameOffset:flatbuffers.Offset) {
@@ -56,16 +64,14 @@ static addValue(builder:flatbuffers.Builder, valueOffset:flatbuffers.Offset) {
   builder.addFieldOffset(1, valueOffset, 0);
 }
 
+static addTypedValue(builder:flatbuffers.Builder, typedValueOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(2, typedValueOffset, 0);
+}
+
 static endScriptVariableOverride(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   builder.requiredField(offset, 4) // name
   return offset;
 }
 
-static createScriptVariableOverride(builder:flatbuffers.Builder, nameOffset:flatbuffers.Offset, valueOffset:flatbuffers.Offset):flatbuffers.Offset {
-  ScriptVariableOverride.startScriptVariableOverride(builder);
-  ScriptVariableOverride.addName(builder, nameOffset);
-  ScriptVariableOverride.addValue(builder, valueOffset);
-  return ScriptVariableOverride.endScriptVariableOverride(builder);
-}
 }

@@ -47,6 +47,7 @@ export { ScriptLibrary } from './scene/script-library.js';
 export { ScriptListRequest } from './scene/script-list-request.js';
 export { ScriptLogLevel } from './scene/script-log-level.js';
 export { ScriptUpdate } from './scene/script-update.js';
+export { ScriptValidate } from './scene/script-validate.js';
 export { ScriptVariableSnapshot } from './scene/script-variable-snapshot.js';
 export { SetComponentBatch } from './scene/set-component-batch.js';
 export { SetComponent } from './scene/set-component.js';

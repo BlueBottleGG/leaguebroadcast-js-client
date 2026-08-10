@@ -5,6 +5,7 @@
 
 export * from './add-bound-text-request';
 export * from './add-logo-request';
+export * from './add-player-video-request';
 export * from './blend-easing';
 export * from './bound-text-source';
 export * from './Cinematic';
@@ -13,6 +14,7 @@ export * from './cinematic-list';
 export * from './cinematic-playback';
 export * from './cinematic-prop';
 export * from './cinematic-track';
+export * from './player-slot';
 export * from './prop-kind';
 export * from './prop-style';
 export * from './set-prop-style-request';

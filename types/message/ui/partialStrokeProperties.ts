@@ -8,9 +8,11 @@ import { StrokeLayer } from "./StrokeLayer";
 import { StrokeLineStyle } from "./StrokeLineStyle";
 import { StrokeTimeMode } from "./StrokeTimeMode";
 import { StrokeTipStyle } from "./StrokeTipStyle";
+import { StrokeTool } from "./StrokeTool";
 
 export class partialStrokeProperties {
     active?: boolean;
+    tool?: StrokeTool;
     color?: colorRGBA;
     width?: number;
     layer?: StrokeLayer;
@@ -23,4 +25,5 @@ export class partialStrokeProperties {
     hasOutline?: boolean;
     anchorMode?: boolean;
     selectedAnchorNetworkId?: number;
+    cameraLockNetworkId?: number;
 }

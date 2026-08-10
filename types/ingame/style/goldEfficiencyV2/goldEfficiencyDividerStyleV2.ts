@@ -4,10 +4,12 @@
  */
 
 import { colorStyleV2 } from "../../../shared/style/colorStyleV2";
+import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
 import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
 
-export class goldEfficiencyHeatStyleV2 {
+export class goldEfficiencyDividerStyleV2 {
     _node: styleNodeMeta = {} as styleNodeMeta;
+    container: containerStyleV2 = {} as containerStyleV2;
     lowColor: colorStyleV2 = {} as colorStyleV2;
     midColor: colorStyleV2 = {} as colorStyleV2;
     highColor: colorStyleV2 = {} as colorStyleV2;

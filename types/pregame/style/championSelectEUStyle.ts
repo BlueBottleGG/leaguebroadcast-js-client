@@ -7,6 +7,7 @@ import { centerContent } from "./centerContent";
 import { championSlot } from "./championSlot";
 import { coachSlot } from "./coachSlot";
 import { HeroStatsDisplayMode } from "./HeroStatsDisplayMode";
+import { HeroStatsValueDisplay } from "./HeroStatsValueDisplay";
 import { layoutStyle } from "../../shared/style/layoutStyle";
 import { phaseTimer } from "./phaseTimer";
 import { pickBans } from "./pickBans";
@@ -31,6 +32,8 @@ export class championSelectEUStyle {
     phaseTimer: phaseTimer = {} as phaseTimer;
     centerContent: centerContent = {} as centerContent;
     heroStats: HeroStatsDisplayMode = HeroStatsDisplayMode.None;
+    heroStatsValue: HeroStatsValueDisplay = HeroStatsValueDisplay.Percentage;
+    heroStatsMinSampleGames: number = 0;
     heroStatDurationSeconds: number = 0;
     showCoaches: boolean = false;
 }

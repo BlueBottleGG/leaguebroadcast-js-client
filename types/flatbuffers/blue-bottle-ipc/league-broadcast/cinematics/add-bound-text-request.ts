@@ -5,6 +5,8 @@
 import * as flatbuffers from 'flatbuffers';
 
 import { BoundTextSource } from '../../../blue-bottle-ipc/league-broadcast/cinematics/bound-text-source.js';
+import { PlayerSlot } from '../../../blue-bottle-ipc/league-broadcast/cinematics/player-slot.js';
+import { TeamSlot } from '../../../blue-bottle-ipc/league-broadcast/cinematics/team-slot.js';
 import { TextFormat } from '../../../blue-bottle-ipc/league-broadcast/cinematics/text-format.js';
 
 
@@ -43,8 +45,23 @@ format():TextFormat {
   return offset ? this.bb!.readUint8(this.bb_pos + offset) : TextFormat.Default;
 }
 
+teamSlot():TeamSlot {
+  const offset = this.bb!.__offset(this.bb_pos, 10);
+  return offset ? this.bb!.readUint8(this.bb_pos + offset) : TeamSlot.Team1;
+}
+
+playerSlot():PlayerSlot {
+  const offset = this.bb!.__offset(this.bb_pos, 12);
+  return offset ? this.bb!.readUint8(this.bb_pos + offset) : PlayerSlot.Player1;
+}
+
+playerBinding():boolean {
+  const offset = this.bb!.__offset(this.bb_pos, 14);
+  return offset ? !!this.bb!.readInt8(this.bb_pos + offset) : false;
+}
+
 static startAddBoundTextRequest(builder:flatbuffers.Builder) {
-  builder.startObject(3);
+  builder.startObject(6);
 }
 
 static addCinematicId(builder:flatbuffers.Builder, cinematicIdOffset:flatbuffers.Offset) {
@@ -59,16 +76,31 @@ static addFormat(builder:flatbuffers.Builder, format:TextFormat) {
   builder.addFieldInt8(2, format, TextFormat.Default);
 }
 
+static addTeamSlot(builder:flatbuffers.Builder, teamSlot:TeamSlot) {
+  builder.addFieldInt8(3, teamSlot, TeamSlot.Team1);
+}
+
+static addPlayerSlot(builder:flatbuffers.Builder, playerSlot:PlayerSlot) {
+  builder.addFieldInt8(4, playerSlot, PlayerSlot.Player1);
+}
+
+static addPlayerBinding(builder:flatbuffers.Builder, playerBinding:boolean) {
+  builder.addFieldInt8(5, +playerBinding, +false);
+}
+
 static endAddBoundTextRequest(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   return offset;
 }
 
-static createAddBoundTextRequest(builder:flatbuffers.Builder, cinematicIdOffset:flatbuffers.Offset, source:BoundTextSource, format:TextFormat):flatbuffers.Offset {
+static createAddBoundTextRequest(builder:flatbuffers.Builder, cinematicIdOffset:flatbuffers.Offset, source:BoundTextSource, format:TextFormat, teamSlot:TeamSlot, playerSlot:PlayerSlot, playerBinding:boolean):flatbuffers.Offset {
   AddBoundTextRequest.startAddBoundTextRequest(builder);
   AddBoundTextRequest.addCinematicId(builder, cinematicIdOffset);
   AddBoundTextRequest.addSource(builder, source);
   AddBoundTextRequest.addFormat(builder, format);
+  AddBoundTextRequest.addTeamSlot(builder, teamSlot);
+  AddBoundTextRequest.addPlayerSlot(builder, playerSlot);
+  AddBoundTextRequest.addPlayerBinding(builder, playerBinding);
   return AddBoundTextRequest.endAddBoundTextRequest(builder);
 }
 }

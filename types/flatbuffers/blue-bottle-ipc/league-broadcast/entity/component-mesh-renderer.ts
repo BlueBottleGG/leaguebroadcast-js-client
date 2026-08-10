@@ -5,13 +5,10 @@
 import * as flatbuffers from 'flatbuffers';
 
 import { AssetIdentifier, unionToAssetIdentifier, unionListToAssetIdentifier } from '../../../blue-bottle-ipc/league-broadcast/commands/asset-identifier.js';
+import { AnimationStateDefinition } from '../../../blue-bottle-ipc/league-broadcast/entity/animation-state-definition.js';
+import { AnimationTransitionDefinition } from '../../../blue-bottle-ipc/league-broadcast/entity/animation-transition-definition.js';
 
 
-/**
- * Skinned / static mesh instance. Drawn by MeshSystem in Shadow + Environment
- * phases. override_texture is optional and replaces the model's per-submesh
- * material textures uniformly when present.
- */
 export class ComponentMeshRenderer {
   bb: flatbuffers.ByteBuffer|null = null;
   bb_pos = 0;
@@ -50,8 +47,67 @@ overrideTexture<T extends flatbuffers.Table>(obj:any|string):any|string|null {
   return offset ? this.bb!.__union_with_string(obj, this.bb_pos + offset) : null;
 }
 
+animationName():string|null
+animationName(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+animationName(optionalEncoding?:any):string|Uint8Array|null {
+  const offset = this.bb!.__offset(this.bb_pos, 12);
+  return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
+}
+
+animationTime():number {
+  const offset = this.bb!.__offset(this.bb_pos, 14);
+  return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 0.0;
+}
+
+animationSpeed():number {
+  const offset = this.bb!.__offset(this.bb_pos, 16);
+  return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 1.0;
+}
+
+animationLoop():boolean {
+  const offset = this.bb!.__offset(this.bb_pos, 18);
+  return offset ? !!this.bb!.readInt8(this.bb_pos + offset) : true;
+}
+
+animationPlaying():boolean {
+  const offset = this.bb!.__offset(this.bb_pos, 20);
+  return offset ? !!this.bb!.readInt8(this.bb_pos + offset) : true;
+}
+
+stateMachineEnabled():boolean {
+  const offset = this.bb!.__offset(this.bb_pos, 22);
+  return offset ? !!this.bb!.readInt8(this.bb_pos + offset) : false;
+}
+
+entryState():string|null
+entryState(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+entryState(optionalEncoding?:any):string|Uint8Array|null {
+  const offset = this.bb!.__offset(this.bb_pos, 24);
+  return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
+}
+
+animationStates(index: number, obj?:AnimationStateDefinition):AnimationStateDefinition|null {
+  const offset = this.bb!.__offset(this.bb_pos, 26);
+  return offset ? (obj || new AnimationStateDefinition()).__init(this.bb!.__indirect(this.bb!.__vector(this.bb_pos + offset) + index * 4), this.bb!) : null;
+}
+
+animationStatesLength():number {
+  const offset = this.bb!.__offset(this.bb_pos, 26);
+  return offset ? this.bb!.__vector_len(this.bb_pos + offset) : 0;
+}
+
+animationTransitions(index: number, obj?:AnimationTransitionDefinition):AnimationTransitionDefinition|null {
+  const offset = this.bb!.__offset(this.bb_pos, 28);
+  return offset ? (obj || new AnimationTransitionDefinition()).__init(this.bb!.__indirect(this.bb!.__vector(this.bb_pos + offset) + index * 4), this.bb!) : null;
+}
+
+animationTransitionsLength():number {
+  const offset = this.bb!.__offset(this.bb_pos, 28);
+  return offset ? this.bb!.__vector_len(this.bb_pos + offset) : 0;
+}
+
 static startComponentMeshRenderer(builder:flatbuffers.Builder) {
-  builder.startObject(4);
+  builder.startObject(13);
 }
 
 static addModelType(builder:flatbuffers.Builder, modelType:AssetIdentifier) {
@@ -70,17 +126,86 @@ static addOverrideTexture(builder:flatbuffers.Builder, overrideTextureOffset:fla
   builder.addFieldOffset(3, overrideTextureOffset, 0);
 }
 
+static addAnimationName(builder:flatbuffers.Builder, animationNameOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(4, animationNameOffset, 0);
+}
+
+static addAnimationTime(builder:flatbuffers.Builder, animationTime:number) {
+  builder.addFieldFloat32(5, animationTime, 0.0);
+}
+
+static addAnimationSpeed(builder:flatbuffers.Builder, animationSpeed:number) {
+  builder.addFieldFloat32(6, animationSpeed, 1.0);
+}
+
+static addAnimationLoop(builder:flatbuffers.Builder, animationLoop:boolean) {
+  builder.addFieldInt8(7, +animationLoop, +true);
+}
+
+static addAnimationPlaying(builder:flatbuffers.Builder, animationPlaying:boolean) {
+  builder.addFieldInt8(8, +animationPlaying, +true);
+}
+
+static addStateMachineEnabled(builder:flatbuffers.Builder, stateMachineEnabled:boolean) {
+  builder.addFieldInt8(9, +stateMachineEnabled, +false);
+}
+
+static addEntryState(builder:flatbuffers.Builder, entryStateOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(10, entryStateOffset, 0);
+}
+
+static addAnimationStates(builder:flatbuffers.Builder, animationStatesOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(11, animationStatesOffset, 0);
+}
+
+static createAnimationStatesVector(builder:flatbuffers.Builder, data:flatbuffers.Offset[]):flatbuffers.Offset {
+  builder.startVector(4, data.length, 4);
+  for (let i = data.length - 1; i >= 0; i--) {
+    builder.addOffset(data[i]!);
+  }
+  return builder.endVector();
+}
+
+static startAnimationStatesVector(builder:flatbuffers.Builder, numElems:number) {
+  builder.startVector(4, numElems, 4);
+}
+
+static addAnimationTransitions(builder:flatbuffers.Builder, animationTransitionsOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(12, animationTransitionsOffset, 0);
+}
+
+static createAnimationTransitionsVector(builder:flatbuffers.Builder, data:flatbuffers.Offset[]):flatbuffers.Offset {
+  builder.startVector(4, data.length, 4);
+  for (let i = data.length - 1; i >= 0; i--) {
+    builder.addOffset(data[i]!);
+  }
+  return builder.endVector();
+}
+
+static startAnimationTransitionsVector(builder:flatbuffers.Builder, numElems:number) {
+  builder.startVector(4, numElems, 4);
+}
+
 static endComponentMeshRenderer(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   return offset;
 }
 
-static createComponentMeshRenderer(builder:flatbuffers.Builder, modelType:AssetIdentifier, modelOffset:flatbuffers.Offset, overrideTextureType:AssetIdentifier, overrideTextureOffset:flatbuffers.Offset):flatbuffers.Offset {
+static createComponentMeshRenderer(builder:flatbuffers.Builder, modelType:AssetIdentifier, modelOffset:flatbuffers.Offset, overrideTextureType:AssetIdentifier, overrideTextureOffset:flatbuffers.Offset, animationNameOffset:flatbuffers.Offset, animationTime:number, animationSpeed:number, animationLoop:boolean, animationPlaying:boolean, stateMachineEnabled:boolean, entryStateOffset:flatbuffers.Offset, animationStatesOffset:flatbuffers.Offset, animationTransitionsOffset:flatbuffers.Offset):flatbuffers.Offset {
   ComponentMeshRenderer.startComponentMeshRenderer(builder);
   ComponentMeshRenderer.addModelType(builder, modelType);
   ComponentMeshRenderer.addModel(builder, modelOffset);
   ComponentMeshRenderer.addOverrideTextureType(builder, overrideTextureType);
   ComponentMeshRenderer.addOverrideTexture(builder, overrideTextureOffset);
+  ComponentMeshRenderer.addAnimationName(builder, animationNameOffset);
+  ComponentMeshRenderer.addAnimationTime(builder, animationTime);
+  ComponentMeshRenderer.addAnimationSpeed(builder, animationSpeed);
+  ComponentMeshRenderer.addAnimationLoop(builder, animationLoop);
+  ComponentMeshRenderer.addAnimationPlaying(builder, animationPlaying);
+  ComponentMeshRenderer.addStateMachineEnabled(builder, stateMachineEnabled);
+  ComponentMeshRenderer.addEntryState(builder, entryStateOffset);
+  ComponentMeshRenderer.addAnimationStates(builder, animationStatesOffset);
+  ComponentMeshRenderer.addAnimationTransitions(builder, animationTransitionsOffset);
   return ComponentMeshRenderer.endComponentMeshRenderer(builder);
 }
 }

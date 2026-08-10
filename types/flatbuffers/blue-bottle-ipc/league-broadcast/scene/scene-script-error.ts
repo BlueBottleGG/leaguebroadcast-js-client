@@ -5,7 +5,7 @@
 import * as flatbuffers from 'flatbuffers';
 
 /**
- * Emitted when a Lua script attached to an entity encounters an error.
+ * Emitted when a scene script attached to an entity encounters an error.
  */
 export class SceneScriptError {
   bb: flatbuffers.ByteBuffer|null = null;

@@ -21,6 +21,12 @@ export class gameAnalysisV2 {
     summary: gameAnalysisSummaryStyleV2 = {} as gameAnalysisSummaryStyleV2;
     goldGraph: goldGraphV2 = {} as goldGraphV2;
     showHeralds: boolean = false;
+    focusDurationMs: number = 0;
+    focusEasing: string = "";
+    focusKeepHeader: boolean = false;
+    focusPadding: string = "";
+    focusCollapseScale: string = "";
+    focusCollapseBlur: string = "";
     customCss?: string;
     fileVersion: string = "1.0";
 }

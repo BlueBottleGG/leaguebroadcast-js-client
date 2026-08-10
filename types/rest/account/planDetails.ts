@@ -8,7 +8,7 @@ import { scheduledChangeInfo } from "./scheduledChangeInfo";
 
 export class planDetails {
     planName: string = "";
-    cost: string = "";
+    cost?: string;
     currency: string = "";
     nextBillingDate?: Date;
     status: string = "";

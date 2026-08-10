@@ -2,11 +2,14 @@
  * Auto-generated REST API client for Season management endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-07-15
+ * @generated 2026-08-05
  */
 
 import type { ApiClient } from "../ApiClient";
+import type { championAvailabilityWindow } from "#types/shared/championAvailabilityWindow";
 import type { matchWithGamesAndTeams } from "#types/shared/matchWithGamesAndTeams";
+import type { playerSeasonStatsRow } from "#types/shared/playerSeasonStatsRow";
+import type { seasonAvailabilityView } from "#types/shared/seasonAvailabilityView";
 import type { seasonData } from "#types/shared/seasonData";
 import type { seasonStandingRow } from "#types/shared/seasonStandingRow";
 import type { seasonUsage } from "#types/shared/seasonUsage";
@@ -100,6 +103,31 @@ export class SeasonApi {
   /** `GET season/{seasonId}/standings` */
   async getSeasonStandings(seasonId: number): Promise<seasonStandingRow[]> {
     return this.client.get<seasonStandingRow[]>(`season/${seasonId}/standings`);
+  }
+
+  /** `GET season/{seasonId}/playerstats` */
+  async getPlayerStatsInSeason(seasonId: number, matchId?: number | null): Promise<playerSeasonStatsRow[]> {
+    return this.client.get<playerSeasonStatsRow[]>(`season/${seasonId}/playerstats${matchId !== undefined ? `?matchId=${encodeURIComponent(String(matchId))}` : ''}`);
+  }
+
+  /** `GET season/{seasonId}/playerstats/mock` */
+  async getMockPlayerStatsInSeason(seasonId: number): Promise<playerSeasonStatsRow[]> {
+    return this.client.get<playerSeasonStatsRow[]>(`season/${seasonId}/playerstats/mock`);
+  }
+
+  /** `GET season/{seasonId}/availability` */
+  async getSeasonAvailability(seasonId: number): Promise<seasonAvailabilityView> {
+    return this.client.get<seasonAvailabilityView>(`season/${seasonId}/availability`);
+  }
+
+  /** `PUT season/{seasonId}/availability/{championId}` */
+  async setChampionAvailability(seasonId: number, championId: number, windows: championAvailabilityWindow[]): Promise<championAvailabilityWindow[]> {
+    return this.client.put<championAvailabilityWindow[]>(`season/${seasonId}/availability/${championId}`, windows);
+  }
+
+  /** `DELETE season/{seasonId}/availability/{championId}` */
+  async clearChampionAvailability(seasonId: number, championId: number): Promise<void> {
+    return this.client.delete<void>(`season/${seasonId}/availability/${championId}`);
   }
 
   /** `PUT season/{seasonId}/standings/{teamId}` */

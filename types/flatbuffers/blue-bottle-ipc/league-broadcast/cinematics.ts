@@ -4,6 +4,7 @@
 
 export { AddBoundTextRequest } from './cinematics/add-bound-text-request.js';
 export { AddLogoRequest } from './cinematics/add-logo-request.js';
+export { AddPlayerVideoRequest } from './cinematics/add-player-video-request.js';
 export { BlendEasing } from './cinematics/blend-easing.js';
 export { BoundTextSource } from './cinematics/bound-text-source.js';
 export { Cinematic } from './cinematics/Cinematic.js';
@@ -12,6 +13,7 @@ export { CinematicList } from './cinematics/cinematic-list.js';
 export { CinematicPlayback } from './cinematics/cinematic-playback.js';
 export { CinematicProp } from './cinematics/cinematic-prop.js';
 export { CinematicTrack } from './cinematics/cinematic-track.js';
+export { PlayerSlot } from './cinematics/player-slot.js';
 export { PropKind } from './cinematics/prop-kind.js';
 export { PropStyle } from './cinematics/prop-style.js';
 export { SetPropStyleRequest } from './cinematics/set-prop-style-request.js';

@@ -7,5 +7,8 @@
  */
 export enum PropKind {
   BoundText = 0,
-  LogoBillboard = 1
+  LogoBillboard = 1,
+  PlayerName = 2,
+  PlayerPortrait = 3,
+  PlayerVideo = 4
 }

@@ -8,7 +8,7 @@ import { ScriptLogLevel } from '../../../blue-bottle-ipc/league-broadcast/scene/
 
 
 /**
- * Emitted when a Lua script calls log.print/info/warn/error.
+ * Emitted when a scene script writes a log message.
  */
 export class SceneScriptLog {
   bb: flatbuffers.ByteBuffer|null = null;

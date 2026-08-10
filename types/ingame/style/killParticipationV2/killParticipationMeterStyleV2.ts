@@ -3,13 +3,12 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { colorStyleV2 } from "../../../shared/style/colorStyleV2";
+import { containerElementStyleV2 } from "../../../shared/style/containerElementStyleV2";
+import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
 import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
 
 export class killParticipationMeterStyleV2 {
     _node: styleNodeMeta = {} as styleNodeMeta;
-    trackColor: colorStyleV2 = {} as colorStyleV2;
-    fillColor: colorStyleV2 = {} as colorStyleV2;
-    height: string = "";
-    borderRadius: string = "";
+    container: containerStyleV2 = {} as containerStyleV2;
+    fill: containerElementStyleV2 = {} as containerElementStyleV2;
 }

@@ -7,5 +7,6 @@ export class summonerSpellData {
     id?: number;
     name: string = "";
     spellIcon: string = "";
+    iconLookupPath: string = "";
     localAsset: string = "";
 }

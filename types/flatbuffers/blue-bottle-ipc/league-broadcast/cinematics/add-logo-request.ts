@@ -4,6 +4,7 @@
 
 import * as flatbuffers from 'flatbuffers';
 
+import { PlayerSlot } from '../../../blue-bottle-ipc/league-broadcast/cinematics/player-slot.js';
 import { TeamSlot } from '../../../blue-bottle-ipc/league-broadcast/cinematics/team-slot.js';
 
 
@@ -37,8 +38,18 @@ teamSlot():TeamSlot {
   return offset ? this.bb!.readUint8(this.bb_pos + offset) : TeamSlot.Team1;
 }
 
+playerSlot():PlayerSlot {
+  const offset = this.bb!.__offset(this.bb_pos, 8);
+  return offset ? this.bb!.readUint8(this.bb_pos + offset) : PlayerSlot.Player1;
+}
+
+playerBinding():boolean {
+  const offset = this.bb!.__offset(this.bb_pos, 10);
+  return offset ? !!this.bb!.readInt8(this.bb_pos + offset) : false;
+}
+
 static startAddLogoRequest(builder:flatbuffers.Builder) {
-  builder.startObject(2);
+  builder.startObject(4);
 }
 
 static addCinematicId(builder:flatbuffers.Builder, cinematicIdOffset:flatbuffers.Offset) {
@@ -49,15 +60,25 @@ static addTeamSlot(builder:flatbuffers.Builder, teamSlot:TeamSlot) {
   builder.addFieldInt8(1, teamSlot, TeamSlot.Team1);
 }
 
+static addPlayerSlot(builder:flatbuffers.Builder, playerSlot:PlayerSlot) {
+  builder.addFieldInt8(2, playerSlot, PlayerSlot.Player1);
+}
+
+static addPlayerBinding(builder:flatbuffers.Builder, playerBinding:boolean) {
+  builder.addFieldInt8(3, +playerBinding, +false);
+}
+
 static endAddLogoRequest(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   return offset;
 }
 
-static createAddLogoRequest(builder:flatbuffers.Builder, cinematicIdOffset:flatbuffers.Offset, teamSlot:TeamSlot):flatbuffers.Offset {
+static createAddLogoRequest(builder:flatbuffers.Builder, cinematicIdOffset:flatbuffers.Offset, teamSlot:TeamSlot, playerSlot:PlayerSlot, playerBinding:boolean):flatbuffers.Offset {
   AddLogoRequest.startAddLogoRequest(builder);
   AddLogoRequest.addCinematicId(builder, cinematicIdOffset);
   AddLogoRequest.addTeamSlot(builder, teamSlot);
+  AddLogoRequest.addPlayerSlot(builder, playerSlot);
+  AddLogoRequest.addPlayerBinding(builder, playerBinding);
   return AddLogoRequest.endAddLogoRequest(builder);
 }
 }

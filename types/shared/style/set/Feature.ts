@@ -15,5 +15,8 @@ export enum Feature {
     Coaching_Cloud = 8,
     Develop = 9,
     Cinematics = 10,
-    HostedWorkspaces = 11
+    HostedWorkspaces = 11,
+    Strokes_Remote = 12,
+    Strokes_Sync = 13,
+    Mirror_Sync = 14
 }

@@ -3,9 +3,12 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+export * from './AvailabilitySource';
 export * from './BestOfType';
 export * from './cDragonPerkInfo';
 export * from './championAbilityData';
+export * from './championAvailabilityEntry';
+export * from './championAvailabilityWindow';
 export * from './championData';
 export * from './championSkinInfo';
 export * from './championStatistics';
@@ -15,7 +18,6 @@ export * from './GameEndCause';
 export * from './GameState';
 export * from './gameWithTeams';
 export * from './iHeroNamed';
-export * from './ingameTelemetry';
 export * from './itemAsset';
 export * from './MatchLifecycleState';
 export * from './MatchRuleSet';
@@ -23,7 +25,10 @@ export * from './matchWithGamesAndTeams';
 export * from './perkData';
 export * from './perkInfoV2';
 export * from './perkStyleInfoV2';
+export * from './playerSeasonChampionRow';
+export * from './playerSeasonStatsRow';
 export * from './runeStyle';
+export * from './seasonAvailabilityView';
 export * from './seasonData';
 export * from './seasonStandingRow';
 export * from './seasonSummaryData';

@@ -3,6 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+export * from './goldGraphEventMarkerStyleV2';
 export * from './goldGraphGridStyleV2';
 export * from './goldGraphSeriesStyleV2';
+export * from './goldGraphTeamfightStyleV2';
 export * from './goldGraphV2';
