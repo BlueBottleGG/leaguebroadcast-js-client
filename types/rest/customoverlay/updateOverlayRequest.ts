@@ -12,4 +12,5 @@ export class updateOverlayRequest {
     version?: string;
     previewWidth?: number;
     previewHeight?: number;
+    showOnGameWindow?: boolean;
 }

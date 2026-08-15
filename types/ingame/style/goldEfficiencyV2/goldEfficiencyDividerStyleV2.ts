@@ -3,16 +3,12 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { colorStyleV2 } from "../../../shared/style/colorStyleV2";
 import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
 import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
 
 export class goldEfficiencyDividerStyleV2 {
     _node: styleNodeMeta = {} as styleNodeMeta;
     container: containerStyleV2 = {} as containerStyleV2;
-    lowColor: colorStyleV2 = {} as colorStyleV2;
-    midColor: colorStyleV2 = {} as colorStyleV2;
-    highColor: colorStyleV2 = {} as colorStyleV2;
     lowBreak: number = 0;
     highBreak: number = 0;
     backgroundOpacity: number = 0;

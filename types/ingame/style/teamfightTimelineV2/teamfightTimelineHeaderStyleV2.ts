@@ -5,8 +5,12 @@
 
 import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
 import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
+import { textStyleV2 } from "../../../shared/style/textStyleV2";
 
-export class damageBreakdownBarStyleV2 {
+export class teamfightTimelineHeaderStyleV2 {
     _node: styleNodeMeta = {} as styleNodeMeta;
     container: containerStyleV2 = {} as containerStyleV2;
+    title: textStyleV2 = {} as textStyleV2;
+    time: textStyleV2 = {} as textStyleV2;
+    tab: textStyleV2 = {} as textStyleV2;
 }

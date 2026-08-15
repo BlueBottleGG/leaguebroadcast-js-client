@@ -4,9 +4,11 @@
  */
 
 import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
+import { levelXpPlayerStyleV2 } from "./levelXpPlayerStyleV2";
 import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
 
-export class damageBreakdownBarStyleV2 {
+export class levelXpRosterStyleV2 {
     _node: styleNodeMeta = {} as styleNodeMeta;
     container: containerStyleV2 = {} as containerStyleV2;
+    player: levelXpPlayerStyleV2 = {} as levelXpPlayerStyleV2;
 }

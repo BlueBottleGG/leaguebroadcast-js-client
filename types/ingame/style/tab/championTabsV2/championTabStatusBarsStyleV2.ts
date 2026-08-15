@@ -3,14 +3,14 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+import { containerElementStyleV2 } from "../../../../shared/style/containerElementStyleV2";
 import { containerStyleV2 } from "../../../../shared/style/containerStyleV2";
 import { styleNodeMeta } from "../../../../shared/style/styleNodeMeta";
-import { textStyleV2 } from "../../../../shared/style/textStyleV2";
 
-export class championTabLevelUpStyleV2 {
+export class championTabStatusBarsStyleV2 {
     _node: styleNodeMeta = {} as styleNodeMeta;
     container: containerStyleV2 = {} as containerStyleV2;
-    showOnlyMajorLevelUps: boolean = false;
-    animationDuration: number = 0;
-    text: textStyleV2 = {} as textStyleV2;
+    experience: containerElementStyleV2 = {} as containerElementStyleV2;
+    health: containerElementStyleV2 = {} as containerElementStyleV2;
+    resource: containerElementStyleV2 = {} as containerElementStyleV2;
 }

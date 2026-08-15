@@ -19,4 +19,5 @@ export class planDetails {
     referralFeaturesUntil?: Date;
     billing_cycle?: billingCycle;
     scheduledChange?: scheduledChangeInfo;
+    awaitingPlanSelection: boolean = false;
 }

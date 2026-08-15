@@ -7,4 +7,7 @@ export class planDescriptorRecord {
     plan: string = "";
     hidden: boolean = false;
     features: string[] = [];
+    action?: string;
+    available?: boolean;
+    useRight?: string;
 }

@@ -5,7 +5,6 @@
 
 import { containerElementStyleV2 } from "../../../shared/style/containerElementStyleV2";
 import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
-import { damagePaletteV2 } from "./damagePaletteV2";
 import { damageRecapEntryStyleV2 } from "./damageRecapEntryStyleV2";
 import { imageElementStyleV2 } from "../../../shared/style/imageElementStyleV2";
 import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
@@ -21,7 +20,6 @@ export class damageRecapV2 {
     victimName: textStyleV2 = {} as textStyleV2;
     totalDamage: textStyleV2 = {} as textStyleV2;
     damageStripe: containerElementStyleV2 = {} as containerElementStyleV2;
-    damageColors: damagePaletteV2 = {} as damagePaletteV2;
     entries: containerElementStyleV2 = {} as containerElementStyleV2;
     entry: damageRecapEntryStyleV2 = {} as damageRecapEntryStyleV2;
     pagination: containerElementStyleV2 = {} as containerElementStyleV2;

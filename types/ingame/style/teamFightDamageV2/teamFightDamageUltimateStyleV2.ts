@@ -4,9 +4,13 @@
  */
 
 import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
+import { imageStyleV2 } from "../../../shared/style/imageStyleV2";
 import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
+import { textStyleV2 } from "../../../shared/style/textStyleV2";
 
-export class damageBreakdownBarStyleV2 {
+export class teamFightDamageUltimateStyleV2 {
     _node: styleNodeMeta = {} as styleNodeMeta;
     container: containerStyleV2 = {} as containerStyleV2;
+    icon: imageStyleV2 = {} as imageStyleV2;
+    cooldown: textStyleV2 = {} as textStyleV2;
 }

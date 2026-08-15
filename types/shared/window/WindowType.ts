@@ -11,5 +11,6 @@ export enum WindowType {
     Drawing = 4,
     ScriptEditor = 5,
     Console = 6,
-    SceneEditor = 7
+    SceneEditor = 7,
+    IngameOverlay = 8
 }

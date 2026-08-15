@@ -25,4 +25,6 @@ export class damageGraphEntry {
     resource?: ingameResourceData;
     experience?: ingameExperienceData;
     role: string = "";
+    hasBaron: boolean = false;
+    hasElder: boolean = false;
 }

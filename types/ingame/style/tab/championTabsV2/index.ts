@@ -5,4 +5,5 @@
 
 export * from './championTabLevelUpStyleV2';
 export * from './championTabSideStyleV2';
+export * from './championTabStatusBarsStyleV2';
 export * from './championTabsV2';

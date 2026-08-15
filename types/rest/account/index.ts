@@ -14,6 +14,8 @@ export * from './emailLoginRequest';
 export * from './emailResendCodeRequest';
 export * from './emailResetPasswordRequest';
 export * from './emailSignUpRequest';
+export * from './licensingResponseRecord';
+export * from './licensingStatusResponse';
 export * from './localizedPriceData';
 export * from './PaymentInterval';
 export * from './planDescriptorRecord';

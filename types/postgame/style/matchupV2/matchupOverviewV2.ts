@@ -3,7 +3,6 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { colorStyleV2 } from "../../../shared/style/colorStyleV2";
 import { containerElementStyleV2 } from "../../../shared/style/containerElementStyleV2";
 import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
 import { imageElementStyleV2 } from "../../../shared/style/imageElementStyleV2";
@@ -35,7 +34,6 @@ export class matchupOverviewV2 {
     versusText: string = "";
     gameLabelTemplate: string = "";
     unplayedTemplate: string = "";
-    activeBackground: colorStyleV2 = {} as colorStyleV2;
     customCss?: string;
     fileVersion: string = "1.0";
 }
