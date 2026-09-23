@@ -37,8 +37,23 @@ linkedToCursor():boolean {
   return offset ? !!this.bb!.readInt8(this.bb_pos + offset) : false;
 }
 
+cursorConstraintX():number {
+  const offset = this.bb!.__offset(this.bb_pos, 8);
+  return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 0.0;
+}
+
+cursorConstraintZ():number {
+  const offset = this.bb!.__offset(this.bb_pos, 10);
+  return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 0.0;
+}
+
+cursorConstraintRadius():number {
+  const offset = this.bb!.__offset(this.bb_pos, 12);
+  return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 0.0;
+}
+
 static startComponentEditState(builder:flatbuffers.Builder) {
-  builder.startObject(2);
+  builder.startObject(5);
 }
 
 static addEditMode(builder:flatbuffers.Builder, editMode:boolean) {
@@ -49,15 +64,30 @@ static addLinkedToCursor(builder:flatbuffers.Builder, linkedToCursor:boolean) {
   builder.addFieldInt8(1, +linkedToCursor, +false);
 }
 
+static addCursorConstraintX(builder:flatbuffers.Builder, cursorConstraintX:number) {
+  builder.addFieldFloat32(2, cursorConstraintX, 0.0);
+}
+
+static addCursorConstraintZ(builder:flatbuffers.Builder, cursorConstraintZ:number) {
+  builder.addFieldFloat32(3, cursorConstraintZ, 0.0);
+}
+
+static addCursorConstraintRadius(builder:flatbuffers.Builder, cursorConstraintRadius:number) {
+  builder.addFieldFloat32(4, cursorConstraintRadius, 0.0);
+}
+
 static endComponentEditState(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   return offset;
 }
 
-static createComponentEditState(builder:flatbuffers.Builder, editMode:boolean, linkedToCursor:boolean):flatbuffers.Offset {
+static createComponentEditState(builder:flatbuffers.Builder, editMode:boolean, linkedToCursor:boolean, cursorConstraintX:number, cursorConstraintZ:number, cursorConstraintRadius:number):flatbuffers.Offset {
   ComponentEditState.startComponentEditState(builder);
   ComponentEditState.addEditMode(builder, editMode);
   ComponentEditState.addLinkedToCursor(builder, linkedToCursor);
+  ComponentEditState.addCursorConstraintX(builder, cursorConstraintX);
+  ComponentEditState.addCursorConstraintZ(builder, cursorConstraintZ);
+  ComponentEditState.addCursorConstraintRadius(builder, cursorConstraintRadius);
   return ComponentEditState.endComponentEditState(builder);
 }
 }

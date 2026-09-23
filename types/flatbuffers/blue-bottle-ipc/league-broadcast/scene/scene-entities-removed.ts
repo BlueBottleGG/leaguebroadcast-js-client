@@ -5,8 +5,10 @@
 import * as flatbuffers from 'flatbuffers';
 
 /**
- * Emitted after EntityDestroy. local_ids includes all cascaded descendant
- * IDs so C# can purge its mirror in one pass.
+ * Emitted after EntityDestroy. local_ids are the requested ids that existed and
+ * were destroyed; ids that did not exist are omitted. reparented_ids are the
+ * surviving children of those entities, which lblib moved to the scene root
+ * (parent_id == 0); a mirror that tracks hierarchy must apply both.
  */
 export class SceneEntitiesRemoved {
   bb: flatbuffers.ByteBuffer|null = null;
@@ -41,8 +43,18 @@ localIdsLength():number {
   return offset ? this.bb!.__vector_len(this.bb_pos + offset) : 0;
 }
 
+reparentedIds(index: number):bigint|null {
+  const offset = this.bb!.__offset(this.bb_pos, 8);
+  return offset ? this.bb!.readUint64(this.bb!.__vector(this.bb_pos + offset) + index * 8) : BigInt(0);
+}
+
+reparentedIdsLength():number {
+  const offset = this.bb!.__offset(this.bb_pos, 8);
+  return offset ? this.bb!.__vector_len(this.bb_pos + offset) : 0;
+}
+
 static startSceneEntitiesRemoved(builder:flatbuffers.Builder) {
-  builder.startObject(2);
+  builder.startObject(3);
 }
 
 static addSceneId(builder:flatbuffers.Builder, sceneId:number) {
@@ -65,15 +77,32 @@ static startLocalIdsVector(builder:flatbuffers.Builder, numElems:number) {
   builder.startVector(8, numElems, 8);
 }
 
+static addReparentedIds(builder:flatbuffers.Builder, reparentedIdsOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(2, reparentedIdsOffset, 0);
+}
+
+static createReparentedIdsVector(builder:flatbuffers.Builder, data:bigint[]):flatbuffers.Offset {
+  builder.startVector(8, data.length, 8);
+  for (let i = data.length - 1; i >= 0; i--) {
+    builder.addInt64(data[i]!);
+  }
+  return builder.endVector();
+}
+
+static startReparentedIdsVector(builder:flatbuffers.Builder, numElems:number) {
+  builder.startVector(8, numElems, 8);
+}
+
 static endSceneEntitiesRemoved(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   return offset;
 }
 
-static createSceneEntitiesRemoved(builder:flatbuffers.Builder, sceneId:number, localIdsOffset:flatbuffers.Offset):flatbuffers.Offset {
+static createSceneEntitiesRemoved(builder:flatbuffers.Builder, sceneId:number, localIdsOffset:flatbuffers.Offset, reparentedIdsOffset:flatbuffers.Offset):flatbuffers.Offset {
   SceneEntitiesRemoved.startSceneEntitiesRemoved(builder);
   SceneEntitiesRemoved.addSceneId(builder, sceneId);
   SceneEntitiesRemoved.addLocalIds(builder, localIdsOffset);
+  SceneEntitiesRemoved.addReparentedIds(builder, reparentedIdsOffset);
   return SceneEntitiesRemoved.endSceneEntitiesRemoved(builder);
 }
 }

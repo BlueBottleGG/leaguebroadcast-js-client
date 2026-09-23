@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
 /**
- * Which playing-roster member within a team a prop is bound to.
+ * Which player within a team a prop is bound to, in the live lane order the overlays render.
  */
 export enum PlayerSlot {
   Player1 = 0,

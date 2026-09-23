@@ -10,6 +10,7 @@ export { EntityEventKind } from './scene/entity-event-kind.js';
 export { EntitySnapshot } from './scene/entity-snapshot.js';
 export { EntityTransformUpdate } from './scene/entity-transform-update.js';
 export { GetComponents } from './scene/get-components.js';
+export { GizmoManipulationPhase } from './scene/gizmo-manipulation-phase.js';
 export { RemoveComponent } from './scene/remove-component.js';
 export { SceneAction } from './scene/scene-action.js';
 export { SceneCommand } from './scene/scene-command.js';

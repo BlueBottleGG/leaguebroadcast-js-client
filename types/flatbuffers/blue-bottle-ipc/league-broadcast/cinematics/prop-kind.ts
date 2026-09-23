@@ -10,5 +10,7 @@ export enum PropKind {
   LogoBillboard = 1,
   PlayerName = 2,
   PlayerPortrait = 3,
-  PlayerVideo = 4
+  PlayerVideo = 4,
+  PlayerChampion = 5,
+  Model = 6
 }

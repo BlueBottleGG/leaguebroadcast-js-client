@@ -9,6 +9,8 @@ export class itemWithAsset {
     displayName: string = "";
     assetUrl: string = "";
     modifierUrl?: string;
+    assetHash?: number;
+    modifierHash?: number;
     cost: number = 0;
     count: number = 0;
     combineCost: number = 0;

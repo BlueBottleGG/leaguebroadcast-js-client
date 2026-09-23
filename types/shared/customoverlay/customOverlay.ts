@@ -19,6 +19,7 @@ export class customOverlay {
     cloudId?: string;
     isManagedPackage: boolean = false;
     showOnGameWindow: boolean = false;
+    gameWindowRoute: string = "";
     previewWidth: number = 0;
     previewHeight: number = 0;
     createdAt: Date = new Date();

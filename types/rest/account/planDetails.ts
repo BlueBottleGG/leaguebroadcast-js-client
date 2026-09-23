@@ -4,6 +4,7 @@
  */
 
 import { billingCycle } from "../billing_cycle/billingCycle";
+import { dunningInfo } from "./dunningInfo";
 import { scheduledChangeInfo } from "./scheduledChangeInfo";
 
 export class planDetails {
@@ -19,5 +20,6 @@ export class planDetails {
     referralFeaturesUntil?: Date;
     billing_cycle?: billingCycle;
     scheduledChange?: scheduledChangeInfo;
+    dunning?: dunningInfo;
     awaitingPlanSelection: boolean = false;
 }

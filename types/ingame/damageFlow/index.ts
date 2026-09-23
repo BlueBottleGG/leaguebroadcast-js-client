@@ -5,4 +5,5 @@
 
 export * from './damageFlowEdge';
 export * from './damageFlowNode';
+export * from './DamageFlowView';
 export * from './ingameDamageFlowData';

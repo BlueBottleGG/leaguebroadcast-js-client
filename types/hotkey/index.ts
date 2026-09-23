@@ -12,4 +12,5 @@ export * from './Lane';
 export * from './playerHotkeyDto';
 export * from './singleChampionDetailHotkeyConfigDto';
 export * from './singleIngameHotkeyConfigDto';
+export * from './singleMulticamTakeHotkeyConfigDto';
 export * from './singlePostgameHotkeyConfigDto';

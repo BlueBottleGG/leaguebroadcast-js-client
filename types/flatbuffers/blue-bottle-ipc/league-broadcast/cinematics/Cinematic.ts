@@ -4,11 +4,18 @@
 
 import * as flatbuffers from 'flatbuffers';
 
+import { CinematicHudTrack } from '../../../blue-bottle-ipc/league-broadcast/cinematics/cinematic-hud-track.js';
+import { CinematicMarker } from '../../../blue-bottle-ipc/league-broadcast/cinematics/cinematic-marker.js';
+import { CinematicOverlayTrack } from '../../../blue-bottle-ipc/league-broadcast/cinematics/cinematic-overlay-track.js';
 import { CinematicProp } from '../../../blue-bottle-ipc/league-broadcast/cinematics/cinematic-prop.js';
 
 
 /**
- * A dynamic cinematic: a named camera flight plus managed props animated along it.
+ * A dynamic cinematic: a named native camera asset plus managed props animated along it.
+ * hud_tracks keyframe League's own UI elements, overlay_tracks LeagueBroadcast's own overlays and
+ * markers name points worth reacting to; the host evaluates all three on the playback tick.
+ * hide_overlays travels with the document, so an exported full-screen intro keeps its takeover.
+ * Fields are append-only — the slot order is the wire format older builds still read.
  */
 export class Cinematic {
   bb: flatbuffers.ByteBuffer|null = null;
@@ -59,8 +66,43 @@ propsLength():number {
   return offset ? this.bb!.__vector_len(this.bb_pos + offset) : 0;
 }
 
+hudTracks(index: number, obj?:CinematicHudTrack):CinematicHudTrack|null {
+  const offset = this.bb!.__offset(this.bb_pos, 12);
+  return offset ? (obj || new CinematicHudTrack()).__init(this.bb!.__indirect(this.bb!.__vector(this.bb_pos + offset) + index * 4), this.bb!) : null;
+}
+
+hudTracksLength():number {
+  const offset = this.bb!.__offset(this.bb_pos, 12);
+  return offset ? this.bb!.__vector_len(this.bb_pos + offset) : 0;
+}
+
+markers(index: number, obj?:CinematicMarker):CinematicMarker|null {
+  const offset = this.bb!.__offset(this.bb_pos, 14);
+  return offset ? (obj || new CinematicMarker()).__init(this.bb!.__indirect(this.bb!.__vector(this.bb_pos + offset) + index * 4), this.bb!) : null;
+}
+
+markersLength():number {
+  const offset = this.bb!.__offset(this.bb_pos, 14);
+  return offset ? this.bb!.__vector_len(this.bb_pos + offset) : 0;
+}
+
+overlayTracks(index: number, obj?:CinematicOverlayTrack):CinematicOverlayTrack|null {
+  const offset = this.bb!.__offset(this.bb_pos, 16);
+  return offset ? (obj || new CinematicOverlayTrack()).__init(this.bb!.__indirect(this.bb!.__vector(this.bb_pos + offset) + index * 4), this.bb!) : null;
+}
+
+overlayTracksLength():number {
+  const offset = this.bb!.__offset(this.bb_pos, 16);
+  return offset ? this.bb!.__vector_len(this.bb_pos + offset) : 0;
+}
+
+hideOverlays():boolean {
+  const offset = this.bb!.__offset(this.bb_pos, 18);
+  return offset ? !!this.bb!.readInt8(this.bb_pos + offset) : false;
+}
+
 static startCinematic(builder:flatbuffers.Builder) {
-  builder.startObject(4);
+  builder.startObject(8);
 }
 
 static addId(builder:flatbuffers.Builder, idOffset:flatbuffers.Offset) {
@@ -91,17 +133,73 @@ static startPropsVector(builder:flatbuffers.Builder, numElems:number) {
   builder.startVector(4, numElems, 4);
 }
 
+static addHudTracks(builder:flatbuffers.Builder, hudTracksOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(4, hudTracksOffset, 0);
+}
+
+static createHudTracksVector(builder:flatbuffers.Builder, data:flatbuffers.Offset[]):flatbuffers.Offset {
+  builder.startVector(4, data.length, 4);
+  for (let i = data.length - 1; i >= 0; i--) {
+    builder.addOffset(data[i]!);
+  }
+  return builder.endVector();
+}
+
+static startHudTracksVector(builder:flatbuffers.Builder, numElems:number) {
+  builder.startVector(4, numElems, 4);
+}
+
+static addMarkers(builder:flatbuffers.Builder, markersOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(5, markersOffset, 0);
+}
+
+static createMarkersVector(builder:flatbuffers.Builder, data:flatbuffers.Offset[]):flatbuffers.Offset {
+  builder.startVector(4, data.length, 4);
+  for (let i = data.length - 1; i >= 0; i--) {
+    builder.addOffset(data[i]!);
+  }
+  return builder.endVector();
+}
+
+static startMarkersVector(builder:flatbuffers.Builder, numElems:number) {
+  builder.startVector(4, numElems, 4);
+}
+
+static addOverlayTracks(builder:flatbuffers.Builder, overlayTracksOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(6, overlayTracksOffset, 0);
+}
+
+static createOverlayTracksVector(builder:flatbuffers.Builder, data:flatbuffers.Offset[]):flatbuffers.Offset {
+  builder.startVector(4, data.length, 4);
+  for (let i = data.length - 1; i >= 0; i--) {
+    builder.addOffset(data[i]!);
+  }
+  return builder.endVector();
+}
+
+static startOverlayTracksVector(builder:flatbuffers.Builder, numElems:number) {
+  builder.startVector(4, numElems, 4);
+}
+
+static addHideOverlays(builder:flatbuffers.Builder, hideOverlays:boolean) {
+  builder.addFieldInt8(7, +hideOverlays, +false);
+}
+
 static endCinematic(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   return offset;
 }
 
-static createCinematic(builder:flatbuffers.Builder, idOffset:flatbuffers.Offset, nameOffset:flatbuffers.Offset, cameraSequenceNameOffset:flatbuffers.Offset, propsOffset:flatbuffers.Offset):flatbuffers.Offset {
+static createCinematic(builder:flatbuffers.Builder, idOffset:flatbuffers.Offset, nameOffset:flatbuffers.Offset, cameraSequenceNameOffset:flatbuffers.Offset, propsOffset:flatbuffers.Offset, hudTracksOffset:flatbuffers.Offset, markersOffset:flatbuffers.Offset, overlayTracksOffset:flatbuffers.Offset, hideOverlays:boolean):flatbuffers.Offset {
   Cinematic.startCinematic(builder);
   Cinematic.addId(builder, idOffset);
   Cinematic.addName(builder, nameOffset);
   Cinematic.addCameraSequenceName(builder, cameraSequenceNameOffset);
   Cinematic.addProps(builder, propsOffset);
+  Cinematic.addHudTracks(builder, hudTracksOffset);
+  Cinematic.addMarkers(builder, markersOffset);
+  Cinematic.addOverlayTracks(builder, overlayTracksOffset);
+  Cinematic.addHideOverlays(builder, hideOverlays);
   return Cinematic.endCinematic(builder);
 }
 }

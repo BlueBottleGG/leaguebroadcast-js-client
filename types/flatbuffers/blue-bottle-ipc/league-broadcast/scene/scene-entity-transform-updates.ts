@@ -5,6 +5,7 @@
 import * as flatbuffers from 'flatbuffers';
 
 import { EntityTransformUpdate } from '../../../blue-bottle-ipc/league-broadcast/scene/entity-transform-update.js';
+import { GizmoManipulationPhase } from '../../../blue-bottle-ipc/league-broadcast/scene/gizmo-manipulation-phase.js';
 
 
 export class SceneEntityTransformUpdates {
@@ -40,8 +41,13 @@ updatesLength():number {
   return offset ? this.bb!.__vector_len(this.bb_pos + offset) : 0;
 }
 
+phase():GizmoManipulationPhase {
+  const offset = this.bb!.__offset(this.bb_pos, 8);
+  return offset ? this.bb!.readUint8(this.bb_pos + offset) : GizmoManipulationPhase.None;
+}
+
 static startSceneEntityTransformUpdates(builder:flatbuffers.Builder) {
-  builder.startObject(2);
+  builder.startObject(3);
 }
 
 static addSceneId(builder:flatbuffers.Builder, sceneId:number) {
@@ -64,15 +70,20 @@ static startUpdatesVector(builder:flatbuffers.Builder, numElems:number) {
   builder.startVector(4, numElems, 4);
 }
 
+static addPhase(builder:flatbuffers.Builder, phase:GizmoManipulationPhase) {
+  builder.addFieldInt8(2, phase, GizmoManipulationPhase.None);
+}
+
 static endSceneEntityTransformUpdates(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   return offset;
 }
 
-static createSceneEntityTransformUpdates(builder:flatbuffers.Builder, sceneId:number, updatesOffset:flatbuffers.Offset):flatbuffers.Offset {
+static createSceneEntityTransformUpdates(builder:flatbuffers.Builder, sceneId:number, updatesOffset:flatbuffers.Offset, phase:GizmoManipulationPhase):flatbuffers.Offset {
   SceneEntityTransformUpdates.startSceneEntityTransformUpdates(builder);
   SceneEntityTransformUpdates.addSceneId(builder, sceneId);
   SceneEntityTransformUpdates.addUpdates(builder, updatesOffset);
+  SceneEntityTransformUpdates.addPhase(builder, phase);
   return SceneEntityTransformUpdates.endSceneEntityTransformUpdates(builder);
 }
 }

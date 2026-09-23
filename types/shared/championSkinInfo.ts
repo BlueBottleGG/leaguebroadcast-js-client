@@ -9,4 +9,7 @@ export class championSkinInfo {
     splashUrl: string = "";
     loadingUrl: string = "";
     tileUrl: string = "";
+    splashVideoPath?: string;
+    collectionSplashVideoPath?: string;
+    collectionCardHoverVideoPath?: string;
 }

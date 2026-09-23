@@ -16,6 +16,7 @@ export class customOverlayDescriptor {
     version: string = "";
     cloudId?: string;
     showOnGameWindow: boolean = false;
+    gameWindowRoute: string = "";
     previewWidth: number = 0;
     previewHeight: number = 0;
     createdAt: Date = new Date();

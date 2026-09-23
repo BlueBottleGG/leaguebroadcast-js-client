@@ -16,5 +16,6 @@ export class casterActionDefinitionDto {
     allowTimePeriod: boolean = false;
     allowTeams: boolean = false;
     singlePlayerPick: boolean = false;
+    category?: string;
     customSettings?: casterActionSettingDto[];
 }

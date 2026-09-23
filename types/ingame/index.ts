@@ -6,6 +6,7 @@
 export * from './ingameAbilityInfo';
 export * from './ingameFrontendData';
 export * from './ingameObjectivePowerPlay';
+export * from './ingameStateSerializationData';
 export * from './ingameStateSettingsWrapper';
 export * from './itemWithAsset';
 export * from './SpellSlotIndex';

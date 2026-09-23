@@ -47,8 +47,13 @@ color(obj?:ColorRGBA):ColorRGBA|null {
   return offset ? (obj || new ColorRGBA()).__init(this.bb_pos + offset, this.bb!) : null;
 }
 
+billboard():boolean {
+  const offset = this.bb!.__offset(this.bb_pos, 10);
+  return offset ? !!this.bb!.readInt8(this.bb_pos + offset) : false;
+}
+
 static startComponentTextRenderer(builder:flatbuffers.Builder) {
-  builder.startObject(3);
+  builder.startObject(4);
 }
 
 static addText(builder:flatbuffers.Builder, textOffset:flatbuffers.Offset) {
@@ -61,6 +66,10 @@ static addFontName(builder:flatbuffers.Builder, fontNameOffset:flatbuffers.Offse
 
 static addColor(builder:flatbuffers.Builder, colorOffset:flatbuffers.Offset) {
   builder.addFieldStruct(2, colorOffset, 0);
+}
+
+static addBillboard(builder:flatbuffers.Builder, billboard:boolean) {
+  builder.addFieldInt8(3, +billboard, +false);
 }
 
 static endComponentTextRenderer(builder:flatbuffers.Builder):flatbuffers.Offset {

@@ -3,9 +3,9 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+import { dbCloudStatusResponse } from "../../cloud/dbCloudStatusResponse";
+
 export class dbCloudSyncStatusMessage {
     type: string = "";
-    hasLocalChanges: boolean = false;
-    lastBackupAt?: Date;
-    isBackingUp: boolean = false;
+    status: dbCloudStatusResponse = {} as dbCloudStatusResponse;
 }

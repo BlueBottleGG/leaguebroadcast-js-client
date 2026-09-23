@@ -9,4 +9,7 @@ export class dbCloudSyncResult {
     success: boolean = false;
     version?: cloudDatabaseVersion;
     error?: string;
+    errorCode?: string;
+    actualSize?: number;
+    maxFileSize?: number;
 }

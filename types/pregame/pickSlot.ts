@@ -14,6 +14,7 @@ export class pickSlot {
     player: string = "";
     summonerSpells: summonerSpellData[] = [];
     champion?: championData;
+    skinId: number = 0;
     championStatistics?: championStatistics;
     championStatisticsBySource?: championStatisticsBySource;
     videoStreamUrl?: string;

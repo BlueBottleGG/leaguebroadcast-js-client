@@ -8,6 +8,7 @@ export * from './changeEmailResponse';
 export * from './changePasswordRequest';
 export * from './checkoutCompleteResponse';
 export * from './checkoutRequestDTO';
+export * from './dunningInfo';
 export * from './emailConfirmRequest';
 export * from './emailForgotPasswordRequest';
 export * from './emailLoginRequest';

@@ -49,6 +49,7 @@ export class websocketMessageTypes {
     static readonly penEraserStateUpdate = "pen-eraser-state-update";
     static readonly hotkeyFired = "hotkey-fired";
     static readonly casterPageSwitched = "caster-page-switched";
+    static readonly casterConfigSeeded = "caster-config-seeded";
     static readonly activeComponentChanged = "active-component-changed";
     static readonly disabledOverlaysUpdate = "disabled-overlays-update";
     static readonly userFeaturesUpdated = "user-features-updated";

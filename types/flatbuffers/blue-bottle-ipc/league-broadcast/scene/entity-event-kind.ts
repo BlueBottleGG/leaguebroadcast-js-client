@@ -5,7 +5,7 @@
 /**
  * Discriminator for SceneEntityChanged events. Created / Updated carry the
  * changed components; Destroyed carries no components and uses
- * SceneEntitiesRemoved for the bulk cascade form.
+ * SceneEntitiesRemoved for the bulk form.
  */
 export enum EntityEventKind {
   Created = 0,

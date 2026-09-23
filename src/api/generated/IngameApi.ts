@@ -2,12 +2,13 @@
  * Auto-generated REST API client for In-game overlay and serialization endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-07-08
+ * @generated 2026-09-22
  */
 
 import type { ApiClient } from "../ApiClient";
 import type { damageEventHistoryEntry } from "#types/ingame/damageEvent/damageEventHistoryEntry";
 import type { ObjectiveRecapDisplayMode } from "#types/ingame/damageRecap/ObjectiveRecapDisplayMode";
+import type { ingameStateSerializationData } from "#types/ingame/ingameStateSerializationData";
 
 export class IngameApi {
   constructor(private readonly client: ApiClient) {}
@@ -43,22 +44,22 @@ export class IngameApi {
   }
 
   /** `GET ingame/showing` */
-  async getCurrentCommonSerializationOptions(): Promise<Record<string, unknown>> {
-    return this.client.get<Record<string, unknown>>('ingame/showing');
+  async getCurrentCommonSerializationOptions(): Promise<ingameStateSerializationData> {
+    return this.client.get<ingameStateSerializationData>('ingame/showing');
   }
 
   /** `POST ingame/showing` */
-  async setCurrentCommonSerializationOptions(data: Record<string, unknown>): Promise<void> {
+  async setCurrentCommonSerializationOptions(data: ingameStateSerializationData): Promise<void> {
     return this.client.post<void>('ingame/showing', data);
   }
 
   /** `GET ingame/showing/{socketid}` */
-  async getCurrentFrontendSerializationOptions(socketid: string): Promise<Record<string, unknown>> {
-    return this.client.get<Record<string, unknown>>(`ingame/showing/${socketid}`);
+  async getCurrentFrontendSerializationOptions(socketid: string): Promise<ingameStateSerializationData> {
+    return this.client.get<ingameStateSerializationData>(`ingame/showing/${socketid}`);
   }
 
   /** `POST ingame/showing/{socketid}` */
-  async setCurrentFrontendSerializationOptions(socketid: string, data: Record<string, unknown>): Promise<void> {
+  async setCurrentFrontendSerializationOptions(socketid: string, data: ingameStateSerializationData): Promise<void> {
     return this.client.post<void>(`ingame/showing/${socketid}`, data);
   }
 

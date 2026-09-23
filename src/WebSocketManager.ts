@@ -7,7 +7,7 @@ export class WebSocketManager {
   private reconnectAttempts: number = 0;
   private maxReconnectAttempts: number = 10;
   private reconnectDelay: number = 5000;
-  private reconnectTimeout: number | null = null;
+  private reconnectTimeout: ReturnType<typeof setTimeout> | null = null;
   private messageHandlers: Set<(data: any) => void> = new Set();
   private connectionHandlers: Set<() => void> = new Set();
   private disconnectionHandlers: Set<() => void> = new Set();
@@ -147,7 +147,7 @@ export class WebSocketManager {
       `[WebSocketManager] Reconnecting in ${this.reconnectDelay}ms (attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts})`,
     );
 
-    this.reconnectTimeout = window.setTimeout(() => {
+    this.reconnectTimeout = setTimeout(() => {
       this.connect(this.url).catch((error) => {
         console.error("[WebSocketManager] Reconnect failed:", error);
       });

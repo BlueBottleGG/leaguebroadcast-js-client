@@ -12,6 +12,9 @@ export class ingameSkinDisplayPlayerData {
     champion?: simpleChampionData;
     skinName: string = "";
     splashCenteredUrl: string = "";
+    splashVideoPath?: string;
+    collectionSplashVideoPath?: string;
+    collectionCardHoverVideoPath?: string;
     splashUrl: string = "";
     loadingUrl: string = "";
     tileUrl: string = "";

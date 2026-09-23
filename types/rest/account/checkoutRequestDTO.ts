@@ -9,4 +9,7 @@ export class checkoutRequestDTO {
     plan: string = "";
     interval: PaymentInterval = PaymentInterval.Monthly;
     referralCode?: string;
+    preview: boolean = false;
+    confirmPlanChange: boolean = false;
+    confirmationToken?: string;
 }

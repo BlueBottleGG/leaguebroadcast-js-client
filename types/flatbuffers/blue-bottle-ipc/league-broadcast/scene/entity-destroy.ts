@@ -5,8 +5,8 @@
 import * as flatbuffers from 'flatbuffers';
 
 /**
- * Destroy entities. Cascades: descendants of any destroyed entity are also
- * destroyed and reported in the resulting SceneEntitiesRemoved event.
+ * Destroy entities. Descendants are not destroyed — they are re-parented to the
+ * scene root. The resulting SceneEntitiesRemoved reports the ids actually destroyed.
  */
 export class EntityDestroy {
   bb: flatbuffers.ByteBuffer|null = null;

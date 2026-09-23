@@ -12,5 +12,7 @@ export class ingameObjectiveDpsData {
     endTime: number = 0;
     maxHealth: number = 0;
     samples: objectiveDpsSample[] = [];
+    blueDamageByType: { [key: string]: number } = {};
+    redDamageByType: { [key: string]: number } = {};
     smiteReaction?: smiteReactionResult;
 }

@@ -13,4 +13,5 @@ export class updateOverlayRequest {
     previewWidth?: number;
     previewHeight?: number;
     showOnGameWindow?: boolean;
+    gameWindowRoute?: string;
 }

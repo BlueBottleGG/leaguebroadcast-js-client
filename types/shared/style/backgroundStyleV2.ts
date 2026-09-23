@@ -7,8 +7,8 @@ import { backgroundColorVariantV2 } from "./backgroundColorVariantV2";
 import { colorStyleV2 } from "./colorStyleV2";
 
 export class backgroundStyleV2 {
-    color: colorStyleV2 = {} as colorStyleV2;
+    colors?: backgroundColorVariantV2[];
+    color?: colorStyleV2;
     effectType: string = "";
     effectStrength?: string;
-    colors?: backgroundColorVariantV2[];
 }

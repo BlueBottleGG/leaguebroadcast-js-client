@@ -10,4 +10,5 @@ export class dbCloudVersionsResponse {
     totalStorageUsed: number = 0;
     maxStorageAllowed: number = 0;
     maxVersions: number = 0;
+    maxFileSize: number = 0;
 }

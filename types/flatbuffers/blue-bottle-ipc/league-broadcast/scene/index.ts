@@ -11,6 +11,7 @@ export * from './entity-event-kind';
 export * from './entity-snapshot';
 export * from './entity-transform-update';
 export * from './get-components';
+export * from './gizmo-manipulation-phase';
 export * from './remove-component';
 export * from './scene-action';
 export * from './scene-command';

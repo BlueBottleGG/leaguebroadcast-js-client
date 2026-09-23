@@ -12,5 +12,6 @@ export class teamfightTimelinePlayer {
     displayName: string = "";
     team: Team = Team.None;
     totalDamage: number = 0;
+    damageByType: { [key: string]: number } = {};
     died: boolean = false;
 }

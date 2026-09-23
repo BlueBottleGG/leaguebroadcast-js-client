@@ -4,8 +4,11 @@
 
 import * as flatbuffers from 'flatbuffers';
 
+import { PropOrientation } from '../../../blue-bottle-ipc/league-broadcast/cinematics/prop-orientation.js';
+
+
 /**
- * Static visual styling for a prop (font from a catalog index; RGBA tint).
+ * Static visual styling for a prop (font from a catalog index; RGBA tint; image orientation).
  */
 export class PropStyle {
   bb: flatbuffers.ByteBuffer|null = null;
@@ -55,8 +58,13 @@ fontSize():number {
   return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 32.0;
 }
 
+orientation():PropOrientation {
+  const offset = this.bb!.__offset(this.bb_pos, 16);
+  return offset ? this.bb!.readUint8(this.bb_pos + offset) : PropOrientation.FaceCamera;
+}
+
 static startPropStyle(builder:flatbuffers.Builder) {
-  builder.startObject(6);
+  builder.startObject(7);
 }
 
 static addFontIndex(builder:flatbuffers.Builder, fontIndex:number) {
@@ -83,12 +91,16 @@ static addFontSize(builder:flatbuffers.Builder, fontSize:number) {
   builder.addFieldFloat32(5, fontSize, 32.0);
 }
 
+static addOrientation(builder:flatbuffers.Builder, orientation:PropOrientation) {
+  builder.addFieldInt8(6, orientation, PropOrientation.FaceCamera);
+}
+
 static endPropStyle(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   return offset;
 }
 
-static createPropStyle(builder:flatbuffers.Builder, fontIndex:number, colorR:number, colorG:number, colorB:number, colorA:number, fontSize:number):flatbuffers.Offset {
+static createPropStyle(builder:flatbuffers.Builder, fontIndex:number, colorR:number, colorG:number, colorB:number, colorA:number, fontSize:number, orientation:PropOrientation):flatbuffers.Offset {
   PropStyle.startPropStyle(builder);
   PropStyle.addFontIndex(builder, fontIndex);
   PropStyle.addColorR(builder, colorR);
@@ -96,6 +108,7 @@ static createPropStyle(builder:flatbuffers.Builder, fontIndex:number, colorR:num
   PropStyle.addColorB(builder, colorB);
   PropStyle.addColorA(builder, colorA);
   PropStyle.addFontSize(builder, fontSize);
+  PropStyle.addOrientation(builder, orientation);
   return PropStyle.endPropStyle(builder);
 }
 }

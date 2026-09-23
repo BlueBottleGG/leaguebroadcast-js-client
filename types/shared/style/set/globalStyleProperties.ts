@@ -3,10 +3,12 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+import { cameraFramesStyleDto } from "./cameraFramesStyleDto";
 import { displayColorData } from "../displayColorData";
 
 export class globalStyleProperties {
     playerFullNameDisplayFormat: string = "";
     color: displayColorData = {} as displayColorData;
     fontFamily: string = "";
+    cameraFrames: cameraFramesStyleDto = {} as cameraFramesStyleDto;
 }

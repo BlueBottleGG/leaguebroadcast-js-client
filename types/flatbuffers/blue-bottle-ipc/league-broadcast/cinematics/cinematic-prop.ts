@@ -81,8 +81,15 @@ playerSlot():PlayerSlot {
   return offset ? this.bb!.readUint8(this.bb_pos + offset) : PlayerSlot.Player1;
 }
 
+modelAsset():string|null
+modelAsset(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+modelAsset(optionalEncoding?:any):string|Uint8Array|null {
+  const offset = this.bb!.__offset(this.bb_pos, 20);
+  return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
+}
+
 static startCinematicProp(builder:flatbuffers.Builder) {
-  builder.startObject(8);
+  builder.startObject(9);
 }
 
 static addId(builder:flatbuffers.Builder, idOffset:flatbuffers.Offset) {
@@ -127,6 +134,10 @@ static addStyle(builder:flatbuffers.Builder, styleOffset:flatbuffers.Offset) {
 
 static addPlayerSlot(builder:flatbuffers.Builder, playerSlot:PlayerSlot) {
   builder.addFieldInt8(7, playerSlot, PlayerSlot.Player1);
+}
+
+static addModelAsset(builder:flatbuffers.Builder, modelAssetOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(8, modelAssetOffset, 0);
 }
 
 static endCinematicProp(builder:flatbuffers.Builder):flatbuffers.Offset {
