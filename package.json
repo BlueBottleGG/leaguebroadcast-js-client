@@ -48,7 +48,7 @@
   },
   "homepage": "https://github.com/BlueBottleGG/leaguebroadcast-js-client#readme",
   "devDependencies": {
-    "@types/node": "^22.19.17",
+    "@types/node": "^26.6.5",
     "rimraf": "^6.0.1",
     "tsup": "^8.3.5",
     "tsx": "^4.21.0",
