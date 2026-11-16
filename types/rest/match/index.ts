@@ -4,4 +4,5 @@
  */
 
 export * from './addMatchRequestArgs';
+export * from './matchStructureData';
 export * from './optionalMatchData';

@@ -10,6 +10,16 @@ import { MatchRuleSet } from "../shared/MatchRuleSet";
 export class matchData {
     matchId: number = 0;
     seasonId: number = 0;
+    stageId?: number;
+    groupId?: number;
+    roundNumber?: number;
+    sortOrder: number = 0;
+    winnerNextMatchPosition?: number;
+    loserNextMatchPosition?: number;
+    leftSeedGroupId?: number;
+    leftSeedRank?: number;
+    rightSeedGroupId?: number;
+    rightSeedRank?: number;
     winnerId?: number;
     isActive: boolean = false;
     type: BestOfType = BestOfType.BestOf1;

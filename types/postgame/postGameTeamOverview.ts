@@ -17,6 +17,8 @@ export class postGameTeamOverview {
     dragons: string[] = [];
     elderDragons: number = 0;
     baronNashors: number = 0;
+    objectiveBounties: number = 0;
+    objectiveBountyGold: number = 0;
     bans: simpleChampionData[] = [];
     metaData?: teamWithMembers;
 }

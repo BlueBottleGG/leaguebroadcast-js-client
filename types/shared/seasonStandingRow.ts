@@ -4,6 +4,7 @@
  */
 
 export class seasonStandingRow {
+    isCalculated: boolean = false;
     teamId: number = 0;
     teamName: string = "";
     tag: string = "";

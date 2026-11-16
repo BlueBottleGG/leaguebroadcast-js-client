@@ -17,6 +17,10 @@ import {
   GameState,
   ApiError,
   shallowEqual,
+  getObjectiveBountyRemaining,
+  IngameObjectiveBountyState,
+  IngameObjectiveBountyType,
+  type ingameObjectiveBountyData,
   type ingameFrontendData,
   type champSelectStateData,
   type GameStateSnapshot,
@@ -986,6 +990,33 @@ async function testGameClock() {
   });
 }
 
+// ─── Objective bounty helpers ────────────────────────────────────────────────
+
+async function testObjectiveBounty() {
+  heading("Utility — objective bounty");
+
+  const { Upcoming, Active, Ending } = IngameObjectiveBountyState;
+  const bounty = (
+    state: IngameObjectiveBountyState,
+    objectives: IngameObjectiveBountyType[],
+  ): ingameObjectiveBountyData => ({
+    state,
+    startTime: 600,
+    endTime: 660,
+    rewards: objectives.map((objective) => ({ objective, gold: 100 })),
+  });
+
+  await runTest("remaining time counts down Upcoming/Ending, clamps at 0", () => {
+    assert(getObjectiveBountyRemaining(bounty(Upcoming, []), 630) === 30, "upcoming 30s left");
+    assert(getObjectiveBountyRemaining(bounty(Ending, []), 700) === 0, "ending clamps at 0");
+  });
+
+  await runTest("remaining time is undefined for Active or no bounty", () => {
+    assert(getObjectiveBountyRemaining(bounty(Active, []), 630) === undefined, "active has no countdown");
+    assert(getObjectiveBountyRemaining(undefined, 630) === undefined, "no bounty");
+  });
+}
+
 // ─── Main ────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -1023,6 +1054,7 @@ Options:
   await testUrls(client, opts.host, opts.port);
   await testShallowEqual();
   await testGameClock();
+  await testObjectiveBounty();
   await testReactiveStores(client);
   await testDataAccessors(client);
 

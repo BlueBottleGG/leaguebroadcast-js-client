@@ -23,6 +23,7 @@ import type { postGameOverview } from "#types/postgame/postGameOverview";
 import type { activeComponentChangedEventArgs } from "#types/message/ui/activeComponentChangedEventArgs";
 import { RestApi } from "./api/RestApi";
 import { smiteReactionResult } from "#types/ingame/smiteReaction/smiteReactionResult";
+import type { objectiveBountyClaim } from "#types/ingame/event/objectiveBountyClaim";
 import {
   createIngameTimerUtils,
   type BoundIngameTimerUtils,
@@ -62,6 +63,8 @@ export interface IngameEventHandlers {
   onAnnouncementEvent?: (event: announcerEvent) => void;
   onKillFeedEvent?: (event: killFeedEvent) => void;
   onSmiteReactionEvent?: (event: smiteReactionResult) => void;
+  /** The team holding the objective bounty took a bounty objective; `gold` is that reward. */
+  onObjectiveBountyClaim?: (event: objectiveBountyClaim) => void;
 }
 
 export interface ChampSelectEventHandlers {
@@ -216,6 +219,7 @@ export class LeagueBroadcastClient {
     onAnnouncementEvent: Set<(event: announcerEvent) => void>;
     onKillFeedEvent: Set<(event: killFeedEvent) => void>;
     onSmiteReactionEvent: Set<(event: smiteReactionResult) => void>;
+    onObjectiveBountyClaim: Set<(event: objectiveBountyClaim) => void>;
   } = {
     onPlayerEvent: new Set(),
     onTeamEvent: new Set(),
@@ -224,6 +228,7 @@ export class LeagueBroadcastClient {
     onAnnouncementEvent: new Set(),
     onKillFeedEvent: new Set(),
     onSmiteReactionEvent: new Set(),
+    onObjectiveBountyClaim: new Set(),
   };
 
   // -- Pre-game event handlers ------------------------------------------------
@@ -991,6 +996,10 @@ export class LeagueBroadcastClient {
         h(events.smiteReaction!),
       );
     }
+
+    events.objectiveBountyClaims?.forEach((claim) =>
+      this.ingameEventHandlers.onObjectiveBountyClaim.forEach((h) => h(claim)),
+    );
   }
 
   private endGame(): void {

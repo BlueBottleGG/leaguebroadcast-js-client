@@ -2,7 +2,7 @@
  * Auto-generated REST API client for Season management endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-08-05
+ * @generated 2026-09-26
  */
 
 import type { ApiClient } from "../ApiClient";
@@ -11,6 +11,8 @@ import type { matchWithGamesAndTeams } from "#types/shared/matchWithGamesAndTeam
 import type { playerSeasonStatsRow } from "#types/shared/playerSeasonStatsRow";
 import type { seasonAvailabilityView } from "#types/shared/seasonAvailabilityView";
 import type { seasonData } from "#types/shared/seasonData";
+import type { seasonGroup } from "#types/shared/seasonGroup";
+import type { seasonStage } from "#types/shared/seasonStage";
 import type { seasonStandingRow } from "#types/shared/seasonStandingRow";
 import type { seasonUsage } from "#types/shared/seasonUsage";
 import type { teamData } from "#types/shared/teamData";
@@ -71,8 +73,8 @@ export class SeasonApi {
   }
 
   /** `GET season/{seasonId}/matches` */
-  async getMatchesInSeason(seasonId: number): Promise<matchWithGamesAndTeams[]> {
-    return this.client.get<matchWithGamesAndTeams[]>(`season/${seasonId}/matches`);
+  async getMatchesInSeason(seasonId: number, stageId?: number | null, groupId?: number | null): Promise<matchWithGamesAndTeams[]> {
+    return this.client.get<matchWithGamesAndTeams[]>(`season/${seasonId}/matches${stageId !== undefined ? `?stageId=${encodeURIComponent(String(stageId))}` : ''}${groupId !== undefined ? `&groupId=${encodeURIComponent(String(groupId))}` : ''}`);
   }
 
   /** `GET season/{seasonId}/matches/count` */
@@ -90,6 +92,11 @@ export class SeasonApi {
     return this.client.get<teamData[]>(`season/${seasonId}/teams`);
   }
 
+  /** `PUT season/{seasonId}/teams` */
+  async setTeamsInSeason(seasonId: number, teamIds: number[]): Promise<void> {
+    return this.client.put<void>(`season/${seasonId}/teams`, teamIds);
+  }
+
   /** `GET season/{seasonId}/teamswithmembers` */
   async getTeamsWithMembersInSeason(seasonId: number): Promise<teamWithMembers[]> {
     return this.client.get<teamWithMembers[]>(`season/${seasonId}/teamswithmembers`);
@@ -101,8 +108,48 @@ export class SeasonApi {
   }
 
   /** `GET season/{seasonId}/standings` */
-  async getSeasonStandings(seasonId: number): Promise<seasonStandingRow[]> {
-    return this.client.get<seasonStandingRow[]>(`season/${seasonId}/standings`);
+  async getSeasonStandings(seasonId: number, stageId?: number | null, groupId?: number | null): Promise<seasonStandingRow[]> {
+    return this.client.get<seasonStandingRow[]>(`season/${seasonId}/standings${stageId !== undefined ? `?stageId=${encodeURIComponent(String(stageId))}` : ''}${groupId !== undefined ? `&groupId=${encodeURIComponent(String(groupId))}` : ''}`);
+  }
+
+  /** `GET season/{seasonId}/stages` */
+  async getStages(seasonId: number): Promise<seasonStage[]> {
+    return this.client.get<seasonStage[]>(`season/${seasonId}/stages`);
+  }
+
+  /** `POST season/{seasonId}/stages` */
+  async saveStage(seasonId: number, stage: seasonStage): Promise<number> {
+    return this.client.post<number>(`season/${seasonId}/stages`, stage);
+  }
+
+  /** `DELETE season/{seasonId}/stages/{stageId}` */
+  async deleteStage(seasonId: number, stageId: number): Promise<void> {
+    return this.client.delete<void>(`season/${seasonId}/stages/${stageId}`);
+  }
+
+  /** `GET season/{seasonId}/stages/{stageId}/groups` */
+  async getGroups(seasonId: number, stageId: number): Promise<seasonGroup[]> {
+    return this.client.get<seasonGroup[]>(`season/${seasonId}/stages/${stageId}/groups`);
+  }
+
+  /** `POST season/{seasonId}/stages/{stageId}/groups` */
+  async saveGroup(seasonId: number, stageId: number, group: seasonGroup): Promise<number> {
+    return this.client.post<number>(`season/${seasonId}/stages/${stageId}/groups`, group);
+  }
+
+  /** `DELETE season/{seasonId}/stages/{stageId}/groups/{groupId}` */
+  async deleteGroup(seasonId: number, stageId: number, groupId: number): Promise<void> {
+    return this.client.delete<void>(`season/${seasonId}/stages/${stageId}/groups/${groupId}`);
+  }
+
+  /** `GET season/{seasonId}/stages/{stageId}/groups/{groupId}/teams` */
+  async getGroupTeams(seasonId: number, stageId: number, groupId: number): Promise<number[]> {
+    return this.client.get<number[]>(`season/${seasonId}/stages/${stageId}/groups/${groupId}/teams`);
+  }
+
+  /** `PUT season/{seasonId}/stages/{stageId}/groups/{groupId}/teams` */
+  async setGroupTeams(seasonId: number, stageId: number, groupId: number, teamIds: number[]): Promise<void> {
+    return this.client.put<void>(`season/${seasonId}/stages/${stageId}/groups/${groupId}/teams`, teamIds);
   }
 
   /** `GET season/{seasonId}/playerstats` */

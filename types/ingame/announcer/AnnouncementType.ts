@@ -38,5 +38,6 @@ export enum AnnouncementType {
     GameStart = 31,
     MinionSpawn = 32,
     GrompKill = 33,
-    ScuttleKill = 34
+    ScuttleKill = 34,
+    ObjectiveBountyClaimed = 35
 }

@@ -5,7 +5,15 @@
  * in different scenarios.
  */
 
-import { LeagueBroadcastClient, GameState, ingameFrontendData } from "../src";
+import {
+  LeagueBroadcastClient,
+  GameState,
+  ingameFrontendData,
+  IngameObjectiveBountyState,
+  IngameObjectiveBountyType,
+  getObjectiveBountyTeam,
+  getObjectiveBountyRemaining,
+} from "../src";
 
 // ============================================================================
 // Example 1: Basic Usage
@@ -265,6 +273,35 @@ function unsubscribeExample() {
 }
 
 // ============================================================================
+// Example 8: Objective Bounties
+// ============================================================================
+
+function objectiveBountyExample() {
+  const client = new LeagueBroadcastClient({ host: "localhost", port: 58869 });
+
+  client.onIngameStateUpdate((gameData) => {
+    const teams = gameData.scoreboard?.teams ?? [];
+    const holder = getObjectiveBountyTeam(gameData.scoreboard);
+
+    if (holder !== undefined) {
+      const bounty = teams[holder].objectiveBounty!;
+      const remaining = getObjectiveBountyRemaining(bounty, client.getGameTime());
+      console.log(
+        `Team ${holder} bounty: ${IngameObjectiveBountyState[bounty.state]}`,
+        remaining !== undefined ? `(${remaining.toFixed(0)}s)` : "",
+        bounty.rewards.map((r) => `${IngameObjectiveBountyType[r.objective]} ${r.gold}g`),
+      );
+    }
+
+  });
+
+  client.onIngameEvents({
+    onObjectiveBountyClaim: (claim) =>
+      console.log(`Team ${claim.teamId} claimed ${IngameObjectiveBountyType[claim.objective]} bounty for ${claim.gold}g`),
+  });
+}
+
+// ============================================================================
 // Run examples 
 // ============================================================================
 
@@ -275,3 +312,4 @@ function unsubscribeExample() {
 // scoreboardExample();
 // connectionStateExample();
 // unsubscribeExample();
+// objectiveBountyExample();

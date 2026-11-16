@@ -6,6 +6,7 @@
 import { announcerEvent } from "../announcer/announcerEvent";
 import { ingameObjectiveEvent } from "./ingameObjectiveEvent";
 import { killFeedEvent } from "./killFeedEvent";
+import { objectiveBountyClaim } from "./objectiveBountyClaim";
 import { playerUpdateEvent } from "./playerUpdateEvent";
 import { smiteReactionResult } from "../smiteReaction/smiteReactionResult";
 import { teamUpdateResults } from "./teamUpdateResults";
@@ -18,4 +19,5 @@ export class transitionEvents {
     announcements?: announcerEvent[];
     killFeed?: killFeedEvent[];
     smiteReaction?: smiteReactionResult;
+    objectiveBountyClaims?: objectiveBountyClaim[];
 }

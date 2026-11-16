@@ -2,12 +2,13 @@
  * Auto-generated REST API client for Match (series) management endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-07-25
+ * @generated 2026-09-25
  */
 
 import type { ApiClient } from "../ApiClient";
 import type { matchData } from "#types/pregame/matchData";
 import type { addMatchRequestArgs } from "#types/rest/match/addMatchRequestArgs";
+import type { matchStructureData } from "#types/rest/match/matchStructureData";
 import type { optionalMatchData } from "#types/rest/match/optionalMatchData";
 import type { BestOfType } from "#types/shared/BestOfType";
 import type { gameWithTeams } from "#types/shared/gameWithTeams";
@@ -85,8 +86,8 @@ export class MatchApi {
   }
 
   /** `PUT match/current/teams` */
-  async setCurrentMatchTeams(teamIds: number[]): Promise<void> {
-    return this.client.put<void>('match/current/teams', teamIds);
+  async setCurrentMatchTeams(teamIds: number[]): Promise<unknown> {
+    return this.client.put<unknown>('match/current/teams', teamIds);
   }
 
   /** `GET match/current/game` */
@@ -130,8 +131,8 @@ export class MatchApi {
   }
 
   /** `PUT match/{matchid}/teams` */
-  async setMatchTeams(matchid: number, teamIds: number[]): Promise<void> {
-    return this.client.put<void>(`match/${matchid}/teams`, teamIds);
+  async setMatchTeams(matchid: number, teamIds: number[]): Promise<unknown> {
+    return this.client.put<unknown>(`match/${matchid}/teams`, teamIds);
   }
 
   /** `GET match/{matchid}/games` */
@@ -187,6 +188,11 @@ export class MatchApi {
   /** `PATCH match/{matchid}` */
   async updateMatch(matchid: number, matchUpdate: optionalMatchData): Promise<void> {
     return this.client.patch<void>(`match/${matchid}`, matchUpdate);
+  }
+
+  /** `PUT match/{matchid}/structure` */
+  async setMatchStructure(matchid: number, structure: matchStructureData): Promise<unknown> {
+    return this.client.put<unknown>(`match/${matchid}/structure`, structure);
   }
 
   /** `GET match/{matchid}/fearless/bans` */

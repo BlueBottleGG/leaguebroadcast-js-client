@@ -5,6 +5,7 @@
 
 export * from './ingameObjectiveEvent';
 export * from './killFeedEvent';
+export * from './objectiveBountyClaim';
 export * from './ObjectiveEventType';
 export * from './playerUpdateEvent';
 export * from './teamUpdateResults';

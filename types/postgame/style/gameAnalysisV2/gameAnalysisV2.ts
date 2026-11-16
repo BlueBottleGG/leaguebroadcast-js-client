@@ -21,6 +21,7 @@ export class gameAnalysisV2 {
     summary: gameAnalysisSummaryStyleV2 = {} as gameAnalysisSummaryStyleV2;
     goldGraph: goldGraphV2 = {} as goldGraphV2;
     showHeralds: boolean = false;
+    showObjectiveBounties: boolean = false;
     focusDurationMs: number = 0;
     focusEasing: string = "";
     focusKeepHeader: boolean = false;

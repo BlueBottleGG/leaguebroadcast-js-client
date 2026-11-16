@@ -559,6 +559,42 @@ See [examples/reactivity.ts](examples/reactivity.ts) for complete in-game exampl
 
 See [examples/pregame-reactivity.ts](examples/pregame-reactivity.ts) for the equivalent examples using pre-game reactive selectors (`selectChampSelect` / `watchChampSelect`).
 
+## Objective Bounties
+
+The team eligible for League's objective bounties carries `scoreboard.teams[i].objectiveBounty`
+while the bounty is Upcoming, Active or Ending; the field is absent otherwise.
+
+| Field                   | Meaning                                                                                       |
+| ----------------------- | --------------------------------------------------------------------------------------------- |
+| `state`                 | `IngameObjectiveBountyState.Upcoming` / `Active` / `Ending`                                   |
+| `startTime` / `endTime` | Absolute game seconds of the current state's countdown. Only Upcoming and Ending count down. |
+| `rewards`               | `{ objective: IngameObjectiveBountyType, gold }[]`, non-zero entries only                     |
+
+Rewards stay listed after a claim; their values follow the gold gap. Claims arrive as their own event:
+`onObjectiveBountyClaim` fires when the bounty team takes a bounty objective while the bounty is
+Active or Ending, with that objective's reward as `gold` (`teamId` 1 = blue, 2 = red).
+
+```typescript
+import {
+  IngameObjectiveBountyType,
+  getObjectiveBountyTeam,
+  getObjectiveBountyRemaining,
+} from "@bluebottle_gg/league-broadcast-client";
+
+client.onIngameStateUpdate((data) => {
+  const holder = getObjectiveBountyTeam(data.scoreboard); // team index, or undefined
+  const bounty = holder !== undefined ? data.scoreboard!.teams[holder].objectiveBounty : undefined;
+  getObjectiveBountyRemaining(bounty, client.getGameTime()); // seconds, undefined while Active
+});
+
+client.onIngameEvents({
+  onObjectiveBountyClaim: (claim) =>
+    console.log(`Team ${claim.teamId} claimed ${IngameObjectiveBountyType[claim.objective]} for ${claim.gold}g`),
+});
+```
+
+See `objectiveBountyExample()` in [examples/usage.ts](examples/usage.ts) for per-team tracking.
+
 ## Examples
 
 See the [examples/](examples/) directory for full runnable code.

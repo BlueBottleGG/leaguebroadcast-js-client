@@ -12,6 +12,12 @@ export class addMatchRequestArgs {
     isCurrent: boolean = false;
     onStage?: boolean;
     seasonId?: number;
+    stageId?: number;
+    groupId?: number;
+    roundNumber?: number;
+    sortOrder: number = 0;
+    winnerNextMatchPosition?: number;
+    loserNextMatchPosition?: number;
     nextMatchId?: number;
     winnerNextMatchId?: number;
     loserNextMatchId?: number;

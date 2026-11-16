@@ -97,3 +97,8 @@ export {
   damageGraphTeamTotal,
   sortDamageEntries,
 } from "./util/postGameUtils";
+
+export {
+  getObjectiveBountyTeam,
+  getObjectiveBountyRemaining,
+} from "./util/objectiveBountyUtils";

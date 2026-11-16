@@ -10,4 +10,5 @@ export class announcerEvent {
     source?: announcementParameter;
     target?: announcementParameter;
     type: AnnouncementType = AnnouncementType.Unknown;
+    bountyGold?: number;
 }

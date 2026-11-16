@@ -5,6 +5,7 @@
 
 import { bottomContentV2 } from "./bottomContentV2";
 import { containerStyleV2 } from "../../../shared/style/containerStyleV2";
+import { objectiveBountyRowV2 } from "./objectiveBountyRowV2";
 import { styleNodeMeta } from "../../../shared/style/styleNodeMeta";
 import { topContentV2 } from "./topContentV2";
 
@@ -13,6 +14,7 @@ export class globalScoreboardV2 {
     container: containerStyleV2 = {} as containerStyleV2;
     topContent: topContentV2 = {} as topContentV2;
     bottomContent: bottomContentV2 = {} as bottomContentV2;
+    objectiveBounty: objectiveBountyRowV2 = {} as objectiveBountyRowV2;
     customCss?: string;
     fileVersion: string = "1.0";
 }

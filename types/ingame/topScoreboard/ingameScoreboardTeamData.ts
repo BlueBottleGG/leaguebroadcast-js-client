@@ -3,6 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
+import { ingameObjectiveBountyData } from "./ingameObjectiveBountyData";
 import { ingameObjectivePowerPlay } from "../ingameObjectivePowerPlay";
 import { teamScore } from "../../shared/teamScore";
 
@@ -24,4 +25,5 @@ export class ingameScoreboardTeamData {
     dragons: string[] = [];
     baronPowerPlay?: ingameObjectivePowerPlay;
     dragonPowerPlay?: ingameObjectivePowerPlay;
+    objectiveBounty?: ingameObjectiveBountyData;
 }
