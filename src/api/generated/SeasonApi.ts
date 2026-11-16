@@ -2,10 +2,11 @@
  * Auto-generated REST API client for Season management endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-09-26
+ * @generated 2026-11-16
  */
 
 import type { ApiClient } from "../ApiClient";
+import { query } from "../query";
 import type { championAvailabilityWindow } from "#types/shared/championAvailabilityWindow";
 import type { matchWithGamesAndTeams } from "#types/shared/matchWithGamesAndTeams";
 import type { playerSeasonStatsRow } from "#types/shared/playerSeasonStatsRow";
@@ -74,7 +75,7 @@ export class SeasonApi {
 
   /** `GET season/{seasonId}/matches` */
   async getMatchesInSeason(seasonId: number, stageId?: number | null, groupId?: number | null): Promise<matchWithGamesAndTeams[]> {
-    return this.client.get<matchWithGamesAndTeams[]>(`season/${seasonId}/matches${stageId !== undefined ? `?stageId=${encodeURIComponent(String(stageId))}` : ''}${groupId !== undefined ? `&groupId=${encodeURIComponent(String(groupId))}` : ''}`);
+    return this.client.get<matchWithGamesAndTeams[]>(`season/${seasonId}/matches${query({ stageId, groupId })}`);
   }
 
   /** `GET season/{seasonId}/matches/count` */
@@ -109,7 +110,7 @@ export class SeasonApi {
 
   /** `GET season/{seasonId}/standings` */
   async getSeasonStandings(seasonId: number, stageId?: number | null, groupId?: number | null): Promise<seasonStandingRow[]> {
-    return this.client.get<seasonStandingRow[]>(`season/${seasonId}/standings${stageId !== undefined ? `?stageId=${encodeURIComponent(String(stageId))}` : ''}${groupId !== undefined ? `&groupId=${encodeURIComponent(String(groupId))}` : ''}`);
+    return this.client.get<seasonStandingRow[]>(`season/${seasonId}/standings${query({ stageId, groupId })}`);
   }
 
   /** `GET season/{seasonId}/stages` */
@@ -154,7 +155,7 @@ export class SeasonApi {
 
   /** `GET season/{seasonId}/playerstats` */
   async getPlayerStatsInSeason(seasonId: number, matchId?: number | null): Promise<playerSeasonStatsRow[]> {
-    return this.client.get<playerSeasonStatsRow[]>(`season/${seasonId}/playerstats${matchId !== undefined ? `?matchId=${encodeURIComponent(String(matchId))}` : ''}`);
+    return this.client.get<playerSeasonStatsRow[]>(`season/${seasonId}/playerstats${query({ matchId })}`);
   }
 
   /** `GET season/{seasonId}/playerstats/mock` */

@@ -2,10 +2,11 @@
  * Auto-generated REST API client for In-game overlay and serialization endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-09-22
+ * @generated 2026-11-16
  */
 
 import type { ApiClient } from "../ApiClient";
+import { query } from "../query";
 import type { damageEventHistoryEntry } from "#types/ingame/damageEvent/damageEventHistoryEntry";
 import type { ObjectiveRecapDisplayMode } from "#types/ingame/damageRecap/ObjectiveRecapDisplayMode";
 import type { ingameStateSerializationData } from "#types/ingame/ingameStateSerializationData";
@@ -65,7 +66,7 @@ export class IngameApi {
 
   /** `POST ingame/showing/teamfight/{active}` */
   async setCurrentTeamfightSerializationOptions(active: boolean, trackDamage?: boolean): Promise<void> {
-    return this.client.post<void>(`ingame/showing/teamfight/${active}${trackDamage !== undefined ? `?trackDamage=${encodeURIComponent(String(trackDamage))}` : ''}`);
+    return this.client.post<void>(`ingame/showing/teamfight/${active}${query({ trackDamage })}`);
   }
 
   /** `POST ingame/showing/teamfight/damage/{active}` */
@@ -95,7 +96,7 @@ export class IngameApi {
 
   /** `POST ingame/damage/select/{eventId}` */
   async selectDamageEvent(eventId: number, displayMode?: ObjectiveRecapDisplayMode | null): Promise<damageEventHistoryEntry> {
-    return this.client.post<damageEventHistoryEntry>(`ingame/damage/select/${eventId}${displayMode !== undefined ? `?displayMode=${encodeURIComponent(String(displayMode))}` : ''}`);
+    return this.client.post<damageEventHistoryEntry>(`ingame/damage/select/${eventId}${query({ displayMode })}`);
   }
 
   /** `POST ingame/damage/deselect` */
@@ -140,12 +141,12 @@ export class IngameApi {
 
   /** `POST ingame/damage/select/latest` */
   async selectLatestDamageEvent(displayMode?: ObjectiveRecapDisplayMode | null): Promise<damageEventHistoryEntry> {
-    return this.client.post<damageEventHistoryEntry>(`ingame/damage/select/latest${displayMode !== undefined ? `?displayMode=${encodeURIComponent(String(displayMode))}` : ''}`);
+    return this.client.post<damageEventHistoryEntry>(`ingame/damage/select/latest${query({ displayMode })}`);
   }
 
   /** `POST ingame/objective/select/latest` */
   async selectLatestObjectiveEvent(displayMode?: ObjectiveRecapDisplayMode | null, dps?: boolean): Promise<damageEventHistoryEntry> {
-    return this.client.post<damageEventHistoryEntry>(`ingame/objective/select/latest${displayMode !== undefined ? `?displayMode=${encodeURIComponent(String(displayMode))}` : ''}${dps !== undefined ? `&dps=${encodeURIComponent(String(dps))}` : ''}`);
+    return this.client.post<damageEventHistoryEntry>(`ingame/objective/select/latest${query({ displayMode, dps })}`);
   }
 
   /** `POST ingame/teamfight/select/latest` */

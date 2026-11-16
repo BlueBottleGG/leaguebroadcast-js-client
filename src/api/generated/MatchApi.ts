@@ -2,10 +2,11 @@
  * Auto-generated REST API client for Match (series) management endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-09-25
+ * @generated 2026-11-16
  */
 
 import type { ApiClient } from "../ApiClient";
+import { query } from "../query";
 import type { matchData } from "#types/pregame/matchData";
 import type { addMatchRequestArgs } from "#types/rest/match/addMatchRequestArgs";
 import type { matchStructureData } from "#types/rest/match/matchStructureData";
@@ -47,7 +48,7 @@ export class MatchApi {
 
   /** `POST match/current` */
   async completeCurrentMatch(force?: boolean): Promise<void> {
-    return this.client.post<void>(`match/current${force !== undefined ? `?force=${encodeURIComponent(String(force))}` : ''}`);
+    return this.client.post<void>(`match/current${query({ force })}`);
   }
 
   /** `GET match/current/id` */

@@ -2,10 +2,11 @@
  * Auto-generated REST API client for Champion select (pre-game) endpoints.
  * Do not edit manually. Changes will be lost.
  *
- * @generated 2026-03-11
+ * @generated 2026-11-16
  */
 
 import type { ApiClient } from "../ApiClient";
+import { query } from "../query";
 import type { simpleChampionData } from "#types/shared/simpleChampionData";
 
 export class PreGameApi {
@@ -13,7 +14,7 @@ export class PreGameApi {
 
   /** `POST championselect/mock/{doMocking}` */
   async mockChampionSelect(doMocking: boolean, randomizationinterval?: number): Promise<boolean> {
-    return this.client.post<boolean>(`championselect/mock/${doMocking}${randomizationinterval !== undefined ? `?randomizationinterval=${encodeURIComponent(String(randomizationinterval))}` : ''}`);
+    return this.client.post<boolean>(`championselect/mock/${doMocking}${query({ randomizationinterval })}`);
   }
 
   /** `GET championselect/mock` */
